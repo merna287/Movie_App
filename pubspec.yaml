@@ -35,6 +35,7 @@ dependencies:
   fpdart: ^1.2.0
   flutter_screenutil: ^5.9.3
   google_fonts: ^8.2.1
+  flutter_native_splash: ^2.4.7
 
 dev_dependencies:
   flutter_test:
