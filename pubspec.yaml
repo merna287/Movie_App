@@ -38,6 +38,8 @@ dependencies:
   smooth_page_indicator: ^3.0.0
   border_progress_indicator: ^0.0.3
   flutter_svg: ^2.0.10
+  get: ^4.7.3
+  get_it: ^9.2.1
 
 dev_dependencies:
   flutter_test:

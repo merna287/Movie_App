@@ -10,6 +10,7 @@ class OnboardingControls extends StatelessWidget {
   final int itemCount;
   final double progress;
   final VoidCallback onNextPressed;
+  final VoidCallback onSkipPressed;
 
   const OnboardingControls({
     super.key,
@@ -17,6 +18,7 @@ class OnboardingControls extends StatelessWidget {
     required this.itemCount,
     required this.progress,
     required this.onNextPressed,
+    required this.onSkipPressed,
   });
 
   @override
@@ -27,6 +29,18 @@ class OnboardingControls extends StatelessWidget {
         height: 60.h,
         child: Row(
           children: [
+            GestureDetector(
+              onTap: onSkipPressed,
+              child: Text(
+                'Skip',
+                style: TextStyle(
+                  color: AppColors.tertiaryTextColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            SizedBox(width: 16.w),
             SmoothPageIndicator(
               controller: pageController,
               count: itemCount,
