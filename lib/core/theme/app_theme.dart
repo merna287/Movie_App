@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
-import 'app_text_styles.dart';
+import 'app_typography.dart';
 
 class AppTheme {
   AppTheme._();
@@ -25,10 +24,10 @@ class AppTheme {
     inputDecorationTheme: InputDecorationTheme(
       fillColor: AppColors.boxColor,
       filled: true,
-      hintStyle: AppTextStyles.bodyMedium.copyWith(
+      hintStyle: AppTypography.montserrat14W500.copyWith(
         color: AppColors.tertiaryTextColor,
       ),
-      labelStyle: AppTextStyles.bodyMedium.copyWith(
+      labelStyle: AppTypography.montserrat14W500.copyWith(
         color: AppColors.secondaryTextColor,
       ),
       enabledBorder: OutlineInputBorder(
@@ -44,20 +43,20 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primaryColor,
         foregroundColor: AppColors.primaryTextColor,
-        textStyle: AppTextStyles.labelLarge,
+        textStyle: AppTypography.montserrat14W600,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         foregroundColor: AppColors.primaryColor,
-        textStyle: AppTextStyles.bodyMedium,
+        textStyle: AppTypography.montserrat14W500,
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         foregroundColor: AppColors.primaryTextColor,
-        textStyle: AppTextStyles.labelLarge,
+        textStyle: AppTypography.montserrat14W600,
         side: const BorderSide(color: AppColors.primaryColor),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
@@ -70,32 +69,30 @@ class AppTheme {
     ),
   );
 
-  static final TextTheme _textTheme = GoogleFonts.montserratTextTheme(
-    TextTheme(
-      displayLarge: AppTextStyles.displayLarge.copyWith(
-        color: AppColors.primaryTextColor,
-      ),
-      headlineLarge: AppTextStyles.headlineLarge.copyWith(
-        color: AppColors.primaryTextColor,
-      ),
-      titleLarge: AppTextStyles.titleLarge.copyWith(
-        color: AppColors.primaryTextColor,
-      ),
-      titleMedium: AppTextStyles.titleMedium.copyWith(
-        color: AppColors.primaryTextColor,
-      ),
-      bodyLarge: AppTextStyles.bodyLarge.copyWith(
-        color: AppColors.secondaryTextColor,
-      ),
-      bodyMedium: AppTextStyles.bodyMedium.copyWith(
-        color: AppColors.secondaryTextColor,
-      ),
-      labelLarge: AppTextStyles.labelLarge.copyWith(
-        color: AppColors.primaryTextColor,
-      ),
-      labelMedium: AppTextStyles.labelMedium.copyWith(
-        color: AppColors.tertiaryTextColor,
-      ),
+  static final TextTheme _textTheme = TextTheme(
+    displayLarge: AppTypography.montserrat28W600.copyWith(
+      color: AppColors.primaryTextColor,
+    ),
+    headlineLarge: AppTypography.montserrat22W600.copyWith(
+      color: AppColors.primaryTextColor,
+    ),
+    titleLarge: AppTypography.montserrat18W600.copyWith(
+      color: AppColors.primaryTextColor,
+    ),
+    titleMedium: AppTypography.montserrat16W600.copyWith(
+      color: AppColors.primaryTextColor,
+    ),
+    bodyLarge: AppTypography.montserrat16W500.copyWith(
+      color: AppColors.secondaryTextColor,
+    ),
+    bodyMedium: AppTypography.montserrat14W500.copyWith(
+      color: AppColors.secondaryTextColor,
+    ),
+    labelLarge: AppTypography.montserrat14W600.copyWith(
+      color: AppColors.primaryTextColor,
+    ),
+    labelMedium: AppTypography.montserrat12W500.copyWith(
+      color: AppColors.tertiaryTextColor,
     ),
   );
 }
