@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
+import 'package:get/get.dart' hide Trans;
+import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'core/service/service_locator.dart';
 import 'core/responsive/app_screen_util_scope.dart';
 import 'core/theme/app_theme.dart';
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         child: Builder(
           builder: (context) {
             return GetMaterialApp(
-              title: 'CINEMAX',
+              title: LocaleKeys.appName.tr(),
               theme: AppTheme.theme,
               debugShowCheckedModeBanner: false,
               localizationsDelegates: context.localizationDelegates,

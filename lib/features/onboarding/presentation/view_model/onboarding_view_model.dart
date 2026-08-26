@@ -1,4 +1,4 @@
-class AuthViewModel {
+class OnboardingViewModel {
   bool _isFirstTime = true;
 
   bool get isFirstTime => _isFirstTime;

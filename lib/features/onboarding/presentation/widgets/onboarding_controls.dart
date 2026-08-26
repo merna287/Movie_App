@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movie_app/core/theme/app_colors.dart';
+import 'package:movie_app/features/onboarding/presentation/widgets/onboarding_next_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../../core/theme/app_colors.dart';
-import 'onboarding_next_button.dart';
 
 class OnboardingControls extends StatelessWidget {
   final PageController pageController;
   final int itemCount;
   final double progress;
   final VoidCallback onNextPressed;
-  final VoidCallback onSkipPressed;
 
   const OnboardingControls({
     super.key,
@@ -18,7 +17,6 @@ class OnboardingControls extends StatelessWidget {
     required this.itemCount,
     required this.progress,
     required this.onNextPressed,
-    required this.onSkipPressed,
   });
 
   @override
@@ -29,18 +27,6 @@ class OnboardingControls extends StatelessWidget {
         height: 60.h,
         child: Row(
           children: [
-            GestureDetector(
-              onTap: onSkipPressed,
-              child: Text(
-                'Skip',
-                style: TextStyle(
-                  color: AppColors.tertiaryTextColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-            SizedBox(width: 16.w),
             SmoothPageIndicator(
               controller: pageController,
               count: itemCount,

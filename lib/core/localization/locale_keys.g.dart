@@ -11,8 +11,10 @@ abstract class  LocaleKeys {
   static const onboardingTitle3 = 'onboardingTitle3';
   static const onboardingDescription3 = 'onboardingDescription3';
   static const enterRegisteredPhoneNumberToSignUp = 'enterRegisteredPhoneNumberToSignUp';
+  static const getStartedSubtitle = 'getStartedSubtitle';
   static const signUp = 'signUp';
   static const alreadyHaveAnAccountLogin = 'alreadyHaveAnAccountLogin';
+  static const alreadyHaveAnAccount = 'alreadyHaveAnAccount';
   static const orSignUpWith = 'orSignUpWith';
   static const login = 'login';
   static const hiName = 'hiName';
@@ -25,7 +27,9 @@ abstract class  LocaleKeys {
   static const theLatestMoviesAndSeriesAreHere = 'theLatestMoviesAndSeriesAreHere';
   static const fullName = 'fullName';
   static const fullNameHint = 'fullNameHint';
-  static const agreeToTheTermsAndPrivacyPolicy = 'agreeToTheTermsAndPrivacyPolicy';
+  static const agreeToThe = 'agreeToThe';
+  static const termsAndServices = 'termsAndServices';
+  static const andPrivacyPolicy = 'andPrivacyPolicy';
   static const resetPassword = 'resetPassword';
   static const recoverYourAccountPassword = 'recoverYourAccountPassword';
   static const next = 'next';
@@ -36,6 +40,12 @@ abstract class  LocaleKeys {
   static const verifyingYourAccount = 'verifyingYourAccount';
   static const weHaveJustSentYou4DigitCodeViaYourEmail = 'weHaveJustSentYou4DigitCodeViaYourEmail';
   static const continueBtn = 'continueBtn';
-  static const didntReceiveCodeResend = 'didntReceiveCodeResend';
-
+  static const didNotReceiveCodeResend = "didn'tReceiveCodeResend";
+  static const confirmPasswordLabel = 'confirmPasswordLabel';
+  static const passwordHint = 'passwordHint';
+  static const verifyAccount = 'verifyAccount';
+  static const verifyAccountDescription = 'verifyAccountDescription';
+  static const continueAction = 'continueAction';
+  static const didNotReceiveCode = "didn'tReceiveCode";
+  static const resend = 'resend';
 }

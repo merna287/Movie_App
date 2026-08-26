@@ -9,4 +9,7 @@ class AppColors {
   static const Color secondaryTextColor = Color(0xFFEBEBEF);
   static const Color tertiaryTextColor = Color(0xFF92929D);
   static const Color boxColor = Color(0xFF252836);
+  static const Color dividerColor = Color(0xFF92929D);
+  static const Color headerButtonColor = Color(0xFF2A2D3B);
+  static const Color borderColor = Color(0xFF3A3D4E);
 }
