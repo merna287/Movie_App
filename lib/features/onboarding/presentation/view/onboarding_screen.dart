@@ -5,11 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:movie_app/core/constants/app_assets.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
-import 'package:movie_app/core/service/service_locator.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/features/auth/presentation/get_started/views/get_started_screen.dart';
 import 'package:movie_app/features/onboarding/data/models/onboarding_item.dart';
-import 'package:movie_app/features/onboarding/presentation/view_model/onboarding_view_model.dart';
 import 'package:movie_app/features/onboarding/presentation/widgets/onboarding_controls.dart';
 import 'package:movie_app/features/onboarding/presentation/widgets/onboarding_page.dart';
 
@@ -62,8 +60,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   double get _progress => (_currentPage + 1) / _items.length;
 
   void _handleGetStarted() {
-    final OnboardingViewModel onboardingViewModel = getIt<OnboardingViewModel>();
-    onboardingViewModel.setFirstTimeDone();
     Get.off(() => const GetStartedScreen());
   }
 

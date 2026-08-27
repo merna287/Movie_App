@@ -5,11 +5,16 @@ import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'core/service/service_locator.dart';
 import 'core/responsive/app_screen_util_scope.dart';
 import 'core/theme/app_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'features/onboarding/presentation/view/onboarding_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   setupServiceLocator();
   runApp(const MyApp());
 }

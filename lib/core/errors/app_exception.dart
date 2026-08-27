@@ -29,3 +29,7 @@ class ParsingException extends AppException {
 class CacheException extends AppException {
   const CacheException([super.message = 'Cache error occurred']);
 }
+
+class AuthException extends AppException {
+  const AuthException([super.message = 'Authentication failed']);
+}

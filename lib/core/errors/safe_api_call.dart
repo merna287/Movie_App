@@ -37,6 +37,8 @@ Future<AppResult<T>> safeApiCall<T>(Future<T> Function() call) async {
     return const Left(ParsingFailure());
   } on CacheException {
     return const Left(CacheFailure());
+  } on AuthException catch (e) {
+    return Left(AuthFailure(message: e.message));
   } on AuthFailure catch (e) {
     return Left(e);
   } on Failure catch (e) {
