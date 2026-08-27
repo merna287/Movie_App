@@ -1,9 +1,9 @@
 import 'package:get_it/get_it.dart';
-import 'package:movie_app/features/auth/data/api/facebook_auth_datasource.dart';
-import 'package:movie_app/features/auth/data/api/google_auth_datasource.dart';
-import 'package:movie_app/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:movie_app/features/auth/domain/repositories/auth_repository.dart';
-import 'package:movie_app/features/auth/presentation/get_started/cubit/get_started_cubit.dart';
+import 'package:movie_app/features/auth/get_started/data/data_sources/facebook_auth_datasource.dart';
+import 'package:movie_app/features/auth/get_started/data/data_sources/google_auth_datasource.dart';
+import 'package:movie_app/features/auth/get_started/data/repositories/auth_repository_impl.dart';
+import 'package:movie_app/features/auth/get_started/domain/repositories/auth_repository.dart';
+import 'package:movie_app/features/auth/get_started/presentation/cubit/get_started_cubit.dart';
 
 final GetIt getIt = GetIt.instance;
 

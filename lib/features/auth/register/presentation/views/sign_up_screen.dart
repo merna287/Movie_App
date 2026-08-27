@@ -5,7 +5,7 @@ import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/widgets/app_screen_header.dart';
 import 'package:movie_app/core/widgets/auth_intro_section.dart';
-import 'package:movie_app/features/auth/presentation/register/widgets/sign_up_form.dart';
+import 'package:movie_app/features/auth/register/presentation/widgets/sign_up_form.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});

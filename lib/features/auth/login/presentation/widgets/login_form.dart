@@ -8,7 +8,7 @@ import 'package:movie_app/core/theme/app_typography.dart';
 import 'package:movie_app/core/validators/validator_app.dart';
 import 'package:movie_app/core/widgets/app_button.dart';
 import 'package:movie_app/core/widgets/app_text_form_field.dart';
-import 'package:movie_app/features/auth/presentation/reset_password/views/reset_password_screen.dart';
+import 'package:movie_app/features/auth/reset_password/presentation/views/reset_password_screen.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});

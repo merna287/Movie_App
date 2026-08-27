@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movie_app/core/errors/failure.dart';
-import 'package:movie_app/features/auth/data/api/facebook_auth_datasource.dart';
-import 'package:movie_app/features/auth/data/api/google_auth_datasource.dart';
-import 'package:movie_app/features/auth/domain/repositories/auth_repository.dart';
+import 'package:movie_app/features/auth/get_started/data/data_sources/facebook_auth_datasource.dart';
+import 'package:movie_app/features/auth/get_started/data/data_sources/google_auth_datasource.dart';
+import 'package:movie_app/features/auth/get_started/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final GoogleAuthDataSource _googleDataSource;

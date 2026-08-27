@@ -5,7 +5,7 @@ import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/widgets/app_screen_header.dart';
 import 'package:movie_app/core/widgets/auth_intro_section.dart';
-import 'package:movie_app/features/auth/presentation/create_new_password/widgets/create_new_password_form.dart';
+import 'package:movie_app/features/auth/create_new_password/presentation/widgets/create_new_password_form.dart';
 
 class CreateNewPasswordScreen extends StatelessWidget {
   const CreateNewPasswordScreen({super.key});

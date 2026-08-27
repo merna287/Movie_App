@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/core/constants/app_assets.dart';
-import 'package:movie_app/features/auth/presentation/get_started/cubit/get_started_cubit.dart';
-import 'package:movie_app/features/auth/presentation/get_started/cubit/get_started_state.dart';
-import 'package:movie_app/features/auth/presentation/get_started/widgets/social_icon_button.dart';
+import 'package:movie_app/features/auth/get_started/presentation/cubit/get_started_cubit.dart';
+import 'package:movie_app/features/auth/get_started/presentation/cubit/get_started_state.dart';
+import 'package:movie_app/features/auth/get_started/presentation/widgets/social_icon_button.dart';
 
 enum _SocialProvider { google, facebook }
 

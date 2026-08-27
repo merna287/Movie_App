@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/errors/failure.dart';
-import 'package:movie_app/features/auth/domain/repositories/auth_repository.dart';
-import 'package:movie_app/features/auth/presentation/get_started/cubit/get_started_state.dart';
+import 'package:movie_app/features/auth/get_started/domain/repositories/auth_repository.dart';
+import 'package:movie_app/features/auth/get_started/presentation/cubit/get_started_state.dart';
 
 class GetStartedCubit extends Cubit<GetStartedState> {
   final AuthRepository _authRepository;

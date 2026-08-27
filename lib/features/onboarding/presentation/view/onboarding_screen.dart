@@ -6,7 +6,7 @@ import 'package:get/get.dart' hide Trans;
 import 'package:movie_app/core/constants/app_assets.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
-import 'package:movie_app/features/auth/presentation/get_started/views/get_started_screen.dart';
+import 'package:movie_app/features/auth/get_started/presentation/views/get_started_screen.dart';
 import 'package:movie_app/features/onboarding/data/models/onboarding_item.dart';
 import 'package:movie_app/features/onboarding/presentation/widgets/onboarding_controls.dart';
 import 'package:movie_app/features/onboarding/presentation/widgets/onboarding_page.dart';

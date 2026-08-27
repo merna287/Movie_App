@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/widgets/app_button.dart';
-import 'package:movie_app/features/auth/presentation/register/widgets/sign_up_fields.dart';
-import 'package:movie_app/features/auth/presentation/register/widgets/terms_checkbox.dart';
+import 'package:movie_app/features/auth/register/presentation/widgets/sign_up_fields.dart';
+import 'package:movie_app/features/auth/register/presentation/widgets/terms_checkbox.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});

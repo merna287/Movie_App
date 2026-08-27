@@ -7,7 +7,7 @@ import 'package:movie_app/core/theme/app_typography.dart';
 import 'package:movie_app/core/widgets/app_button.dart';
 import 'package:movie_app/core/widgets/app_screen_header.dart';
 import 'package:movie_app/core/widgets/auth_intro_section.dart';
-import 'package:movie_app/features/auth/presentation/verify_account/widgets/otp_input_field.dart';
+import 'package:movie_app/features/auth/verify_account/presentation/widgets/otp_input_field.dart';
 
 class VerifyAccountScreen extends StatefulWidget {
   const VerifyAccountScreen({super.key});

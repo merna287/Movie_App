@@ -5,7 +5,7 @@ import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/widgets/app_screen_header.dart';
 import 'package:movie_app/core/widgets/auth_intro_section.dart';
-import 'package:movie_app/features/auth/presentation/reset_password/widgets/reset_password_form.dart';
+import 'package:movie_app/features/auth/reset_password/presentation/widgets/reset_password_form.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
   const ResetPasswordScreen({super.key});

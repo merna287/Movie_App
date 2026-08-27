@@ -11,12 +11,12 @@ import 'package:movie_app/core/service/service_locator.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
 import 'package:movie_app/core/widgets/app_button.dart';
-import 'package:movie_app/features/auth/presentation/get_started/cubit/get_started_cubit.dart';
-import 'package:movie_app/features/auth/presentation/get_started/widgets/login_prompt.dart';
-import 'package:movie_app/features/auth/presentation/get_started/widgets/social_login_buttons.dart';
-import 'package:movie_app/features/auth/presentation/get_started/widgets/social_login_divider.dart';
-import 'package:movie_app/features/auth/presentation/login/views/login_screen.dart';
-import 'package:movie_app/features/auth/presentation/register/views/sign_up_screen.dart';
+import 'package:movie_app/features/auth/get_started/presentation/cubit/get_started_cubit.dart';
+import 'package:movie_app/features/auth/get_started/presentation/widgets/login_prompt.dart';
+import 'package:movie_app/features/auth/get_started/presentation/widgets/social_login_buttons.dart';
+import 'package:movie_app/features/auth/get_started/presentation/widgets/social_login_divider.dart';
+import 'package:movie_app/features/auth/login/presentation/views/login_screen.dart';
+import 'package:movie_app/features/auth/register/presentation/views/sign_up_screen.dart';
 
 class GetStartedScreen extends StatelessWidget {
   const GetStartedScreen({super.key});
