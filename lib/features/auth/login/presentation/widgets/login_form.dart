@@ -1,13 +1,18 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
+import 'package:movie_app/core/utils/app_toast.dart';
 import 'package:movie_app/core/validators/validator_app.dart';
 import 'package:movie_app/core/widgets/app_button.dart';
+import 'package:movie_app/core/widgets/app_dialogs.dart';
 import 'package:movie_app/core/widgets/app_text_form_field.dart';
+import 'package:movie_app/features/auth/login/presentation/cubit/login_cubit.dart';
+import 'package:movie_app/features/auth/login/presentation/cubit/login_state.dart';
 import 'package:movie_app/features/auth/reset_password/presentation/views/reset_password_screen.dart';
 
 class LoginForm extends StatefulWidget {
@@ -22,6 +27,7 @@ class _LoginFormState extends State<LoginForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
+  bool _isSubmitting = false;
 
   @override
   void dispose() {
@@ -32,63 +38,96 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AppTextFormField(
-            controller: _emailController,
-            labelText: LocaleKeys.emailAddress.tr(),
-            keyboardType: TextInputType.emailAddress,
-            textInputAction: TextInputAction.next,
-            validator: ValidatorApp.validateEmail,
-          ),
-          SizedBox(height: 24.h),
-          AppTextFormField(
-            controller: _passwordController,
-            labelText: LocaleKeys.password.tr(),
-            obscureText: _obscurePassword,
-            textInputAction: TextInputAction.done,
-            validator: ValidatorApp.validatePassword,
-            suffixIcon: GestureDetector(
-              onTap: () => setState(() => _obscurePassword = !_obscurePassword),
-              child: Icon(
-                _obscurePassword
-                    ? Icons.visibility_off_outlined
-                    : Icons.visibility_outlined,
-                color: AppColors.tertiaryTextColor,
-                size: 20.w,
+    return BlocConsumer<LoginCubit, LoginState>(
+      listener: (context, state) {
+        if (state is LoginLoading) {
+          AppDialogs.showLoadingDialog(context);
+        } else if (state is LoginSuccess) {
+          setState(() => _isSubmitting = false);
+          AppDialogs.hideLoading();
+          AppToast.showToast(
+            context,
+            LocaleKeys.loginSuccessful.tr(),
+            type: ToastType.success,
+          );
+        } else if (state is LoginError) {
+          setState(() => _isSubmitting = false);
+          AppDialogs.hideLoading();
+          AppToast.showToast(
+            context,
+            state.message,
+            type: ToastType.error,
+          );
+        }
+      },
+      builder: (context, state) {
+        return Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppTextFormField(
+                controller: _emailController,
+                labelText: LocaleKeys.emailAddress.tr(),
+                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
+                validator: ValidatorApp.validateEmail,
               ),
-            ),
-          ),
-          SizedBox(height: 8.h),
-          Align(
-            alignment: Alignment.centerRight,
-            child: GestureDetector(
-              onTap: () => Get.to(() => const ResetPasswordScreen()),
-              child: Text(
-                LocaleKeys.forgotPassword.tr(),
-                style: AppTypography.withColor(
-                  AppTypography.montserrat14W500,
-                  AppColors.primaryColor,
+              SizedBox(height: 24.h),
+              AppTextFormField(
+                controller: _passwordController,
+                labelText: LocaleKeys.password.tr(),
+                obscureText: _obscurePassword,
+                textInputAction: TextInputAction.done,
+                validator: ValidatorApp.validatePassword,
+                suffixIcon: GestureDetector(
+                  onTap: () =>
+                      setState(() => _obscurePassword = !_obscurePassword),
+                  child: Icon(
+                    _obscurePassword
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    color: AppColors.tertiaryTextColor,
+                    size: 20.w,
+                  ),
                 ),
               ),
-            ),
+              SizedBox(height: 8.h),
+              Align(
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                  onTap: () => Get.to(() => const ResetPasswordScreen()),
+                  child: Text(
+                    LocaleKeys.forgotPassword.tr(),
+                    style: AppTypography.withColor(
+                      AppTypography.montserrat14W500,
+                      AppColors.primaryColor,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 63.h),
+              AppButton(
+                text: LocaleKeys.login.tr(),
+                onPressed: _onLoginPressed,
+              ),
+            ],
           ),
-          SizedBox(height: 63.h),
-          AppButton(
-            text: LocaleKeys.login.tr(),
-            onPressed: _onLoginPressed,
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
   void _onLoginPressed() {
+    if (_isSubmitting) return;
+
     if (_formKey.currentState?.validate() ?? false) {
-      // TODO: Implement login logic
+      setState(() => _isSubmitting = true);
+
+      context.read<LoginCubit>().signIn(
+            email: _emailController.text,
+            password: _passwordController.text,
+          );
     }
   }
 }

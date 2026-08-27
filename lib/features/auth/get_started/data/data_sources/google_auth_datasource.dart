@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movie_app/core/errors/failure.dart';
+import 'package:movie_app/core/localization/locale_keys.g.dart';
 
 class GoogleAuthDataSource {
   final GoogleSignIn _googleSignIn;
@@ -25,8 +27,8 @@ class GoogleAuthDataSource {
       final idToken = authentication.idToken;
 
       if (idToken == null) {
-        return const Left(
-          AuthFailure(message: 'Failed to obtain Google ID token'),
+        return Left(
+          AuthFailure(message: LocaleKeys.failedToObtainGoogleIdToken.tr()),
         );
       }
 
@@ -39,9 +41,17 @@ class GoogleAuthDataSource {
       if (e.code == GoogleSignInExceptionCode.canceled) {
         return const Left(CancelledFailure());
       }
-      return Left(AuthFailure(message: e.description ?? 'Google sign-in failed'));
+      return Left(
+        AuthFailure(
+          message: e.description ?? LocaleKeys.googleSignInFailed.tr(),
+        ),
+      );
     } on FirebaseAuthException catch (e) {
-      return Left(AuthFailure(message: e.message ?? 'Firebase authentication failed'));
+      return Left(
+        AuthFailure(
+          message: e.message ?? LocaleKeys.firebaseAuthenticationFailed.tr(),
+        ),
+      );
     } catch (_) {
       return const Left(UnknownFailure());
     }

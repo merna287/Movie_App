@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/errors/failure.dart';
+import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/features/auth/get_started/domain/repositories/auth_repository.dart';
 import 'package:movie_app/features/auth/get_started/presentation/cubit/get_started_state.dart';
 
@@ -22,7 +24,7 @@ class GetStartedCubit extends Cubit<GetStartedState> {
         if (user != null) {
           emit(GetStartedSuccess(user));
         } else {
-          emit(const GetStartedError('Sign-in was cancelled'));
+          emit(GetStartedError(LocaleKeys.signInCancelled.tr()));
         }
       },
     );
@@ -42,7 +44,7 @@ class GetStartedCubit extends Cubit<GetStartedState> {
         if (user != null) {
           emit(GetStartedSuccess(user));
         } else {
-          emit(const GetStartedError('Sign-in was cancelled'));
+          emit(GetStartedError(LocaleKeys.signInCancelled.tr()));
         }
       },
     );
@@ -50,10 +52,10 @@ class GetStartedCubit extends Cubit<GetStartedState> {
 
   String _mapFailureToMessage(Failure failure) {
     if (failure is CancelledFailure) {
-      return 'Sign-in was cancelled';
+      return LocaleKeys.signInCancelled.tr();
     } else if (failure is AuthFailure) {
       return failure.message;
     }
-    return 'An unexpected error occurred';
+    return LocaleKeys.unexpectedError.tr();
   }
 }

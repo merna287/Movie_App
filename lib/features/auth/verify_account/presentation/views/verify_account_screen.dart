@@ -10,7 +10,9 @@ import 'package:movie_app/core/widgets/auth_intro_section.dart';
 import 'package:movie_app/features/auth/verify_account/presentation/widgets/otp_input_field.dart';
 
 class VerifyAccountScreen extends StatefulWidget {
-  const VerifyAccountScreen({super.key});
+  final String email;
+
+  const VerifyAccountScreen({super.key, required this.email});
 
   @override
   State<VerifyAccountScreen> createState() => _VerifyAccountScreenState();
@@ -35,7 +37,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
               AuthIntroSection(
                 title: LocaleKeys.verifyingYourAccount.tr(),
                 subtitle: LocaleKeys.verifyAccountDescription.tr(
-                  namedArgs: {'email': 'example@email.com'},
+                  namedArgs: {'email': widget.email},
                 ),
               ),
               SizedBox(height: 48.h),

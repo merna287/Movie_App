@@ -49,22 +49,29 @@ class TermsCheckbox extends StatelessWidget {
                 text: TextSpan(
                   text: LocaleKeys.agreeToThe.tr(),
                   style: AppTypography.withColor(
-                    AppTypography.montserrat12W500,
+                    AppTypography.montserrat13W500,
                     AppColors.secondaryTextColor,
                   ),
                   children: [
                     TextSpan(
                       text: LocaleKeys.termsAndServices.tr(),
                       style: AppTypography.withColor(
-                        AppTypography.montserrat12W500,
+                        AppTypography.montserrat13W500,
                         AppColors.primaryColor,
                       ),
                     ),
                     TextSpan(
-                      text: LocaleKeys.andPrivacyPolicy.tr(),
+                      text: LocaleKeys.and.tr(),
                       style: AppTypography.withColor(
-                        AppTypography.montserrat12W500,
+                        AppTypography.montserrat13W500,
                         AppColors.secondaryTextColor,
+                      ),
+                    ),
+                    TextSpan(
+                      text: LocaleKeys.privacyPolicy.tr(),
+                      style: AppTypography.withColor(
+                        AppTypography.montserrat13W500,
+                        AppColors.primaryColor,
                       ),
                     ),
                   ],

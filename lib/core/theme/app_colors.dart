@@ -12,4 +12,6 @@ class AppColors {
   static const Color dividerColor = Color(0xFF92929D);
   static const Color headerButtonColor = Color(0xFF2A2D3B);
   static const Color borderColor = Color(0xFF3A3D4E);
+  static const Color successColor = Color(0xFF34C759);
+  static const Color errorColor = Color(0xFFFF3B30);
 }
