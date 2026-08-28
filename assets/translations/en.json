@@ -33,6 +33,7 @@
   "next": "Next",
   "createNewPassword": "Create New Password",
   "enterYourNewPassword": "Enter your new password",
+  "passwordResetSuccessfully": "Password reset successfully.",
   "confirmPassword": "Confirm Password",
   "confirmPasswordLabel": "Confirm Password",
   "passwordHint": "Min. 6 characters, one uppercase & one number",

@@ -15,6 +15,12 @@ class ResetPasswordDataSource {
     return safeApiCall(() async {
       await _firebaseAuth.sendPasswordResetEmail(
         email: email.trim(),
+        actionCodeSettings: ActionCodeSettings(
+          url: 'https://movie-app-30945.firebaseapp.com',
+          handleCodeInApp: true,
+          androidPackageName: 'com.example.movie_app',
+          androidInstallApp: true,
+        ),
       );
 
       return true;

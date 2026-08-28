@@ -68,6 +68,10 @@ String _mapFirebaseAuthError(String code) {
       return 'No account found with this email address.';
     case 'operation-not-allowed':
       return 'Email/password sign-up is not enabled.';
+    case 'invalid-action-code':
+      return 'The password reset link is invalid or has already been used.';
+    case 'expired-action-code':
+      return 'The password reset link has expired. Please request a new one.';
     case 'network-request-failed':
     case 'network_error':
       return 'No internet connection. Please try again.';

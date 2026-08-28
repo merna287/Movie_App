@@ -37,6 +37,7 @@ abstract class  LocaleKeys {
   static const next = 'next';
   static const createNewPassword = 'createNewPassword';
   static const enterYourNewPassword = 'enterYourNewPassword';
+  static const passwordResetSuccessfully = 'passwordResetSuccessfully';
   static const confirmPassword = 'confirmPassword';
   static const confirmPasswordLabel = 'confirmPasswordLabel';
   static const passwordHint = 'passwordHint';
