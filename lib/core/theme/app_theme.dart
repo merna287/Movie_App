@@ -24,11 +24,13 @@ class AppTheme {
     inputDecorationTheme: InputDecorationTheme(
       fillColor: AppColors.boxColor,
       filled: true,
-      hintStyle: AppTypography.montserrat14W500.copyWith(
-        color: AppColors.tertiaryTextColor,
+      hintStyle: AppTypography.withColor(
+        AppTypography.montserrat14W500,
+        AppColors.tertiaryTextColor,
       ),
-      labelStyle: AppTypography.montserrat14W500.copyWith(
-        color: AppColors.secondaryTextColor,
+      labelStyle: AppTypography.withColor(
+        AppTypography.montserrat14W500,
+        AppColors.secondaryTextColor,
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
@@ -70,29 +72,37 @@ class AppTheme {
   );
 
   static final TextTheme _textTheme = TextTheme(
-    displayLarge: AppTypography.montserrat28W600.copyWith(
-      color: AppColors.primaryTextColor,
+    displayLarge: AppTypography.withColor(
+      AppTypography.montserrat28W600,
+      AppColors.primaryTextColor,
     ),
-    headlineLarge: AppTypography.montserrat22W600.copyWith(
-      color: AppColors.primaryTextColor,
+    headlineLarge: AppTypography.withColor(
+      AppTypography.montserrat22W600,
+      AppColors.primaryTextColor,
     ),
-    titleLarge: AppTypography.montserrat18W600.copyWith(
-      color: AppColors.primaryTextColor,
+    titleLarge: AppTypography.withColor(
+      AppTypography.montserrat18W600,
+      AppColors.primaryTextColor,
     ),
-    titleMedium: AppTypography.montserrat16W600.copyWith(
-      color: AppColors.primaryTextColor,
+    titleMedium: AppTypography.withColor(
+      AppTypography.montserrat16W600,
+      AppColors.primaryTextColor,
     ),
-    bodyLarge: AppTypography.montserrat16W500.copyWith(
-      color: AppColors.secondaryTextColor,
+    bodyLarge: AppTypography.withColor(
+      AppTypography.montserrat16W500,
+      AppColors.secondaryTextColor,
     ),
-    bodyMedium: AppTypography.montserrat14W500.copyWith(
-      color: AppColors.secondaryTextColor,
+    bodyMedium: AppTypography.withColor(
+      AppTypography.montserrat14W500,
+      AppColors.secondaryTextColor,
     ),
-    labelLarge: AppTypography.montserrat14W600.copyWith(
-      color: AppColors.primaryTextColor,
+    labelLarge: AppTypography.withColor(
+      AppTypography.montserrat14W600,
+      AppColors.primaryTextColor,
     ),
-    labelMedium: AppTypography.montserrat12W500.copyWith(
-      color: AppColors.tertiaryTextColor,
+    labelMedium: AppTypography.withColor(
+      AppTypography.montserrat12W500,
+      AppColors.tertiaryTextColor,
     ),
   );
 }

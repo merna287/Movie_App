@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_typography.dart';
-import '../../data/models/onboarding_item.dart';
+import 'package:movie_app/core/theme/app_colors.dart';
+import 'package:movie_app/core/theme/app_typography.dart';
+import 'package:movie_app/features/onboarding/data/models/onboarding_item.dart';
 
 class OnboardingPage extends StatelessWidget {
   final OnboardingItem item;
@@ -39,16 +38,18 @@ class OnboardingPage extends StatelessWidget {
                 children: [
                   Text(
                     item.title,
-                    style: AppTypography.montserrat22W600.copyWith(
-                      color: AppColors.primaryTextColor,
+                    style: AppTypography.withColor(
+                      AppTypography.montserrat22W600,
+                      AppColors.primaryTextColor,
                     ),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 10.h),
                   Text(
                     item.description,
-                    style: AppTypography.montserrat14W500.copyWith(
-                      color: AppColors.tertiaryTextColor,
+                    style: AppTypography.withColor(
+                      AppTypography.montserrat14W500,
+                      AppColors.tertiaryTextColor,
                     ),
                     textAlign: TextAlign.center,
                   ),

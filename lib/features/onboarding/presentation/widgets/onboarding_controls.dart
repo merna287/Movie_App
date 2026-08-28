@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movie_app/core/theme/app_colors.dart';
+import 'package:movie_app/features/onboarding/presentation/widgets/onboarding_next_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../../core/theme/app_colors.dart';
-import 'onboarding_next_button.dart';
 
 class OnboardingControls extends StatelessWidget {
   final PageController pageController;

@@ -58,4 +58,15 @@ class AppTypography {
     fontWeight: FontWeight.w500,
     letterSpacing: 0.12,
   );
+
+  static const TextStyle montserrat13W500 = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 13,
+    fontWeight: FontWeight.w500,
+    letterSpacing: 0.12,
+  );
+
+  static TextStyle withColor(TextStyle style, Color color) {
+    return style.copyWith(color: color);
+  }
 }
