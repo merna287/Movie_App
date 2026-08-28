@@ -29,6 +29,7 @@
   "privacyPolicy": "Privacy Policy",
   "resetPassword": "Reset Password",
   "recoverYourAccountPassword": "Recover your account password",
+  "resetPasswordEmailSent": "Password reset email sent. Please check your inbox.",
   "next": "Next",
   "createNewPassword": "Create New Password",
   "enterYourNewPassword": "Enter your new password",

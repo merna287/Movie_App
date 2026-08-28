@@ -33,6 +33,7 @@ abstract class  LocaleKeys {
   static const privacyPolicy = 'privacyPolicy';
   static const resetPassword = 'resetPassword';
   static const recoverYourAccountPassword = 'recoverYourAccountPassword';
+  static const resetPasswordEmailSent = 'resetPasswordEmailSent';
   static const next = 'next';
   static const createNewPassword = 'createNewPassword';
   static const enterYourNewPassword = 'enterYourNewPassword';

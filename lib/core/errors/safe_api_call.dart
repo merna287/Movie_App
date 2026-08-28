@@ -64,6 +64,8 @@ String _mapFirebaseAuthError(String code) {
       return 'The password is too weak. Please choose a stronger password.';
     case 'invalid-email':
       return 'The email address is invalid.';
+    case 'user-not-found':
+      return 'No account found with this email address.';
     case 'operation-not-allowed':
       return 'Email/password sign-up is not enabled.';
     case 'network-request-failed':

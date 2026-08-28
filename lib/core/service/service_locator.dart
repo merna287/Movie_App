@@ -12,6 +12,10 @@ import 'package:movie_app/features/auth/register/data/data_sources/register_data
 import 'package:movie_app/features/auth/register/data/repositories/register_repository_impl.dart';
 import 'package:movie_app/features/auth/register/domain/repositories/register_repository.dart';
 import 'package:movie_app/features/auth/register/presentation/cubit/register_cubit.dart';
+import 'package:movie_app/features/auth/reset_password/data/data_sources/reset_password_data_source.dart';
+import 'package:movie_app/features/auth/reset_password/data/repositories/reset_password_repository_impl.dart';
+import 'package:movie_app/features/auth/reset_password/domain/repositories/reset_password_repository.dart';
+import 'package:movie_app/features/auth/reset_password/presentation/cubit/reset_password_cubit.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -48,5 +52,14 @@ void setupServiceLocator() {
   );
   getIt.registerFactory<LoginCubit>(
     () => LoginCubit(getIt<LoginRepository>()),
+  );
+  getIt.registerLazySingleton<ResetPasswordDataSource>(
+    () => ResetPasswordDataSource(),
+  );
+  getIt.registerLazySingleton<ResetPasswordRepository>(
+    () => ResetPasswordRepositoryImpl(getIt<ResetPasswordDataSource>()),
+  );
+  getIt.registerFactory<ResetPasswordCubit>(
+    () => ResetPasswordCubit(getIt<ResetPasswordRepository>()),
   );
 }
