@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:movie_app/core/errors/failure.dart';
+import 'package:movie_app/core/localization/locale_keys.g.dart';
 
 class FacebookAuthDataSource {
   static const List<String> _permissions = ['email', 'public_profile'];
@@ -26,7 +28,7 @@ class FacebookAuthDataSource {
 
         return Left(
           AuthFailure(
-            message: loginResult.message ?? 'Facebook login failed',
+            message: loginResult.message ?? LocaleKeys.facebookLoginFailed.tr(),
           ),
         );
       }
@@ -34,9 +36,9 @@ class FacebookAuthDataSource {
       final accessToken = loginResult.accessToken?.tokenString;
 
       if (accessToken == null) {
-        return const Left(
+        return Left(
           AuthFailure(
-            message: 'Failed to obtain Facebook access token',
+            message: LocaleKeys.failedToObtainFacebookAccessToken.tr(),
           ),
         );
       }
@@ -53,7 +55,7 @@ class FacebookAuthDataSource {
 
       return Left(
         AuthFailure(
-          message: e.message ?? 'Firebase authentication failed',
+          message: e.message ?? LocaleKeys.firebaseAuthenticationFailed.tr(),
         ),
       );
     } catch (e, stackTrace) {

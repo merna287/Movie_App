@@ -63,5 +63,29 @@ abstract class  LocaleKeys {
   static const unexpectedError = 'unexpectedError';
   static const registrationCancelled = 'registrationCancelled';
   static const noInternetConnection = 'noInternetConnection';
+  static const home = 'home';
+  static const search = 'search';
+  static const favorite = 'favorite';
+  static const profile = 'profile';
+  static const emailCannotBeEmpty = 'emailCannotBeEmpty';
+  static const enterValidEmail = 'enterValidEmail';
+  static const passwordCannotBeEmpty = 'passwordCannotBeEmpty';
+  static const passwordRequirements = 'passwordRequirements';
+  static const confirmPasswordCannotBeEmpty = 'confirmPasswordCannotBeEmpty';
+  static const confirmPasswordMustMatch = 'confirmPasswordMustMatch';
+  static const nameCannotBeEmpty = 'nameCannotBeEmpty';
+  static const phoneNumberCannotBeEmpty = 'phoneNumberCannotBeEmpty';
+  static const enterValidPhoneNumber = 'enterValidPhoneNumber';
+  static const codeCannotBeEmpty = 'codeCannotBeEmpty';
+  static const codeMustBeSixDigits = 'codeMustBeSixDigits';
+  static const emailAlreadyInUse = 'emailAlreadyInUse';
+  static const weakPassword = 'weakPassword';
+  static const invalidEmailAddress = 'invalidEmailAddress';
+  static const userNotFound = 'userNotFound';
+  static const operationNotAllowed = 'operationNotAllowed';
+  static const invalidActionCode = 'invalidActionCode';
+  static const expiredActionCode = 'expiredActionCode';
+  static const tooManyRequests = 'tooManyRequests';
+  static const authenticationFailedTryAgain = 'authenticationFailedTryAgain';
 
 }

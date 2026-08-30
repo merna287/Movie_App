@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/dialogs/app_toast.dart';
-import 'package:movie_app/core/widgets/app_button.dart';
+import 'package:movie_app/core/common/widgets/app_button.dart';
 import 'package:movie_app/core/dialogs/app_dialogs.dart';
 import 'package:movie_app/features/auth/register/presentation/cubit/register_cubit.dart';
 import 'package:movie_app/features/auth/register/presentation/cubit/register_state.dart';

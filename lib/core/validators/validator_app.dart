@@ -1,3 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:movie_app/core/localization/locale_keys.g.dart';
+
 const String emailRegexString =
     r"^[a-zA-Z0-9.!#$%&'*+\-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$";
 
@@ -10,14 +13,14 @@ abstract final class ValidatorApp {
 
   static String? validateEmail(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Email cannot be empty';
+      return LocaleKeys.emailCannotBeEmpty.tr();
     }
 
     final email = value.trim();
     final emailRegex = RegExp(emailRegexString);
 
     if (!emailRegex.hasMatch(email)) {
-      return 'Enter a valid email address';
+      return LocaleKeys.enterValidEmail.tr();
     }
 
     return null;
@@ -25,13 +28,13 @@ abstract final class ValidatorApp {
 
   static String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Password cannot be empty';
+      return LocaleKeys.passwordCannotBeEmpty.tr();
     }
 
     final passwordRegex = RegExp(passwordRegexString);
 
     if (!passwordRegex.hasMatch(value)) {
-      return 'Password must contain at least 6 characters, one uppercase letter, and one number';
+      return LocaleKeys.passwordRequirements.tr();
     }
 
     return null;
@@ -39,11 +42,11 @@ abstract final class ValidatorApp {
 
   static String? validateConfirmPassword(String? value, String? password) {
     if (value == null || value.isEmpty) {
-      return 'Confirm password cannot be empty';
+      return LocaleKeys.confirmPasswordCannotBeEmpty.tr();
     }
 
     if (value != password) {
-      return 'Confirm password must match the password';
+      return LocaleKeys.confirmPasswordMustMatch.tr();
     }
 
     return null;
@@ -51,7 +54,7 @@ abstract final class ValidatorApp {
 
   static String? validateName(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Name cannot be empty';
+      return LocaleKeys.nameCannotBeEmpty.tr();
     }
 
     return null;
@@ -59,7 +62,7 @@ abstract final class ValidatorApp {
 
   static String? validatePhoneNumber(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Phone number cannot be empty';
+      return LocaleKeys.phoneNumberCannotBeEmpty.tr();
     }
 
     final phone = value.trim();
@@ -67,7 +70,7 @@ abstract final class ValidatorApp {
     final phoneRegex = RegExp(r'^\+?\d{10,15}$');
 
     if (!phoneRegex.hasMatch(phone)) {
-      return 'Enter a valid phone number';
+      return LocaleKeys.enterValidPhoneNumber.tr();
     }
 
     return null;
@@ -75,13 +78,13 @@ abstract final class ValidatorApp {
 
   static String? validateCode(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Code cannot be empty';
+      return LocaleKeys.codeCannotBeEmpty.tr();
     }
 
     final code = value.trim();
 
     if (!RegExp(r'^\d{6}$').hasMatch(code)) {
-      return 'Code must be exactly 6 digits';
+      return LocaleKeys.codeMustBeSixDigits.tr();
     }
 
     return null;

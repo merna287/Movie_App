@@ -10,7 +10,7 @@ import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/service/service_locator.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
-import 'package:movie_app/core/widgets/app_button.dart';
+import 'package:movie_app/core/common/widgets/app_button.dart';
 import 'package:movie_app/features/auth/get_started/presentation/cubit/get_started_cubit.dart';
 import 'package:movie_app/features/auth/get_started/presentation/widgets/login_prompt.dart';
 import 'package:movie_app/features/auth/get_started/presentation/widgets/social_login_buttons.dart';

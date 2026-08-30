@@ -6,8 +6,8 @@ import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/dialogs/app_dialogs.dart';
 import 'package:movie_app/core/dialogs/app_toast.dart';
 import 'package:movie_app/core/validators/validator_app.dart';
-import 'package:movie_app/core/widgets/app_button.dart';
-import 'package:movie_app/core/widgets/app_text_form_field.dart';
+import 'package:movie_app/core/common/widgets/app_button.dart';
+import 'package:movie_app/core/common/widgets/app_text_form_field.dart';
 import 'package:movie_app/features/auth/reset_password/presentation/cubit/reset_password_cubit.dart';
 import 'package:movie_app/features/auth/reset_password/presentation/cubit/reset_password_state.dart';
 
