@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
-import 'package:movie_app/features/home/presentation/mock/home_mock_data.dart';
+import 'package:movie_app/features/home/domain/entities/movie.dart';
 
 class FeaturedMovieCard extends StatelessWidget {
-  final HomeMovie movie;
+  final Movie movie;
 
   const FeaturedMovieCard({super.key, required this.movie});
 
