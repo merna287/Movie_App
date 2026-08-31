@@ -87,5 +87,31 @@ abstract class  LocaleKeys {
   static const expiredActionCode = 'expiredActionCode';
   static const tooManyRequests = 'tooManyRequests';
   static const authenticationFailedTryAgain = 'authenticationFailedTryAgain';
+  static const helloName = 'helloName';
+  static const letsStreamYourFavoriteMovie = 'letsStreamYourFavoriteMovie';
+  static const searchHint = 'searchHint';
+  static const categories = 'categories';
+  static const mostPopular = 'mostPopular';
+  static const seeAll = 'seeAll';
+  static const categoryAll = 'categoryAll';
+  static const categoryComedy = 'categoryComedy';
+  static const categoryAnimation = 'categoryAnimation';
+  static const categoryDocumentary = 'categoryDocumentary';
+  static const categoryAction = 'categoryAction';
+  static const categoryDrama = 'categoryDrama';
+  static const categoryHorror = 'categoryHorror';
+  static const categoryThriller = 'categoryThriller';
+  static const categoryRomance = 'categoryRomance';
+  static const categorySciFi = 'categorySciFi';
+  static const genreAction = 'genreAction';
+  static const genreAdventure = 'genreAdventure';
+  static const genreAnimation = 'genreAnimation';
+  static const genreComedy = 'genreComedy';
+  static const genreCrime = 'genreCrime';
+  static const genreDrama = 'genreDrama';
+  static const genreHorror = 'genreHorror';
+  static const genreRomance = 'genreRomance';
+  static const genreSciFi = 'genreSciFi';
+  static const genreThriller = 'genreThriller';
 
 }

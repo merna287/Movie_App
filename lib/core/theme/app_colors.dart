@@ -14,4 +14,10 @@ class AppColors {
   static const Color borderColor = Color(0xFF3A3D4E);
   static const Color successColor = Color(0xFF34C759);
   static const Color errorColor = Color(0xFFFF3B30);
+  static const Color cardOverlayColor = Color(0xCC1F1D2B);
+  static const Color categorySelectedColor = Color(0xFF12CDD9);
+  static const Color categoryUnselectedColor = Color(0xFF252836);
+  static const Color ratingBadgeColor = Color(0xFF12CDD9);
+  static const Color ratingStarColor = Color(0xFFFF8700);
+  static const Color ratingBadgeBackgroundColor = Color(0x26252836);
 }

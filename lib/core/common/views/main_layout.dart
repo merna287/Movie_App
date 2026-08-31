@@ -5,6 +5,7 @@ import 'package:movie_app/core/common/widgets/custom_bottom_nav_ba.dart';
 import 'package:movie_app/core/constants/app_assets.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
+import 'package:movie_app/features/home/presentation/views/home_screen.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -16,13 +17,12 @@ class MainLayout extends StatefulWidget {
 class _MainLayoutState extends State<MainLayout> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [
-    Container(color: AppColors.successColor),
-    Container(color: AppColors.grayColor),
-    Container(color: AppColors.primaryTextColor),
-    Container(color: AppColors.tertiaryTextColor),
-    /*BlocProvider(create: (context) => getIt<HomeCubit>() , child: const HomeScreen()),
-    BlocProvider(
+  final List<Widget> _screens = const [
+    HomeScreen(),
+    SizedBox.shrink(),
+    SizedBox.shrink(),
+    SizedBox.shrink(),
+    /*BlocProvider(
     create: (context) => getIt<SearchCubit>(),
     child: SearchScreen(),
   ),
