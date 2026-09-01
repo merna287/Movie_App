@@ -8,7 +8,14 @@ import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
 
 class HomeSearchBar extends StatelessWidget {
-  const HomeSearchBar({super.key});
+  final TextEditingController? controller;
+  final ValueChanged<String>? onChanged;
+
+  const HomeSearchBar({
+    super.key,
+    this.controller,
+    this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +39,33 @@ class HomeSearchBar extends StatelessWidget {
           ),
           SizedBox(width: 12.w),
           Expanded(
-            child: Text(
-              LocaleKeys.searchHint.tr(),
-              style: AppTypography.withColor(
-                AppTypography.montserrat14W500,
-                AppColors.tertiaryTextColor,
-              ),
-            ),
+            child: controller == null
+                ? Text(
+                    LocaleKeys.searchHint.tr(),
+                    style: AppTypography.withColor(
+                      AppTypography.montserrat14W500,
+                      AppColors.tertiaryTextColor,
+                    ),
+                  )
+                : TextField(
+                    controller: controller,
+                    onChanged: onChanged,
+                    style: AppTypography.withColor(
+                      AppTypography.montserrat14W500,
+                      AppColors.primaryTextColor,
+                    ),
+                    cursorColor: AppColors.primaryColor,
+                    textInputAction: TextInputAction.search,
+                    decoration: InputDecoration(
+                      isCollapsed: true,
+                      border: InputBorder.none,
+                      hintText: LocaleKeys.searchHint.tr(),
+                      hintStyle: AppTypography.withColor(
+                        AppTypography.montserrat14W500,
+                        AppColors.tertiaryTextColor,
+                      ),
+                    ),
+                  ),
           ),
           Container(
             width: 1.w,

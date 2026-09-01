@@ -14,8 +14,7 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 135.w,
-      height: 231.h,
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: AppColors.boxColor,
         borderRadius: BorderRadius.circular(12.r),
@@ -23,19 +22,16 @@ class MovieCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(12.r)),
-                child: Image.network(
+          Expanded(
+            flex: 3,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Image.network(
                   movie.imageUrl,
-                  width: 135.w,
-                  height: 170.h,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
-                      width: 135.w,
-                      height: 178.h,
                       color: AppColors.headerButtonColor,
                       child: Icon(
                         Icons.movie,
@@ -45,39 +41,40 @@ class MovieCard extends StatelessWidget {
                     );
                   },
                 ),
-              ),
-              Positioned(
-                top: 8.h,
-                right: 8.w,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 3.h),
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(97, 37, 40, 54),
-                    borderRadius: BorderRadius.circular(6.r),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.star,
-                        size: 12.w,
-                        color: AppColors.ratingStarColor,
-                      ),
-                      SizedBox(width: 2.w),
-                      Text(
-                        movie.rating.toString(),
-                        style: AppTypography.withColor(
-                          AppTypography.montserrat12W500,
-                          AppColors.ratingStarColor,
+                Positioned(
+                  top: 8.h,
+                  right: 8.w,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 3.h),
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(97, 37, 40, 54),
+                      borderRadius: BorderRadius.circular(6.r),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.star,
+                          size: 12.w,
+                          color: AppColors.ratingStarColor,
                         ),
-                      ),
-                    ],
+                        SizedBox(width: 2.w),
+                        Text(
+                          movie.rating.toString(),
+                          style: AppTypography.withColor(
+                            AppTypography.montserrat12W500,
+                            AppColors.ratingStarColor,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Expanded(
+            flex: 1,
             child: Padding(
               padding: EdgeInsets.fromLTRB(8.w, 4.h, 8.w, 4.h),
               child: Column(

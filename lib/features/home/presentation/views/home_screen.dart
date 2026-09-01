@@ -17,45 +17,35 @@ class HomeScreen extends StatelessWidget {
     return BlocProvider<HomeCubit>(
       create: (_) => getIt<HomeCubit>()..loadHomeData(),
       child: SafeArea(
-        child: CustomScrollView(
-          slivers: <Widget>[
-            _section(
+        child: ListView(
+          children: <Widget>[
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: SizedBox(height: 22.h),
             ),
-            _section(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: const HomeHeader(),
             ),
-            _section(
+            Padding(
               padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 26.w),
               child: const HomeSearchBar(),
             ),
-            _section(
-              padding: const EdgeInsets.only(bottom: 24),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 15),
               child: const FeaturedMovieCarousel(),
             ),
-            _section(
+            Padding(
               padding: EdgeInsets.symmetric(vertical: 24.h),
               child: const MovieCategories(),
             ),
-            _section(
+            Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: const MostPopularSection(),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  SliverPadding _section({
-    required Widget child,
-    EdgeInsetsGeometry padding = EdgeInsets.zero,
-  }) {
-    return SliverPadding(
-      padding: padding,
-      sliver: SliverToBoxAdapter(child: child),
     );
   }
 }

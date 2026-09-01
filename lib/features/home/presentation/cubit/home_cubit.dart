@@ -24,7 +24,7 @@ class HomeCubit extends Cubit<HomeState> {
     final featuredResult = await _repository.getFeaturedMovies();
     if (featuredResult.isLeft()) {
       emit(
-        HomeError(_mapFailureToMessage(featuredResult.getLeft().toNullable()!)),
+        HomeError(HomeCubit.failureMessage(featuredResult.getLeft().toNullable()!)),
       );
       return;
     }
@@ -32,7 +32,7 @@ class HomeCubit extends Cubit<HomeState> {
     final genresResult = await _repository.getMovieGenres();
     if (genresResult.isLeft()) {
       emit(
-        HomeError(_mapFailureToMessage(genresResult.getLeft().toNullable()!)),
+        HomeError(HomeCubit.failureMessage(genresResult.getLeft().toNullable()!)),
       );
       return;
     }
@@ -44,7 +44,7 @@ class HomeCubit extends Cubit<HomeState> {
 
     popularResult.fold(
       (failure) {
-        emit(HomeError(_mapFailureToMessage(failure)));
+        emit(HomeError(HomeCubit.failureMessage(failure)));
       },
       (popular) {
         debugPrint(
@@ -58,7 +58,7 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
-  String _mapFailureToMessage(Failure failure) {
+  static String failureMessage(Failure failure) {
     if (failure is NetworkFailure) {
       return LocaleKeys.noInternetConnection.tr();
     }
