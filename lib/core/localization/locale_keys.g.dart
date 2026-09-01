@@ -142,5 +142,13 @@ abstract class  LocaleKeys {
   static const genreTvMovie = 'genreTvMovie';
   static const genreWar = 'genreWar';
   static const genreWestern = 'genreWestern';
+  static const storyLine = 'storyLine';
+  static const castAndCrew = 'castAndCrew';
+  static const readMore = 'readMore';
+  static const showLess = 'showLess';
+  static const play = 'play';
+  static const share = 'share';
+  static const minutes = 'minutes';
+  static const castAndCrewComingSoon = 'castAndCrewComingSoon';
 
 }

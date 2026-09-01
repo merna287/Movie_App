@@ -137,5 +137,13 @@
   "genreScienceFiction": "Science Fiction",
   "genreTvMovie": "TV Movie",
   "genreWar": "War",
-  "genreWestern": "Western"
+  "genreWestern": "Western",
+  "storyLine": "Story Line",
+  "castAndCrew": "Cast and Crew",
+  "readMore": "Read More",
+  "showLess": "Show Less",
+  "play": "Play",
+  "share": "Share",
+  "minutes": "{count} Minutes",
+  "castAndCrewComingSoon": "Cast and crew coming soon"
 }
