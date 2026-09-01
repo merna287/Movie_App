@@ -7,6 +7,7 @@ class ApiEndpoints {
   static const String movieCategories = '$baseUrl/genre/movie/list';
   static const String popularMovies = '$baseUrl/movie/popular';
   static const String nowPlayingMovies = '$baseUrl/movie/now_playing';
+  static const String trendingMovies = '$baseUrl/trending/movie/week';
   static const String topRatedMovies = '$baseUrl/movie/top_rated';
   static const String searchMovies = '$baseUrl/search/movie';
 

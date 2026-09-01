@@ -98,13 +98,35 @@ class HomeApi {
   }
 
   Future<AppResult<List<MovieModel>>> fetchPopularMovies() {
+    return _fetchMovieResults(
+      Uri.parse(ApiEndpoints.popularMovies),
+      logLabel: 'popular',
+    );
+  }
+
+  Future<AppResult<List<MovieModel>>> fetchTopRatedMovies() {
+    return _fetchMovieResults(
+      Uri.parse(ApiEndpoints.topRatedMovies),
+      logLabel: 'top rated',
+    );
+  }
+
+  Future<AppResult<List<MovieModel>>> fetchTrendingMovies() {
+    return _fetchMovieResults(
+      Uri.parse(ApiEndpoints.trendingMovies),
+      logLabel: 'trending',
+    );
+  }
+
+  Future<AppResult<List<MovieModel>>> _fetchMovieResults(
+    Uri requestUri, {
+    required String logLabel,
+  }) {
     return safeApiCall(() async {
       const token = ApiConfig.readAccessToken;
 
-      final uri = Uri.parse(ApiEndpoints.popularMovies);
-
       final response = await _client.get(
-        uri,
+        requestUri,
         headers: {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',
@@ -129,7 +151,7 @@ class HomeApi {
           .map((item) => MovieModel.fromJson(item as Map<String, dynamic>))
           .toList();
 
-      debugPrint('TMDB popular: ${movies.length} movies fetched');
+      debugPrint('TMDB $logLabel: ${movies.length} movies fetched');
       return movies;
     });
   }

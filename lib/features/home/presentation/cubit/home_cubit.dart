@@ -41,20 +41,40 @@ class HomeCubit extends Cubit<HomeState> {
     final genres = genresResult.getRight().toNullable()!;
 
     final popularResult = await _repository.getPopularMovies(genres);
+    if (popularResult.isLeft()) {
+      emit(HomeError(HomeCubit.failureMessage(popularResult.getLeft().toNullable()!)));
+      return;
+    }
 
-    popularResult.fold(
-      (failure) {
-        emit(HomeError(HomeCubit.failureMessage(failure)));
-      },
-      (popular) {
-        debugPrint(
-          'TMDB: ${featured.length} featured, ${genres.length} genres, '
-          '${popular.length} popular movies loaded',
-        );
-        emit(
-          HomeSuccess(movies: featured, genres: genres, popularMovies: popular),
-        );
-      },
+    final topRatedResult = await _repository.getTopRatedMovies(genres);
+    if (topRatedResult.isLeft()) {
+      emit(HomeError(HomeCubit.failureMessage(topRatedResult.getLeft().toNullable()!)));
+      return;
+    }
+
+    final trendingResult = await _repository.getTrendingMovies(genres);
+    if (trendingResult.isLeft()) {
+      emit(HomeError(HomeCubit.failureMessage(trendingResult.getLeft().toNullable()!)));
+      return;
+    }
+
+    final popular = popularResult.getRight().toNullable()!;
+    final topRated = topRatedResult.getRight().toNullable()!;
+    final trending = trendingResult.getRight().toNullable()!;
+
+    debugPrint(
+      'TMDB: ${featured.length} featured, ${genres.length} genres, '
+      '${popular.length} popular, ${topRated.length} top rated, '
+      '${trending.length} trending movies loaded',
+    );
+    emit(
+      HomeSuccess(
+        movies: featured,
+        genres: genres,
+        popularMovies: popular,
+        topRatedMovies: topRated,
+        trendingMovies: trending,
+      ),
     );
   }
 

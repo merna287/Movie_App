@@ -5,9 +5,9 @@ import 'package:movie_app/core/service/service_locator.dart';
 import 'package:movie_app/features/home/presentation/cubit/home_cubit.dart';
 import 'package:movie_app/features/home/presentation/widgets/featured_movie_carousel.dart';
 import 'package:movie_app/features/home/presentation/widgets/home_header.dart';
+import 'package:movie_app/features/home/presentation/widgets/home_movie_sections.dart';
 import 'package:movie_app/features/home/presentation/widgets/home_search_bar.dart';
 import 'package:movie_app/features/home/presentation/widgets/movie_categories.dart';
-import 'package:movie_app/features/home/presentation/widgets/most_popular_section.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -41,7 +41,7 @@ class HomeScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
-              child: const MostPopularSection(),
+              child: const HomeMovieSections(),
             ),
           ],
         ),

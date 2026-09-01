@@ -17,11 +17,15 @@ final class HomeSuccess extends HomeState {
   final List<Movie> movies;
   final List<Genre> genres;
   final List<Movie> popularMovies;
+  final List<Movie> topRatedMovies;
+  final List<Movie> trendingMovies;
 
   const HomeSuccess({
     required this.movies,
     required this.genres,
     required this.popularMovies,
+    required this.topRatedMovies,
+    required this.trendingMovies,
   });
 }
 

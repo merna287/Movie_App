@@ -34,7 +34,25 @@ class HomeRepositoryImpl implements HomeRepository {
   @override
   Future<AppResult<List<Movie>>> getPopularMovies(List<Genre> genres) async {
     final result = await _api.fetchPopularMovies();
+    return _mapMovieResult(result, genres);
+  }
 
+  @override
+  Future<AppResult<List<Movie>>> getTopRatedMovies(List<Genre> genres) async {
+    final result = await _api.fetchTopRatedMovies();
+    return _mapMovieResult(result, genres);
+  }
+
+  @override
+  Future<AppResult<List<Movie>>> getTrendingMovies(List<Genre> genres) async {
+    final result = await _api.fetchTrendingMovies();
+    return _mapMovieResult(result, genres);
+  }
+
+  AppResult<List<Movie>> _mapMovieResult(
+    AppResult<List<MovieModel>> result,
+    List<Genre> genres,
+  ) {
     return result.fold(
       (failure) => Left(failure),
       (models) => Right(

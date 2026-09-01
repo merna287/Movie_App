@@ -92,9 +92,13 @@ abstract class  LocaleKeys {
   static const searchHint = 'searchHint';
   static const categories = 'categories';
   static const mostPopular = 'mostPopular';
+  static const topRated = 'topRated';
+  static const trending = 'trending';
   static const seeAll = 'seeAll';
   static const noMoviesAvailable = 'noMoviesAvailable';
   static const noPopularMoviesAvailable = 'noPopularMoviesAvailable';
+  static const noTopRatedMoviesAvailable = 'noTopRatedMoviesAvailable';
+  static const noTrendingMoviesAvailable = 'noTrendingMoviesAvailable';
   static const noMoviesFound = 'noMoviesFound';
   static const retry = 'retry';
   static const categoryAll = 'categoryAll';
