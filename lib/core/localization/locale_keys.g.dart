@@ -45,7 +45,7 @@ abstract class  LocaleKeys {
   static const verifyingYourAccount = 'verifyingYourAccount';
   static const weHaveJustSentYou4DigitCodeViaYourEmail = 'weHaveJustSentYou4DigitCodeViaYourEmail';
   static const continueBtn = 'continueBtn';
-  static const didntReceiveCodeResend = 'didntReceiveCodeResend';
+  static const didNotReceiveCodeResend = 'didNotReceiveCodeResend';
   static const verifyAccount = 'verifyAccount';
   static const verifyAccountDescription = 'verifyAccountDescription';
   static const continueAction = 'continueAction';
@@ -111,6 +111,17 @@ abstract class  LocaleKeys {
   static const categoryThriller = 'categoryThriller';
   static const categoryRomance = 'categoryRomance';
   static const categorySciFi = 'categorySciFi';
+  static const categoryAdventure = 'categoryAdventure';
+  static const categoryCrime = 'categoryCrime';
+  static const categoryFamily = 'categoryFamily';
+  static const categoryFantasy = 'categoryFantasy';
+  static const categoryHistory = 'categoryHistory';
+  static const categoryMusic = 'categoryMusic';
+  static const categoryMystery = 'categoryMystery';
+  static const categoryScienceFiction = 'categoryScienceFiction';
+  static const categoryTvMovie = 'categoryTvMovie';
+  static const categoryWar = 'categoryWar';
+  static const categoryWestern = 'categoryWestern';
   static const genreAction = 'genreAction';
   static const genreAdventure = 'genreAdventure';
   static const genreAnimation = 'genreAnimation';
@@ -121,5 +132,15 @@ abstract class  LocaleKeys {
   static const genreRomance = 'genreRomance';
   static const genreSciFi = 'genreSciFi';
   static const genreThriller = 'genreThriller';
+  static const genreDocumentary = 'genreDocumentary';
+  static const genreFamily = 'genreFamily';
+  static const genreFantasy = 'genreFantasy';
+  static const genreHistory = 'genreHistory';
+  static const genreMusic = 'genreMusic';
+  static const genreMystery = 'genreMystery';
+  static const genreScienceFiction = 'genreScienceFiction';
+  static const genreTvMovie = 'genreTvMovie';
+  static const genreWar = 'genreWar';
+  static const genreWestern = 'genreWestern';
 
 }

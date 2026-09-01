@@ -97,6 +97,60 @@ class HomeApi {
     });
   }
 
+  Future<AppResult<List<MovieModel>>> fetchDiscoverMoviesByGenre({
+    required int genreId,
+    required String sortBy,
+    int? minVoteCount,
+  }) {
+    return safeApiCall(() async {
+      const token = ApiConfig.readAccessToken;
+
+      final queryParameters = <String, String>{
+        'with_genres': '$genreId',
+        'sort_by': sortBy,
+      };
+      if (minVoteCount != null) {
+        queryParameters['vote_count.gte'] = '$minVoteCount';
+      }
+
+      final uri = Uri.parse(
+        ApiEndpoints.discoverMovies,
+      ).replace(queryParameters: queryParameters);
+
+      final response = await _client.get(
+        uri,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode != 200) {
+        throw ServerException(
+          statusCode: response.statusCode,
+          responseBody: response.body,
+        );
+      }
+
+      final decoded = jsonDecode(response.body) as Map<String, dynamic>;
+      final rawResults = decoded['results'];
+
+      if (rawResults is! List) {
+        throw const ParsingException('Response is missing "results" array');
+      }
+
+      final movies = rawResults
+          .map((item) => MovieModel.fromJson(item as Map<String, dynamic>))
+          .toList();
+
+      debugPrint(
+        'TMDB discover genre=$genreId sort=$sortBy: '
+        '${movies.length} movies fetched',
+      );
+      return movies;
+    });
+  }
+
   Future<AppResult<List<MovieModel>>> fetchPopularMovies() {
     return _fetchMovieResults(
       Uri.parse(ApiEndpoints.popularMovies),

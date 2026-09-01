@@ -49,6 +49,21 @@ class HomeRepositoryImpl implements HomeRepository {
     return _mapMovieResult(result, genres);
   }
 
+  @override
+  Future<AppResult<List<Movie>>> getMoviesByGenre({
+    required int genreId,
+    required String sortBy,
+    int? minVoteCount,
+    required List<Genre> genres,
+  }) async {
+    final result = await _api.fetchDiscoverMoviesByGenre(
+      genreId: genreId,
+      sortBy: sortBy,
+      minVoteCount: minVoteCount,
+    );
+    return _mapMovieResult(result, genres);
+  }
+
   AppResult<List<Movie>> _mapMovieResult(
     AppResult<List<MovieModel>> result,
     List<Genre> genres,

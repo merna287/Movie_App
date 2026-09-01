@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
+import 'package:movie_app/features/home/domain/entities/genre.dart';
 import 'package:movie_app/features/home/presentation/cubit/home_cubit.dart';
 import 'package:movie_app/features/home/presentation/cubit/home_state.dart';
 import 'package:movie_app/features/home/presentation/widgets/movie_category_chip.dart';
@@ -17,7 +18,6 @@ class MovieCategories extends StatefulWidget {
 
 class _MovieCategoriesState extends State<MovieCategories> {
   final ScrollController _scrollController = ScrollController();
-  int _selectedIndex = 0;
 
   @override
   void dispose() {
@@ -31,11 +31,12 @@ class _MovieCategoriesState extends State<MovieCategories> {
       builder: (context, state) {
         if (state is! HomeSuccess) return const SizedBox.shrink();
 
-        final categories = ['All', ...state.genres.map((g) => g.name)];
-        final itemKeys = [for (var _ in categories) GlobalKey()];
-        final selectedIndex = _selectedIndex < categories.length
-            ? _selectedIndex
-            : 0;
+        final genres = [null, ...state.genres];
+        final itemKeys = [for (var _ in genres) GlobalKey()];
+        final foundIndex = state.selectedGenreId == null
+            ? 0
+            : genres.indexWhere((g) => g?.id == state.selectedGenreId);
+        final selectedIndex = foundIndex < 0 ? 0 : foundIndex;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +51,7 @@ class _MovieCategoriesState extends State<MovieCategories> {
             SizedBox(height: 16.h),
             SizedBox(
               height: 31.h,
-              child: categories.isEmpty
+              child: genres.isEmpty
                   ? Center(
                       child: Text(
                         'No categories available',
@@ -61,13 +62,13 @@ class _MovieCategoriesState extends State<MovieCategories> {
                       controller: _scrollController,
                       scrollDirection: Axis.horizontal,
                       padding: EdgeInsets.symmetric(horizontal: 24.w),
-                      itemCount: categories.length,
+                      itemCount: genres.length,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: EdgeInsets.only(left: index == 0 ? 0 : 3.w),
                           child: _buildCategory(
                             index,
-                            categories,
+                            genres,
                             itemKeys,
                             selectedIndex,
                           ),
@@ -83,22 +84,75 @@ class _MovieCategoriesState extends State<MovieCategories> {
 
   Widget _buildCategory(
     int index,
-    List<String> categories,
+    List<Genre?> genres,
     List<GlobalKey> itemKeys,
     int selectedIndex,
   ) {
+    final genre = genres[index];
     return MovieCategoryChip(
       key: itemKeys[index],
-      label: _getCategoryKey(categories[index]).tr(),
+      label: genre == null
+          ? LocaleKeys.categoryAll.tr()
+          : _localizedCategory(genre.name),
       isSelected: index == selectedIndex,
-      onTap: () => _onCategoryTapped(index, itemKeys),
+      onTap: () => _onCategoryTapped(index, genre?.id, itemKeys),
     );
   }
 
-  void _onCategoryTapped(int index, List<GlobalKey> itemKeys) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  String _localizedCategory(String category) {
+    final key = _getCategoryKey(category);
+    return key == null ? category : key.tr();
+  }
+
+  String? _getCategoryKey(String category) {
+    switch (category) {
+      case 'Action':
+        return LocaleKeys.categoryAction;
+      case 'Adventure':
+        return LocaleKeys.categoryAdventure;
+      case 'Animation':
+        return LocaleKeys.categoryAnimation;
+      case 'Comedy':
+        return LocaleKeys.categoryComedy;
+      case 'Crime':
+        return LocaleKeys.categoryCrime;
+      case 'Documentary':
+        return LocaleKeys.categoryDocumentary;
+      case 'Drama':
+        return LocaleKeys.categoryDrama;
+      case 'Family':
+        return LocaleKeys.categoryFamily;
+      case 'Fantasy':
+        return LocaleKeys.categoryFantasy;
+      case 'History':
+        return LocaleKeys.categoryHistory;
+      case 'Horror':
+        return LocaleKeys.categoryHorror;
+      case 'Music':
+        return LocaleKeys.categoryMusic;
+      case 'Mystery':
+        return LocaleKeys.categoryMystery;
+      case 'Romance':
+        return LocaleKeys.categoryRomance;
+      case 'Science Fiction':
+        return LocaleKeys.categoryScienceFiction;
+      case 'Sci-Fi':
+        return LocaleKeys.categorySciFi;
+      case 'TV Movie':
+        return LocaleKeys.categoryTvMovie;
+      case 'Thriller':
+        return LocaleKeys.categoryThriller;
+      case 'War':
+        return LocaleKeys.categoryWar;
+      case 'Western':
+        return LocaleKeys.categoryWestern;
+      default:
+        return null;
+    }
+  }
+
+  void _onCategoryTapped(int index, int? genreId, List<GlobalKey> itemKeys) {
+    context.read<HomeCubit>().selectGenre(genreId);
     final itemContext = itemKeys[index].currentContext;
     if (itemContext != null) {
       Scrollable.ensureVisible(
@@ -108,33 +162,6 @@ class _MovieCategoriesState extends State<MovieCategories> {
         alignment: 0.5,
         alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtEnd,
       );
-    }
-  }
-
-  String _getCategoryKey(String category) {
-    switch (category) {
-      case 'All':
-        return LocaleKeys.categoryAll;
-      case 'Comedy':
-        return LocaleKeys.categoryComedy;
-      case 'Animation':
-        return LocaleKeys.categoryAnimation;
-      case 'Documentary':
-        return LocaleKeys.categoryDocumentary;
-      case 'Action':
-        return LocaleKeys.categoryAction;
-      case 'Drama':
-        return LocaleKeys.categoryDrama;
-      case 'Horror':
-        return LocaleKeys.categoryHorror;
-      case 'Thriller':
-        return LocaleKeys.categoryThriller;
-      case 'Romance':
-        return LocaleKeys.categoryRomance;
-      case 'Sci-Fi':
-        return LocaleKeys.categorySciFi;
-      default:
-        return category;
     }
   }
 }

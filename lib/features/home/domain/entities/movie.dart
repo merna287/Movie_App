@@ -6,6 +6,7 @@ class Movie {
   final double rating;
   final String releaseYear;
   final String genre;
+  final List<int> genreIds;
 
   const Movie({
     required this.id,
@@ -15,5 +16,6 @@ class Movie {
     required this.rating,
     required this.releaseYear,
     this.genre = '',
+    this.genreIds = const [],
   });
 }

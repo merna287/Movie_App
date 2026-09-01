@@ -8,4 +8,10 @@ abstract class HomeRepository {
   Future<AppResult<List<Movie>>> getPopularMovies(List<Genre> genres);
   Future<AppResult<List<Movie>>> getTopRatedMovies(List<Genre> genres);
   Future<AppResult<List<Movie>>> getTrendingMovies(List<Genre> genres);
+  Future<AppResult<List<Movie>>> getMoviesByGenre({
+    required int genreId,
+    required String sortBy,
+    int? minVoteCount,
+    required List<Genre> genres,
+  });
 }

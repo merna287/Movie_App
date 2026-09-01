@@ -46,6 +46,7 @@ class MovieModel {
       rating: voteAverage,
       releaseYear: releaseDate.length >= 4 ? releaseDate.substring(0, 4) : '',
       genre: genre,
+      genreIds: genreIds,
     );
   }
 }
