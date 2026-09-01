@@ -9,6 +9,7 @@ class MovieModel {
   final String? backdropPath;
   final double voteAverage;
   final String releaseDate;
+  final List<int> genreIds;
 
   const MovieModel({
     required this.id,
@@ -18,6 +19,7 @@ class MovieModel {
     this.backdropPath,
     required this.voteAverage,
     required this.releaseDate,
+    this.genreIds = const [],
   });
 
   factory MovieModel.fromJson(Map<String, dynamic> json) {
@@ -29,10 +31,11 @@ class MovieModel {
       backdropPath: json['backdrop_path'],
       voteAverage: (json['vote_average'] ?? 0).toDouble(),
       releaseDate: json['release_date'] ?? '',
+      genreIds: (json['genre_ids'] as List? ?? []).cast<int>(),
     );
   }
 
-  Movie toEntity() {
+  Movie toEntity({String genre = ''}) {
     final imagePath = backdropPath ?? posterPath;
 
     return Movie(
@@ -42,6 +45,7 @@ class MovieModel {
       imageUrl: ApiEndpoints.imageUrl(imagePath ?? '', size: 'w780'),
       rating: voteAverage,
       releaseYear: releaseDate.length >= 4 ? releaseDate.substring(0, 4) : '',
+      genre: genre,
     );
   }
 }

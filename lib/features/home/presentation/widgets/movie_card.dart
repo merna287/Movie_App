@@ -4,10 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
-import 'package:movie_app/features/home/presentation/mock/home_mock_data.dart';
+import 'package:movie_app/features/home/domain/entities/movie.dart';
 
 class MovieCard extends StatelessWidget {
-  final HomeMovie movie;
+  final Movie movie;
 
   const MovieCard({super.key, required this.movie});
 
@@ -30,7 +30,7 @@ class MovieCard extends StatelessWidget {
                 child: Image.network(
                   movie.imageUrl,
                   width: 135.w,
-                  height: 178.h,
+                  height: 170.h,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
@@ -52,7 +52,7 @@ class MovieCard extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 3.h),
                   decoration: BoxDecoration(
-                    color: AppColors.ratingBadgeBackgroundColor,
+                    color: const Color.fromARGB(97, 37, 40, 54),
                     borderRadius: BorderRadius.circular(6.r),
                   ),
                   child: Row(

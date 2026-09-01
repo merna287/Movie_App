@@ -65,7 +65,7 @@ class _CarouselError extends StatelessWidget {
             ),
             SizedBox(height: 12.h),
             TextButton(
-              onPressed: () => context.read<HomeCubit>().loadFeaturedMovies(),
+              onPressed: () => context.read<HomeCubit>().loadHomeData(),
               child: const Text('Retry'),
             ),
           ],

@@ -12,7 +12,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   HomeCubit(this._repository) : super(const HomeInitial());
 
-  Future<void> loadFeaturedMovies() async {
+  Future<void> loadHomeData() async {
     if (ApiConfig.readAccessToken.isEmpty) {
       debugPrint('TMDB token configured: false');
       emit(const HomeError('TMDB token is missing. Add it to your .env file.'));
@@ -21,14 +21,41 @@ class HomeCubit extends Cubit<HomeState> {
 
     emit(const HomeLoading());
 
-    final result = await _repository.getFeaturedMovies();
+    final featuredResult = await _repository.getFeaturedMovies();
+    if (featuredResult.isLeft()) {
+      emit(
+        HomeError(_mapFailureToMessage(featuredResult.getLeft().toNullable()!)),
+      );
+      return;
+    }
 
-    result.fold((failure) => emit(HomeError(_mapFailureToMessage(failure))), (
-      movies,
-    ) {
-      debugPrint('TMDB: ${movies.length} featured movies loaded');
-      emit(HomeSuccess(movies));
-    });
+    final genresResult = await _repository.getMovieGenres();
+    if (genresResult.isLeft()) {
+      emit(
+        HomeError(_mapFailureToMessage(genresResult.getLeft().toNullable()!)),
+      );
+      return;
+    }
+
+    final featured = featuredResult.getRight().toNullable()!;
+    final genres = genresResult.getRight().toNullable()!;
+
+    final popularResult = await _repository.getPopularMovies(genres);
+
+    popularResult.fold(
+      (failure) {
+        emit(HomeError(_mapFailureToMessage(failure)));
+      },
+      (popular) {
+        debugPrint(
+          'TMDB: ${featured.length} featured, ${genres.length} genres, '
+          '${popular.length} popular movies loaded',
+        );
+        emit(
+          HomeSuccess(movies: featured, genres: genres, popularMovies: popular),
+        );
+      },
+    );
   }
 
   String _mapFailureToMessage(Failure failure) {

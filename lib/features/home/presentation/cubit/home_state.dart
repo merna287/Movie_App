@@ -1,3 +1,4 @@
+import 'package:movie_app/features/home/domain/entities/genre.dart';
 import 'package:movie_app/features/home/domain/entities/movie.dart';
 
 sealed class HomeState {
@@ -14,8 +15,14 @@ final class HomeLoading extends HomeState {
 
 final class HomeSuccess extends HomeState {
   final List<Movie> movies;
+  final List<Genre> genres;
+  final List<Movie> popularMovies;
 
-  const HomeSuccess(this.movies);
+  const HomeSuccess({
+    required this.movies,
+    required this.genres,
+    required this.popularMovies,
+  });
 }
 
 final class HomeError extends HomeState {

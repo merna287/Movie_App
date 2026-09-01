@@ -1,14 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
+import 'package:movie_app/features/home/presentation/cubit/home_cubit.dart';
+import 'package:movie_app/features/home/presentation/cubit/home_state.dart';
 import 'package:movie_app/features/home/presentation/widgets/movie_category_chip.dart';
 
 class MovieCategories extends StatefulWidget {
-  final List<String> categories;
-
-  const MovieCategories({super.key, required this.categories});
+  const MovieCategories({super.key});
 
   @override
   State<MovieCategories> createState() => _MovieCategoriesState();
@@ -16,14 +17,7 @@ class MovieCategories extends StatefulWidget {
 
 class _MovieCategoriesState extends State<MovieCategories> {
   final ScrollController _scrollController = ScrollController();
-  late List<GlobalKey> _itemKeys;
   int _selectedIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _itemKeys = [for (var _ in widget.categories) GlobalKey()];
-  }
 
   @override
   void dispose() {
@@ -33,51 +27,79 @@ class _MovieCategoriesState extends State<MovieCategories> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: Text(
-            LocaleKeys.categories.tr(),
-            style: AppTypography.montserrat18W600,
-          ),
-        ),
-        SizedBox(height: 16.h),
-        SizedBox(
-          height: 31.h,
-          child: ListView.builder(
-            controller: _scrollController,
-            scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: 24.w),
-            itemCount: widget.categories.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: EdgeInsets.only(left: index == 0 ? 0 : 12.w),
-                child: _buildCategory(index),
-              );
-            },
-          ),
-        ),
-      ],
+    return BlocBuilder<HomeCubit, HomeState>(
+      builder: (context, state) {
+        if (state is! HomeSuccess) return const SizedBox.shrink();
+
+        final categories = ['All', ...state.genres.map((g) => g.name)];
+        final itemKeys = [for (var _ in categories) GlobalKey()];
+        final selectedIndex = _selectedIndex < categories.length
+            ? _selectedIndex
+            : 0;
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
+              child: Text(
+                LocaleKeys.categories.tr(),
+                style: AppTypography.montserrat18W600,
+              ),
+            ),
+            SizedBox(height: 16.h),
+            SizedBox(
+              height: 31.h,
+              child: categories.isEmpty
+                  ? Center(
+                      child: Text(
+                        'No categories available',
+                        style: AppTypography.montserrat12W500,
+                      ),
+                    )
+                  : ListView.builder(
+                      controller: _scrollController,
+                      scrollDirection: Axis.horizontal,
+                      padding: EdgeInsets.symmetric(horizontal: 24.w),
+                      itemCount: categories.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.only(left: index == 0 ? 0 : 3.w),
+                          child: _buildCategory(
+                            index,
+                            categories,
+                            itemKeys,
+                            selectedIndex,
+                          ),
+                        );
+                      },
+                    ),
+            ),
+          ],
+        );
+      },
     );
   }
 
-  Widget _buildCategory(int index) {
-    final categoryKey = _getCategoryKey(widget.categories[index]);
+  Widget _buildCategory(
+    int index,
+    List<String> categories,
+    List<GlobalKey> itemKeys,
+    int selectedIndex,
+  ) {
     return MovieCategoryChip(
-      key: _itemKeys[index],
-      label: categoryKey.tr(),
-      isSelected: index == _selectedIndex,
-      onTap: () => _onCategoryTapped(index),
+      key: itemKeys[index],
+      label: _getCategoryKey(categories[index]).tr(),
+      isSelected: index == selectedIndex,
+      onTap: () => _onCategoryTapped(index, itemKeys),
     );
   }
 
-  void _onCategoryTapped(int index) {
+  void _onCategoryTapped(int index, List<GlobalKey> itemKeys) {
     setState(() {
       _selectedIndex = index;
     });
-    final itemContext = _itemKeys[index].currentContext;
+    final itemContext = itemKeys[index].currentContext;
     if (itemContext != null) {
       Scrollable.ensureVisible(
         itemContext,

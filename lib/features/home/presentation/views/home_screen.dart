@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/core/service/service_locator.dart';
 import 'package:movie_app/features/home/presentation/cubit/home_cubit.dart';
-import 'package:movie_app/features/home/presentation/mock/home_mock_data.dart';
 import 'package:movie_app/features/home/presentation/widgets/featured_movie_carousel.dart';
 import 'package:movie_app/features/home/presentation/widgets/home_header.dart';
 import 'package:movie_app/features/home/presentation/widgets/home_search_bar.dart';
@@ -15,10 +14,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final data = HomeMockData.data;
-
     return BlocProvider<HomeCubit>(
-      create: (_) => getIt<HomeCubit>()..loadFeaturedMovies(),
+      create: (_) => getIt<HomeCubit>()..loadHomeData(),
       child: SafeArea(
         child: CustomScrollView(
           slivers: <Widget>[
@@ -28,10 +25,7 @@ class HomeScreen extends StatelessWidget {
             ),
             _section(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
-              child: HomeHeader(
-                userName: data.userName,
-                avatarUrl: data.avatarUrl,
-              ),
+              child: const HomeHeader(),
             ),
             _section(
               padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 26.w),
@@ -43,11 +37,11 @@ class HomeScreen extends StatelessWidget {
             ),
             _section(
               padding: EdgeInsets.symmetric(vertical: 24.h),
-              child: MovieCategories(categories: data.categories),
+              child: const MovieCategories(),
             ),
             _section(
               padding: const EdgeInsets.only(bottom: 20),
-              child: MostPopularSection(popularMovies: data.popularMovies),
+              child: const MostPopularSection(),
             ),
           ],
         ),

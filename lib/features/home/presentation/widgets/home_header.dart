@@ -9,11 +9,7 @@ class HomeHeader extends StatelessWidget {
   final String userName;
   final String avatarUrl;
 
-  const HomeHeader({
-    super.key,
-    required this.userName,
-    required this.avatarUrl,
-  });
+  const HomeHeader({super.key, this.userName = 'Guest', this.avatarUrl = ''});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +18,14 @@ class HomeHeader extends StatelessWidget {
         CircleAvatar(
           radius: 24.r,
           backgroundColor: AppColors.boxColor,
-          backgroundImage: NetworkImage(avatarUrl),
+          backgroundImage: avatarUrl.isEmpty ? null : NetworkImage(avatarUrl),
+          child: avatarUrl.isEmpty
+              ? Icon(
+                  Icons.person,
+                  size: 24.w,
+                  color: AppColors.tertiaryTextColor,
+                )
+              : null,
         ),
         SizedBox(width: 12.w),
         Expanded(

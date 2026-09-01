@@ -5,6 +5,7 @@ class Movie {
   final String imageUrl;
   final double rating;
   final String releaseYear;
+  final String genre;
 
   const Movie({
     required this.id,
@@ -13,5 +14,6 @@ class Movie {
     required this.imageUrl,
     required this.rating,
     required this.releaseYear,
+    this.genre = '',
   });
 }
