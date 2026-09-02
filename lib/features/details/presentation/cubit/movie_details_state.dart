@@ -1,7 +1,7 @@
-import 'package:movie_app/features/home/domain/entities/cast_member.dart';
-import 'package:movie_app/features/home/domain/entities/crew_member.dart';
-import 'package:movie_app/features/home/domain/entities/movie_details.dart';
-import 'package:movie_app/features/home/domain/entities/movie_video.dart';
+import 'package:movie_app/features/details/domain/entities/cast_member.dart';
+import 'package:movie_app/features/details/domain/entities/crew_member.dart';
+import 'package:movie_app/features/details/domain/entities/movie_details.dart';
+import 'package:movie_app/features/details/domain/entities/movie_video.dart';
 
 sealed class MovieDetailsState {
   const MovieDetailsState();

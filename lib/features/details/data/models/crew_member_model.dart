@@ -1,5 +1,5 @@
 import 'package:movie_app/core/network/api_endpoints.dart';
-import 'package:movie_app/features/home/domain/entities/crew_member.dart';
+import 'package:movie_app/features/details/domain/entities/crew_member.dart';
 
 class CrewMemberModel {
   final int id;

@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
+import 'package:movie_app/features/details/presentation/views/movie_details_screen.dart';
 import 'package:movie_app/features/home/domain/entities/movie.dart';
-import 'package:movie_app/features/home/presentation/views/movie_details_screen.dart';
 import 'package:movie_app/features/home/presentation/widgets/localized_genre.dart';
 
 class MovieCard extends StatelessWidget {

@@ -1,8 +1,6 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/errors/failure.dart';
-import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/network/api_config.dart';
 import 'package:movie_app/features/home/domain/entities/movie.dart';
 import 'package:movie_app/features/home/domain/repositories/home_repository.dart';
@@ -30,21 +28,13 @@ class HomeCubit extends Cubit<HomeState> {
 
     final featuredResult = await _repository.getFeaturedMovies();
     if (featuredResult.isLeft()) {
-      emit(
-        HomeError(
-          HomeCubit.failureMessage(featuredResult.getLeft().toNullable()!),
-        ),
-      );
+      emit(HomeError(failureMessage(featuredResult.getLeft().toNullable()!)));
       return;
     }
 
     final genresResult = await _repository.getMovieGenres();
     if (genresResult.isLeft()) {
-      emit(
-        HomeError(
-          HomeCubit.failureMessage(genresResult.getLeft().toNullable()!),
-        ),
-      );
+      emit(HomeError(failureMessage(genresResult.getLeft().toNullable()!)));
       return;
     }
 
@@ -53,31 +43,19 @@ class HomeCubit extends Cubit<HomeState> {
 
     final popularResult = await _repository.getPopularMovies(genres);
     if (popularResult.isLeft()) {
-      emit(
-        HomeError(
-          HomeCubit.failureMessage(popularResult.getLeft().toNullable()!),
-        ),
-      );
+      emit(HomeError(failureMessage(popularResult.getLeft().toNullable()!)));
       return;
     }
 
     final topRatedResult = await _repository.getTopRatedMovies(genres);
     if (topRatedResult.isLeft()) {
-      emit(
-        HomeError(
-          HomeCubit.failureMessage(topRatedResult.getLeft().toNullable()!),
-        ),
-      );
+      emit(HomeError(failureMessage(topRatedResult.getLeft().toNullable()!)));
       return;
     }
 
     final trendingResult = await _repository.getTrendingMovies(genres);
     if (trendingResult.isLeft()) {
-      emit(
-        HomeError(
-          HomeCubit.failureMessage(trendingResult.getLeft().toNullable()!),
-        ),
-      );
+      emit(HomeError(failureMessage(trendingResult.getLeft().toNullable()!)));
       return;
     }
 
@@ -167,11 +145,7 @@ class HomeCubit extends Cubit<HomeState> {
     final failedIndex = results.indexWhere((result) => result.isLeft());
     if (failedIndex != -1) {
       emit(
-        HomeError(
-          HomeCubit.failureMessage(
-            results[failedIndex].getLeft().toNullable()!,
-          ),
-        ),
+        HomeError(failureMessage(results[failedIndex].getLeft().toNullable()!)),
       );
       return;
     }
@@ -201,26 +175,6 @@ class HomeCubit extends Cubit<HomeState> {
         filteredTrendingMovies: popularMovies,
       ),
     );
-  }
-
-  static String failureMessage(Failure failure) {
-    if (failure is NetworkFailure) {
-      return LocaleKeys.noInternetConnection.tr();
-    }
-    if (failure is ServerFailure) {
-      final statusCode = failure.statusCode;
-      if (statusCode == 401 || statusCode == 403) {
-        return 'TMDB authentication failed. Check your API token.';
-      }
-      if (statusCode != null) {
-        return 'TMDB request failed (HTTP $statusCode).';
-      }
-      return failure.serverMessage ?? LocaleKeys.unexpectedError.tr();
-    }
-    if (failure is ParsingFailure) {
-      return 'Failed to parse TMDB response.';
-    }
-    return LocaleKeys.unexpectedError.tr();
   }
 }
 

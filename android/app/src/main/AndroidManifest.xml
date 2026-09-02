@@ -60,5 +60,15 @@
         <!-- Required for the Facebook login flow on Android 11+ -->
         <package android:name="com.facebook.katana" />
         <provider android:authorities="com.facebook.katana.provider.PlatformProvider" />
+        <!-- Required by url_launcher to open external links
+             (e.g. the YouTube trailer via the Play button) on Android 11+. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="https"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="http"/>
+        </intent>
     </queries>
 </manifest>

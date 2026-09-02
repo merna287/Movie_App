@@ -1,6 +1,6 @@
-import 'package:movie_app/features/home/data/models/cast_member_model.dart';
-import 'package:movie_app/features/home/data/models/crew_member_model.dart';
-import 'package:movie_app/features/home/domain/entities/movie_credits.dart';
+import 'package:movie_app/features/details/data/models/cast_member_model.dart';
+import 'package:movie_app/features/details/data/models/crew_member_model.dart';
+import 'package:movie_app/features/details/domain/entities/movie_credits.dart';
 
 class MovieCreditsModel {
   final List<CastMemberModel> cast;

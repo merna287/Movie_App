@@ -1,4 +1,4 @@
-import 'package:movie_app/features/home/domain/entities/movie_video.dart';
+import 'package:movie_app/features/details/domain/entities/movie_video.dart';
 
 class MovieVideoModel {
   final String key;

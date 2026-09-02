@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
-import 'package:movie_app/features/home/domain/entities/cast_member.dart';
-import 'package:movie_app/features/home/domain/entities/crew_member.dart';
+import 'package:movie_app/features/details/domain/entities/cast_member.dart';
+import 'package:movie_app/features/details/domain/entities/crew_member.dart';
 
 class MovieCastAndCrew extends StatelessWidget {
   final List<CastMember> cast;

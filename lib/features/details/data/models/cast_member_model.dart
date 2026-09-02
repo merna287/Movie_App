@@ -1,5 +1,5 @@
 import 'package:movie_app/core/network/api_endpoints.dart';
-import 'package:movie_app/features/home/domain/entities/cast_member.dart';
+import 'package:movie_app/features/details/domain/entities/cast_member.dart';
 
 class CastMemberModel {
   final int id;

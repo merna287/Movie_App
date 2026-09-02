@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:movie_app/core/localization/locale_keys.g.dart';
 
 sealed class Failure {
   final String message;
@@ -54,3 +56,23 @@ final class CancelledFailure extends Failure {
 }
 
 typedef AppResult<T> = Either<Failure, T>;
+
+String failureMessage(Failure failure) {
+  if (failure is NetworkFailure) {
+    return LocaleKeys.noInternetConnection.tr();
+  }
+  if (failure is ServerFailure) {
+    final statusCode = failure.statusCode;
+    if (statusCode == 401 || statusCode == 403) {
+      return 'TMDB authentication failed. Check your API token.';
+    }
+    if (statusCode != null) {
+      return 'TMDB request failed (HTTP $statusCode).';
+    }
+    return failure.serverMessage ?? LocaleKeys.unexpectedError.tr();
+  }
+  if (failure is ParsingFailure) {
+    return 'Failed to parse TMDB response.';
+  }
+  return LocaleKeys.unexpectedError.tr();
+}

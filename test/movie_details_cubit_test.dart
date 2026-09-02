@@ -1,18 +1,16 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:movie_app/core/errors/failure.dart';
-import 'package:movie_app/features/home/domain/entities/cast_member.dart';
-import 'package:movie_app/features/home/domain/entities/crew_member.dart';
-import 'package:movie_app/features/home/domain/entities/genre.dart';
-import 'package:movie_app/features/home/domain/entities/movie.dart';
-import 'package:movie_app/features/home/domain/entities/movie_credits.dart';
-import 'package:movie_app/features/home/domain/entities/movie_details.dart';
-import 'package:movie_app/features/home/domain/entities/movie_video.dart';
-import 'package:movie_app/features/home/domain/repositories/home_repository.dart';
-import 'package:movie_app/features/home/presentation/cubit/movie_details_cubit.dart';
-import 'package:movie_app/features/home/presentation/cubit/movie_details_state.dart';
+import 'package:movie_app/features/details/domain/entities/cast_member.dart';
+import 'package:movie_app/features/details/domain/entities/crew_member.dart';
+import 'package:movie_app/features/details/domain/entities/movie_credits.dart';
+import 'package:movie_app/features/details/domain/entities/movie_details.dart';
+import 'package:movie_app/features/details/domain/entities/movie_video.dart';
+import 'package:movie_app/features/details/domain/repositories/details_repository.dart';
+import 'package:movie_app/features/details/presentation/cubit/movie_details_cubit.dart';
+import 'package:movie_app/features/details/presentation/cubit/movie_details_state.dart';
 
-class _FakeDetailsRepository implements HomeRepository {
+class _FakeDetailsRepository implements DetailsRepository {
   MovieDetails? details;
   MovieCredits credits = const MovieCredits(cast: [], crew: []);
   List<MovieVideo> videos = const [];
@@ -39,34 +37,6 @@ class _FakeDetailsRepository implements HomeRepository {
     if (videosFailure != null) return Left(videosFailure!);
     return Right(videos);
   }
-
-  @override
-  Future<AppResult<List<Movie>>> getFeaturedMovies() async =>
-      const Right(<Movie>[]);
-
-  @override
-  Future<AppResult<List<Genre>>> getMovieGenres() async =>
-      const Right(<Genre>[]);
-
-  @override
-  Future<AppResult<List<Movie>>> getPopularMovies(List<Genre> genres) async =>
-      const Right(<Movie>[]);
-
-  @override
-  Future<AppResult<List<Movie>>> getTopRatedMovies(List<Genre> genres) async =>
-      const Right(<Movie>[]);
-
-  @override
-  Future<AppResult<List<Movie>>> getTrendingMovies(List<Genre> genres) async =>
-      const Right(<Movie>[]);
-
-  @override
-  Future<AppResult<List<Movie>>> getMoviesByGenre({
-    required int genreId,
-    required String sortBy,
-    int? minVoteCount,
-    required List<Genre> genres,
-  }) async => const Right(<Movie>[]);
 }
 
 const _details = MovieDetails(

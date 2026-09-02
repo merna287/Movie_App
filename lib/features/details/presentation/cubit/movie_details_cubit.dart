@@ -2,17 +2,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/errors/failure.dart';
 import 'package:movie_app/core/network/api_config.dart';
-import 'package:movie_app/features/home/domain/entities/cast_member.dart';
-import 'package:movie_app/features/home/domain/entities/crew_member.dart';
-import 'package:movie_app/features/home/domain/entities/movie_credits.dart';
-import 'package:movie_app/features/home/domain/entities/movie_details.dart';
-import 'package:movie_app/features/home/domain/entities/movie_video.dart';
-import 'package:movie_app/features/home/domain/repositories/home_repository.dart';
-import 'package:movie_app/features/home/presentation/cubit/home_cubit.dart';
-import 'package:movie_app/features/home/presentation/cubit/movie_details_state.dart';
+import 'package:movie_app/features/details/domain/entities/cast_member.dart';
+import 'package:movie_app/features/details/domain/entities/crew_member.dart';
+import 'package:movie_app/features/details/domain/entities/movie_credits.dart';
+import 'package:movie_app/features/details/domain/entities/movie_details.dart';
+import 'package:movie_app/features/details/domain/entities/movie_video.dart';
+import 'package:movie_app/features/details/domain/repositories/details_repository.dart';
+import 'package:movie_app/features/details/presentation/cubit/movie_details_state.dart';
 
 class MovieDetailsCubit extends Cubit<MovieDetailsState> {
-  final HomeRepository _repository;
+  final DetailsRepository _repository;
 
   MovieDetailsCubit(this._repository) : super(const MovieDetailsInitial());
 
@@ -39,7 +38,7 @@ class MovieDetailsCubit extends Cubit<MovieDetailsState> {
 
     final detailsFailure = results[0].getLeft().toNullable();
     if (detailsFailure != null) {
-      emit(MovieDetailsError(HomeCubit.failureMessage(detailsFailure)));
+      emit(MovieDetailsError(failureMessage(detailsFailure)));
       return;
     }
 

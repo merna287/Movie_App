@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,15 +8,19 @@ import 'package:movie_app/core/dialogs/app_toast.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/service/service_locator.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
-import 'package:movie_app/core/theme/app_typography.dart';
+import 'package:movie_app/features/details/presentation/cubit/movie_details_cubit.dart';
+import 'package:movie_app/features/details/presentation/cubit/movie_details_state.dart';
+import 'package:movie_app/features/details/presentation/widgets/movie_action_buttons.dart';
+import 'package:movie_app/features/details/presentation/widgets/movie_cast_and_crew.dart';
+import 'package:movie_app/features/details/presentation/widgets/movie_details_header.dart';
+import 'package:movie_app/features/details/presentation/widgets/movie_details_metadata.dart';
+import 'package:movie_app/features/details/presentation/widgets/movie_error_view.dart';
+import 'package:movie_app/features/details/presentation/widgets/movie_loading_indicator.dart';
+import 'package:movie_app/features/details/presentation/widgets/movie_poster.dart';
+import 'package:movie_app/features/details/presentation/widgets/movie_poster_backdrop.dart';
+import 'package:movie_app/features/details/presentation/widgets/movie_rating.dart';
+import 'package:movie_app/features/details/presentation/widgets/movie_story_line.dart';
 import 'package:movie_app/features/home/domain/entities/movie.dart';
-import 'package:movie_app/features/home/presentation/cubit/movie_details_cubit.dart';
-import 'package:movie_app/features/home/presentation/cubit/movie_details_state.dart';
-import 'package:movie_app/features/home/presentation/widgets/movie_action_buttons.dart';
-import 'package:movie_app/features/home/presentation/widgets/movie_cast_and_crew.dart';
-import 'package:movie_app/features/home/presentation/widgets/movie_details_header.dart';
-import 'package:movie_app/features/home/presentation/widgets/movie_details_metadata.dart';
-import 'package:movie_app/features/home/presentation/widgets/movie_story_line.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
   final Movie movie;
@@ -36,9 +38,13 @@ class MovieDetailsScreen extends StatelessWidget {
       backgroundColor: AppColors.backgroundColor,
       body: Stack(
         children: [
-          Positioned.fill(
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            height: MediaQuery.sizeOf(context).height * 0.60,
             child: IgnorePointer(
-              child: _MoviePosterBackdrop(imageUrl: movie.imageUrl),
+              child: MoviePosterBackdrop(imageUrl: movie.imageUrl),
             ),
           ),
           SafeArea(
@@ -79,7 +85,7 @@ class _MovieDetailsViewState extends State<_MovieDetailsView> {
     return BlocConsumer<MovieDetailsCubit, MovieDetailsState>(
       listener: (context, state) {
         if (state is MovieDetailsError) {
-          AppToast.showToast(context, state.message, type: ToastType.error);
+          _showErrorToast(context, state.message);
         }
       },
       builder: (context, state) => _buildBody(context, state),
@@ -113,7 +119,7 @@ class _MovieDetailsViewState extends State<_MovieDetailsView> {
             ),
           ),
           SizedBox(height: 16.h),
-          Center(child: _buildPoster(movie.imageUrl)),
+          Center(child: MoviePoster(imageUrl: movie.imageUrl)),
           SizedBox(height: 22.h),
           MovieDetailsMetadata(
             year: year.isEmpty ? null : year,
@@ -121,11 +127,15 @@ class _MovieDetailsViewState extends State<_MovieDetailsView> {
             genre: genre.isEmpty ? null : genre,
           ),
           SizedBox(height: 10.h),
-          _buildRating(movie.rating),
+          MovieRating(rating: movie.rating),
           SizedBox(height: 16.h),
           switch (state) {
-            MovieDetailsInitial() || MovieDetailsLoading() => _buildLoading(),
-            MovieDetailsError(:final message) => _buildError(context, message),
+            MovieDetailsInitial() ||
+            MovieDetailsLoading() => const MovieLoadingIndicator(),
+            MovieDetailsError(:final message) => MovieErrorView(
+              message: message,
+              onRetry: () => _retry(context),
+            ),
             MovieDetailsLoaded() => const SizedBox.shrink(),
           },
           SizedBox(height: 6.h),
@@ -153,61 +163,6 @@ class _MovieDetailsViewState extends State<_MovieDetailsView> {
     );
   }
 
-  Widget _buildLoading() {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 8.h),
-      child: Center(
-        child: SizedBox(
-          width: 20.w,
-          height: 20.w,
-          child: const CircularProgressIndicator(
-            strokeWidth: 2,
-            color: AppColors.primaryColor,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildError(BuildContext context, String message) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 4.h),
-      child: Center(
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Flexible(
-              child: Text(
-                message,
-                style: AppTypography.withColor(
-                  AppTypography.montserrat12W500,
-                  AppColors.grayColor,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            SizedBox(width: 8.w),
-            TextButton(
-              onPressed: () => _retry(context),
-              child: Text(
-                LocaleKeys.retry.tr(),
-                style: AppTypography.withColor(
-                  AppTypography.montserrat12W500.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                  AppColors.primaryColor,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   void _retry(BuildContext context) {
     context.read<MovieDetailsCubit>().load(movieId: widget.movie.id);
   }
@@ -217,25 +172,32 @@ class _MovieDetailsViewState extends State<_MovieDetailsView> {
     final trailer = state is MovieDetailsLoaded ? state.trailer : null;
 
     if (trailer == null) {
-      AppToast.showToast(
-        context,
-        LocaleKeys.noTrailerAvailable.tr(),
-        type: ToastType.error,
-      );
+      _showErrorToast(context, LocaleKeys.noTrailerAvailable.tr());
       return;
     }
 
-    final launched = await launchUrl(
-      Uri.parse(trailer.watchUrl),
-      mode: LaunchMode.externalApplication,
-    );
+    final uri = Uri.tryParse(trailer.watchUrl);
+    final isValidUrl =
+        uri != null &&
+        uri.hasAuthority &&
+        (uri.scheme == 'https' || uri.scheme == 'http');
+    if (!isValidUrl) {
+      _showErrorToast(context, LocaleKeys.unexpectedError.tr());
+      return;
+    }
 
-    if (!launched && context.mounted) {
-      AppToast.showToast(
-        context,
-        LocaleKeys.unexpectedError.tr(),
-        type: ToastType.error,
+    try {
+      final launched = await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
       );
+      if (!launched && context.mounted) {
+        _showErrorToast(context, LocaleKeys.unexpectedError.tr());
+      }
+    } catch (_) {
+      if (context.mounted) {
+        _showErrorToast(context, LocaleKeys.unexpectedError.tr());
+      }
     }
   }
 
@@ -251,94 +213,12 @@ class _MovieDetailsViewState extends State<_MovieDetailsView> {
       );
     } catch (_) {
       if (context.mounted) {
-        AppToast.showToast(
-          context,
-          LocaleKeys.unexpectedError.tr(),
-          type: ToastType.error,
-        );
+        _showErrorToast(context, LocaleKeys.unexpectedError.tr());
       }
     }
   }
 
-  Widget _buildPoster(String imageUrl) {
-    return SizedBox(
-      width: 200.w,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20.r),
-        child: AspectRatio(
-          aspectRatio: 2 / 3,
-          child: Image.network(
-            imageUrl,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              return Container(
-                color: AppColors.headerButtonColor,
-                child: Icon(
-                  Icons.movie,
-                  size: 56.w,
-                  color: AppColors.tertiaryTextColor,
-                ),
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRating(double rating) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Icon(Icons.star, size: 18, color: AppColors.ratingStarColor),
-        SizedBox(width: 6.w),
-        Text(
-          rating.toString(),
-          style: AppTypography.withColor(
-            AppTypography.montserrat14W600,
-            AppColors.primaryTextColor,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _MoviePosterBackdrop extends StatelessWidget {
-  final String imageUrl;
-
-  const _MoviePosterBackdrop({required this.imageUrl});
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRect(
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              AppColors.backgroundColor.withValues(alpha: 0.08),
-              AppColors.backgroundColor.withValues(alpha: 0.22),
-              AppColors.backgroundColor.withValues(alpha: 0.48),
-              AppColors.backgroundColor.withValues(alpha: 0.88),
-              AppColors.backgroundColor,
-            ],
-            stops: const [0.0, 0.42, 0.52, 0.62, 1.0],
-          ),
-        ),
-        child: ImageFiltered(
-          imageFilter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-          child: Image.network(
-            imageUrl,
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,
-            errorBuilder: (context, error, stackTrace) =>
-                const SizedBox.shrink(),
-          ),
-        ),
-      ),
-    );
+  void _showErrorToast(BuildContext context, String message) {
+    AppToast.showToast(context, message, type: ToastType.error);
   }
 }

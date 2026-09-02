@@ -1,5 +1,5 @@
 import 'package:movie_app/core/network/api_endpoints.dart';
-import 'package:movie_app/features/home/domain/entities/movie_details.dart';
+import 'package:movie_app/features/details/domain/entities/movie_details.dart';
 
 class MovieDetailsModel {
   final int id;
