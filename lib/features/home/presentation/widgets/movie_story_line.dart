@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
@@ -15,7 +16,7 @@ class MovieStoryLine extends StatefulWidget {
 }
 
 class _MovieStoryLineState extends State<MovieStoryLine> {
-  static const int _maxCollapsedLines = 5;
+  static const int _maxCollapsedLines = 6;
   static const int _longTextThreshold = 140;
 
   bool _expanded = false;
@@ -24,6 +25,18 @@ class _MovieStoryLineState extends State<MovieStoryLine> {
 
   @override
   Widget build(BuildContext context) {
+    final proseStyle = AppTypography.withColor(
+      AppTypography.montserrat13W500.copyWith(height: 1.55),
+      AppColors.secondaryTextColor,
+    );
+    final linkStyle = AppTypography.withColor(
+      AppTypography.montserrat13W500.copyWith(
+        height: 1.55,
+        fontWeight: FontWeight.w600,
+      ),
+      AppColors.primaryColor,
+    );
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -35,31 +48,24 @@ class _MovieStoryLineState extends State<MovieStoryLine> {
           ),
         ),
         SizedBox(height: 10.h),
-        Text(
-          widget.overview,
-          style: AppTypography.withColor(
-            AppTypography.montserrat13W500.copyWith(height: 1.55),
-            AppColors.secondaryTextColor,
+        Text.rich(
+          TextSpan(
+            style: proseStyle,
+            children: [
+              TextSpan(text: widget.overview),
+              if (_isLong)
+                TextSpan(
+                  text:
+                      '  ${_expanded ? LocaleKeys.showLess.tr() : LocaleKeys.readMore.tr()}',
+                  style: linkStyle,
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => setState(() => _expanded = !_expanded),
+                ),
+            ],
           ),
           maxLines: _expanded ? null : _maxCollapsedLines,
           overflow: _expanded ? null : TextOverflow.clip,
         ),
-        if (_isLong)
-          GestureDetector(
-            onTap: () => setState(() => _expanded = !_expanded),
-            child: Padding(
-              padding: EdgeInsets.only(top: 6.h),
-              child: Text(
-                _expanded ? LocaleKeys.showLess.tr() : LocaleKeys.readMore.tr(),
-                style: AppTypography.withColor(
-                  AppTypography.montserrat13W500.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                  AppColors.primaryColor,
-                ),
-              ),
-            ),
-          ),
       ],
     );
   }

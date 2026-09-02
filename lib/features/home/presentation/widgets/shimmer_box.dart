@@ -7,12 +7,7 @@ class ShimmerBox extends StatelessWidget {
   final double? height;
   final double radius;
 
-  const ShimmerBox({
-    super.key,
-    this.width,
-    this.height,
-    this.radius = 8,
-  });
+  const ShimmerBox({super.key, this.width, this.height, this.radius = 8});
 
   @override
   Widget build(BuildContext context) {

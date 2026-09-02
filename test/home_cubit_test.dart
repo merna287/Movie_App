@@ -5,6 +5,9 @@ import 'package:fpdart/fpdart.dart';
 import 'package:movie_app/core/errors/failure.dart';
 import 'package:movie_app/features/home/domain/entities/genre.dart';
 import 'package:movie_app/features/home/domain/entities/movie.dart';
+import 'package:movie_app/features/home/domain/entities/movie_credits.dart';
+import 'package:movie_app/features/home/domain/entities/movie_details.dart';
+import 'package:movie_app/features/home/domain/entities/movie_video.dart';
 import 'package:movie_app/features/home/domain/repositories/home_repository.dart';
 import 'package:movie_app/features/home/presentation/cubit/home_cubit.dart';
 import 'package:movie_app/features/home/presentation/cubit/home_state.dart';
@@ -62,6 +65,28 @@ class _FakeHomeRepository implements HomeRepository {
         return Right(data['topRated'] ?? const []);
     }
   }
+
+  @override
+  Future<AppResult<MovieDetails>> getMovieDetails(int movieId) async => Right(
+    MovieDetails(
+      id: movieId,
+      title: 'Movie $movieId',
+      overview: '',
+      imageUrl: '',
+      rating: 1,
+      releaseYear: '2020',
+      genre: 'Action',
+      runtimeMinutes: 120,
+    ),
+  );
+
+  @override
+  Future<AppResult<MovieCredits>> getMovieCredits(int movieId) async =>
+      const Right(MovieCredits(cast: [], crew: []));
+
+  @override
+  Future<AppResult<List<MovieVideo>>> getMovieVideos(int movieId) async =>
+      const Right(<MovieVideo>[]);
 }
 
 const _genres = [Genre(id: 28, name: 'Action'), Genre(id: 35, name: 'Comedy')];

@@ -4,6 +4,7 @@ import 'package:movie_app/features/home/data/api/home_api.dart';
 import 'package:movie_app/features/home/data/repositories/home_repository_impl.dart';
 import 'package:movie_app/features/home/domain/repositories/home_repository.dart';
 import 'package:movie_app/features/home/presentation/cubit/home_cubit.dart';
+import 'package:movie_app/features/home/presentation/cubit/movie_details_cubit.dart';
 import 'package:movie_app/features/auth/get_started/data/data_sources/google_auth_datasource.dart';
 import 'package:movie_app/features/auth/get_started/data/repositories/auth_repository_impl.dart';
 import 'package:movie_app/features/auth/get_started/domain/repositories/auth_repository.dart';
@@ -78,4 +79,7 @@ void setupServiceLocator() {
     () => HomeRepositoryImpl(getIt<HomeApi>()),
   );
   getIt.registerFactory<HomeCubit>(() => HomeCubit(getIt<HomeRepository>()));
+  getIt.registerFactory<MovieDetailsCubit>(
+    () => MovieDetailsCubit(getIt<HomeRepository>()),
+  );
 }

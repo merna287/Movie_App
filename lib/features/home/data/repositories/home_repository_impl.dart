@@ -4,6 +4,9 @@ import 'package:movie_app/features/home/data/api/home_api.dart';
 import 'package:movie_app/features/home/data/models/movie_model.dart';
 import 'package:movie_app/features/home/domain/entities/genre.dart';
 import 'package:movie_app/features/home/domain/entities/movie.dart';
+import 'package:movie_app/features/home/domain/entities/movie_credits.dart';
+import 'package:movie_app/features/home/domain/entities/movie_details.dart';
+import 'package:movie_app/features/home/domain/entities/movie_video.dart';
 import 'package:movie_app/features/home/domain/repositories/home_repository.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
@@ -87,5 +90,35 @@ class HomeRepositoryImpl implements HomeRepository {
       }
     }
     return '';
+  }
+
+  @override
+  Future<AppResult<MovieDetails>> getMovieDetails(int movieId) async {
+    final result = await _api.fetchMovieDetails(movieId);
+
+    return result.fold(
+      (failure) => Left(failure),
+      (model) => Right(model.toEntity()),
+    );
+  }
+
+  @override
+  Future<AppResult<MovieCredits>> getMovieCredits(int movieId) async {
+    final result = await _api.fetchMovieCredits(movieId);
+
+    return result.fold(
+      (failure) => Left(failure),
+      (model) => Right(model.toEntity()),
+    );
+  }
+
+  @override
+  Future<AppResult<List<MovieVideo>>> getMovieVideos(int movieId) async {
+    final result = await _api.fetchMovieVideos(movieId);
+
+    return result.fold(
+      (failure) => Left(failure),
+      (models) => Right(models.map((model) => model.toEntity()).toList()),
+    );
   }
 }

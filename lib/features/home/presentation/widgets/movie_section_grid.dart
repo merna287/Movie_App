@@ -20,8 +20,10 @@ class MovieSectionGrid extends StatelessWidget {
     final filtered = trimmedQuery.isEmpty
         ? movies
         : movies
-            .where((movie) => movie.title.toLowerCase().contains(trimmedQuery))
-            .toList();
+              .where(
+                (movie) => movie.title.toLowerCase().contains(trimmedQuery),
+              )
+              .toList();
 
     if (filtered.isEmpty) {
       return MovieSectionEmpty(hasQuery: trimmedQuery.isNotEmpty);

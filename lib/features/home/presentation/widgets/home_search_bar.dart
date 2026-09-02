@@ -11,11 +11,7 @@ class HomeSearchBar extends StatelessWidget {
   final TextEditingController? controller;
   final ValueChanged<String>? onChanged;
 
-  const HomeSearchBar({
-    super.key,
-    this.controller,
-    this.onChanged,
-  });
+  const HomeSearchBar({super.key, this.controller, this.onChanged});
 
   @override
   Widget build(BuildContext context) {

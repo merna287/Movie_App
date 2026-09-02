@@ -150,5 +150,11 @@ abstract class  LocaleKeys {
   static const share = 'share';
   static const minutes = 'minutes';
   static const castAndCrewComingSoon = 'castAndCrewComingSoon';
+  static const noTrailerAvailable = 'noTrailerAvailable';
+  static const checkOutMovie = 'checkOutMovie';
+  static const director = 'director';
+  static const writer = 'writer';
+  static const screenplay = 'screenplay';
+  static const producer = 'producer';
 
 }

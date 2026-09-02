@@ -53,7 +53,8 @@ final class HomeSuccess extends HomeState {
       topRatedMovies: topRatedMovies,
       trendingMovies: trendingMovies,
       selectedGenreId: clearSelectedGenreId ? null : selectedGenreId,
-      filteredPopularMovies: filteredPopularMovies ?? this.filteredPopularMovies,
+      filteredPopularMovies:
+          filteredPopularMovies ?? this.filteredPopularMovies,
       filteredTopRatedMovies:
           filteredTopRatedMovies ?? this.filteredTopRatedMovies,
       filteredTrendingMovies:
@@ -62,17 +63,14 @@ final class HomeSuccess extends HomeState {
     );
   }
 
-  List<Movie> get visiblePopularMovies => selectedGenreId == null
-      ? popularMovies
-      : filteredPopularMovies;
+  List<Movie> get visiblePopularMovies =>
+      selectedGenreId == null ? popularMovies : filteredPopularMovies;
 
-  List<Movie> get visibleTopRatedMovies => selectedGenreId == null
-      ? topRatedMovies
-      : filteredTopRatedMovies;
+  List<Movie> get visibleTopRatedMovies =>
+      selectedGenreId == null ? topRatedMovies : filteredTopRatedMovies;
 
-  List<Movie> get visibleTrendingMovies => selectedGenreId == null
-      ? trendingMovies
-      : filteredTrendingMovies;
+  List<Movie> get visibleTrendingMovies =>
+      selectedGenreId == null ? trendingMovies : filteredTrendingMovies;
 }
 
 final class HomeError extends HomeState {

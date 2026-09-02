@@ -17,6 +17,8 @@ class ApiEndpoints {
 
   static String movieImages(int movieId) => '$baseUrl/movie/$movieId/images';
 
+  static String movieVideos(int movieId) => '$baseUrl/movie/$movieId/videos';
+
   static const String imageBaseUrl = 'https://image.tmdb.org/t/p';
 
   static String imageUrl(String path, {String size = 'w500'}) =>

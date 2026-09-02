@@ -145,5 +145,11 @@
   "play": "Play",
   "share": "Share",
   "minutes": "{count} Minutes",
-  "castAndCrewComingSoon": "Cast and crew coming soon"
+  "castAndCrewComingSoon": "Cast and crew coming soon",
+  "noTrailerAvailable": "No trailer available for this movie",
+  "checkOutMovie": "Check out {title} on CINEMAX",
+  "director": "Director",
+  "writer": "Writer",
+  "screenplay": "Screenplay",
+  "producer": "Producer"
 }
