@@ -13,8 +13,8 @@ import 'package:movie_app/features/details/presentation/widgets/movie_action_but
 import 'package:movie_app/features/details/presentation/widgets/movie_cast_and_crew.dart';
 import 'package:movie_app/features/details/presentation/widgets/movie_details_header.dart';
 import 'package:movie_app/features/details/presentation/widgets/movie_details_metadata.dart';
+import 'package:movie_app/features/details/presentation/widgets/movie_details_shimmer.dart';
 import 'package:movie_app/features/details/presentation/widgets/movie_error_view.dart';
-import 'package:movie_app/features/details/presentation/widgets/movie_loading_indicator.dart';
 import 'package:movie_app/features/details/presentation/widgets/movie_poster.dart';
 import 'package:movie_app/features/details/presentation/widgets/movie_poster_backdrop.dart';
 import 'package:movie_app/features/details/presentation/widgets/movie_rating.dart';
@@ -93,6 +93,10 @@ class _MovieDetailsViewState extends State<_MovieDetailsView> {
   }
 
   Widget _buildBody(BuildContext context, MovieDetailsState state) {
+    if (state is MovieDetailsInitial || state is MovieDetailsLoading) {
+      return const MovieDetailsShimmer();
+    }
+
     final movie = widget.movie;
     final details = state is MovieDetailsLoaded ? state.details : null;
 
@@ -131,7 +135,7 @@ class _MovieDetailsViewState extends State<_MovieDetailsView> {
           SizedBox(height: 16.h),
           switch (state) {
             MovieDetailsInitial() ||
-            MovieDetailsLoading() => const MovieLoadingIndicator(),
+            MovieDetailsLoading() => const SizedBox.shrink(),
             MovieDetailsError(:final message) => MovieErrorView(
               message: message,
               onRetry: () => _retry(context),
