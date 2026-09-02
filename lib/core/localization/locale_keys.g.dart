@@ -148,6 +148,7 @@ abstract class  LocaleKeys {
   static const showLess = 'showLess';
   static const play = 'play';
   static const share = 'share';
+  static const shareTo = 'shareTo';
   static const minutes = 'minutes';
   static const castAndCrewComingSoon = 'castAndCrewComingSoon';
   static const noTrailerAvailable = 'noTrailerAvailable';

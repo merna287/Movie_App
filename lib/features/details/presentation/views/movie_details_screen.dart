@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:movie_app/core/dialogs/app_toast.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
@@ -20,6 +19,7 @@ import 'package:movie_app/features/details/presentation/widgets/movie_poster.dar
 import 'package:movie_app/features/details/presentation/widgets/movie_poster_backdrop.dart';
 import 'package:movie_app/features/details/presentation/widgets/movie_rating.dart';
 import 'package:movie_app/features/details/presentation/widgets/movie_story_line.dart';
+import 'package:movie_app/features/details/presentation/share/share_modal.dart';
 import 'package:movie_app/features/home/domain/entities/movie.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
@@ -202,20 +202,10 @@ class _MovieDetailsViewState extends State<_MovieDetailsView> {
   }
 
   Future<void> _handleShare(BuildContext context) async {
-    final state = context.read<MovieDetailsCubit>().state;
-    final title = state is MovieDetailsLoaded
-        ? state.details.title
-        : widget.movie.title;
-
-    try {
-      await Share.share(
-        LocaleKeys.checkOutMovie.tr(namedArgs: {'title': title}),
-      );
-    } catch (_) {
-      if (context.mounted) {
-        _showErrorToast(context, LocaleKeys.unexpectedError.tr());
-      }
-    }
+    ShareModal.show(
+      context,
+      shareUrl: 'https://www.themoviedb.org/movie/${widget.movie.id}',
+    );
   }
 
   void _showErrorToast(BuildContext context, String message) {
