@@ -37,7 +37,7 @@ class MovieDetailsShimmer extends StatelessWidget {
             Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.r),
-                child: _box(width: 200.w, height: 300.w),
+                child: _box(width: 200.w, height: 300.w, radius: 20.r),
               ),
             ),
             SizedBox(height: 22.h),
@@ -53,7 +53,7 @@ class MovieDetailsShimmer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                _box(width: 88.w, height: 44.h, radius: 22.r),
+                _box(width: 116.w, height: 44.h, radius: 22.r),
                 SizedBox(width: 20.w),
                 _box(width: 48.w, height: 48.w, radius: 24.r),
                 SizedBox(width: 12.w),
