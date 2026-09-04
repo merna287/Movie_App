@@ -5,6 +5,7 @@ import 'package:movie_app/core/common/widgets/custom_bottom_nav_ba.dart';
 import 'package:movie_app/core/constants/app_assets.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
+import 'package:movie_app/features/favorite/presentation/views/favorite_screen.dart';
 import 'package:movie_app/features/home/presentation/views/home_screen.dart';
 
 class MainLayout extends StatefulWidget {
@@ -20,7 +21,7 @@ class _MainLayoutState extends State<MainLayout> {
   final List<Widget> _screens = const [
     HomeScreen(),
     SizedBox.shrink(),
-    SizedBox.shrink(),
+    FavoriteScreen(),
     SizedBox.shrink(),
     /*BlocProvider(
     create: (context) => getIt<SearchCubit>(),
