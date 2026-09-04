@@ -57,7 +57,7 @@ class AppTextFormField extends StatelessWidget {
         errorMaxLines: 5,
         labelStyle: AppTypography.withColor(
           AppTypography.montserrat14W500,
-          AppColors.secondaryTextColor,
+          AppColors.whiteGreyColor,
         ),
         hintStyle: AppTypography.withColor(
           AppTypography.montserrat14W500,

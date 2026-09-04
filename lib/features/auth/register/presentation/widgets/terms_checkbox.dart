@@ -50,7 +50,7 @@ class TermsCheckbox extends StatelessWidget {
                   text: LocaleKeys.agreeToThe.tr(),
                   style: AppTypography.withColor(
                     AppTypography.montserrat13W500,
-                    AppColors.secondaryTextColor,
+                    AppColors.whiteGreyColor,
                   ),
                   children: [
                     TextSpan(
@@ -64,7 +64,7 @@ class TermsCheckbox extends StatelessWidget {
                       text: LocaleKeys.and.tr(),
                       style: AppTypography.withColor(
                         AppTypography.montserrat13W500,
-                        AppColors.secondaryTextColor,
+                        AppColors.whiteGreyColor,
                       ),
                     ),
                     TextSpan(

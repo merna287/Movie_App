@@ -27,7 +27,7 @@ class _MovieStoryLineState extends State<MovieStoryLine> {
   Widget build(BuildContext context) {
     final proseStyle = AppTypography.withColor(
       AppTypography.montserrat13W500.copyWith(height: 1.55),
-      AppColors.secondaryTextColor,
+      AppColors.whiteGreyColor,
     );
     final linkStyle = AppTypography.withColor(
       AppTypography.montserrat13W500.copyWith(

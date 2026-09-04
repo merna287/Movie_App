@@ -30,7 +30,7 @@ class AppTheme {
       ),
       labelStyle: AppTypography.withColor(
         AppTypography.montserrat14W500,
-        AppColors.secondaryTextColor,
+        AppColors.whiteGreyColor,
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
@@ -90,11 +90,11 @@ class AppTheme {
     ),
     bodyLarge: AppTypography.withColor(
       AppTypography.montserrat16W500,
-      AppColors.secondaryTextColor,
+      AppColors.whiteGreyColor,
     ),
     bodyMedium: AppTypography.withColor(
       AppTypography.montserrat14W500,
-      AppColors.secondaryTextColor,
+      AppColors.whiteGreyColor,
     ),
     labelLarge: AppTypography.withColor(
       AppTypography.montserrat14W600,

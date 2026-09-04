@@ -99,7 +99,7 @@ class MovieCastAndCrew extends StatelessWidget {
                       member.character,
                       style: AppTypography.withColor(
                         AppTypography.montserrat12W500.copyWith(fontSize: 10),
-                        AppColors.secondaryTextColor,
+                        AppColors.whiteGreyColor,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
