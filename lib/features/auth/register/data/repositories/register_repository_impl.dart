@@ -10,10 +10,12 @@ class RegisterRepositoryImpl implements RegisterRepository {
 
   @override
   Future<AppResult<User?>> signUp({
+    required String name,
     required String email,
     required String password,
   }) {
     return _dataSource.signUpWithEmailAndPassword(
+      name: name,
       email: email,
       password: password,
     );

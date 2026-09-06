@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:movie_app/core/errors/failure.dart';
 import 'package:movie_app/core/errors/safe_api_call.dart';
 
 class LoginDataSource {
   final FirebaseAuth _firebaseAuth;
 
-  LoginDataSource({
-    FirebaseAuth? firebaseAuth,
-  }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
+  LoginDataSource({FirebaseAuth? firebaseAuth})
+    : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
 
   Future<AppResult<User?>> signInWithEmailAndPassword({
     required String email,
@@ -17,6 +17,12 @@ class LoginDataSource {
       final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
         email: email.trim(),
         password: password,
+      );
+
+      debugPrint(
+        '[AUTH-TRACE] login -> uid=${userCredential.user?.uid} '
+        'email=${userCredential.user?.email} '
+        'displayName=${userCredential.user?.displayName}',
       );
 
       return userCredential.user;

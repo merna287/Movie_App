@@ -83,6 +83,7 @@
   "expiredActionCode": "The password reset link has expired. Please request a new one.",
   "tooManyRequests": "Too many attempts. Please try again later.",
   "authenticationFailedTryAgain": "Authentication failed. Please try again.",
+  "profileNameSaveFailed": "Account created, but your name could not be saved. Please sign in and try again.",
   "helloName": "Hello, {name}",
   "letsStreamYourFavoriteMovie": "Let's stream your favorite movie",
   "searchHint": "Search a title...",

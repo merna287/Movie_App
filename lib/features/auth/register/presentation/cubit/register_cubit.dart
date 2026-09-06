@@ -11,12 +11,14 @@ class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit(this._registerRepository) : super(const RegisterInitial());
 
   Future<void> signUp({
+    required String name,
     required String email,
     required String password,
   }) async {
     emit(const RegisterLoading());
 
     final result = await _registerRepository.signUp(
+      name: name,
       email: email,
       password: password,
     );

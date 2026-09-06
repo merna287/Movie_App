@@ -34,7 +34,7 @@ class MovieActionButtons extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 28.w, vertical: 11.h),
             decoration: BoxDecoration(
-              color: AppColors.ratingStarColor,
+              color: AppColors.primaryColor,
               borderRadius: BorderRadius.circular(28.r),
             ),
             child: Row(
