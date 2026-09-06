@@ -12,6 +12,7 @@ class MovieActionButtons extends StatelessWidget {
   final VoidCallback onFavoriteToggle;
   final VoidCallback? onPlay;
   final VoidCallback? onShare;
+  final bool favoriteBusy;
 
   const MovieActionButtons({
     super.key,
@@ -19,6 +20,7 @@ class MovieActionButtons extends StatelessWidget {
     required this.onFavoriteToggle,
     this.onPlay,
     this.onShare,
+    this.favoriteBusy = false,
   });
 
   @override
@@ -57,11 +59,14 @@ class MovieActionButtons extends StatelessWidget {
         ),
         SizedBox(width: 20.w),
         _CircleActionButton(
-          onTap: onFavoriteToggle,
+          onTap:
+              favoriteBusy ? null : onFavoriteToggle,
           child: Icon(
             isFavorite ? Icons.favorite : Icons.favorite_border,
             size: 20,
-            color: AppColors.errorColor,
+            color: favoriteBusy
+                ? AppColors.grayColor
+                : AppColors.errorColor,
           ),
         ),
         SizedBox(width: 12.w),

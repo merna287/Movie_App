@@ -20,6 +20,14 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   }
 
   @override
+  Future<AppResult<bool>> addFavorite({
+    required String accountId,
+    required int movieId,
+  }) async {
+    return _api.addFavoriteMovie(accountId: accountId, movieId: movieId);
+  }
+
+  @override
   Future<AppResult<bool>> removeFavorite({
     required String accountId,
     required int movieId,

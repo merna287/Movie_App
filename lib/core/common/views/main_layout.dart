@@ -5,6 +5,8 @@ import 'package:movie_app/core/common/widgets/custom_bottom_nav_ba.dart';
 import 'package:movie_app/core/constants/app_assets.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
+import 'package:movie_app/core/service/service_locator.dart';
+import 'package:movie_app/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:movie_app/features/favorite/presentation/views/favorite_screen.dart';
 import 'package:movie_app/features/home/presentation/views/home_screen.dart';
 
@@ -36,6 +38,12 @@ class _MainLayoutState extends State<MainLayout> {
     (icon: AppAssets.heartIcon, labelKey: LocaleKeys.favorite),
     (icon: AppAssets.personIcon, labelKey: LocaleKeys.profile),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    getIt<FavoriteCubit>().load();
+  }
 
   @override
   Widget build(BuildContext context) {

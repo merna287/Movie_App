@@ -4,6 +4,11 @@ import 'package:movie_app/features/home/domain/entities/movie.dart';
 abstract class FavoriteRepository {
   Future<AppResult<List<Movie>>> getFavoriteMovies(String accountId);
 
+  Future<AppResult<bool>> addFavorite({
+    required String accountId,
+    required int movieId,
+  });
+
   Future<AppResult<bool>> removeFavorite({
     required String accountId,
     required int movieId,

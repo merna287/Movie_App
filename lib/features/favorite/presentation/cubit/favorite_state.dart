@@ -30,6 +30,18 @@ final class FavoriteRemoving extends FavoriteState {
   const FavoriteRemoving({required this.movies});
 }
 
+final class FavoriteToggling extends FavoriteState {
+  @override
+  final List<Movie> movies;
+
+  final int pendingMovieId;
+
+  const FavoriteToggling({
+    required this.movies,
+    required this.pendingMovieId,
+  });
+}
+
 final class FavoriteError extends FavoriteState {
   final String message;
 

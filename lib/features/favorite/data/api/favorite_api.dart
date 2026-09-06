@@ -53,9 +53,32 @@ class FavoriteApi {
     });
   }
 
+  Future<AppResult<bool>> addFavoriteMovie({
+    required String accountId,
+    required int movieId,
+  }) {
+    return _setFavorite(
+      accountId: accountId,
+      movieId: movieId,
+      favorite: true,
+    );
+  }
+
   Future<AppResult<bool>> removeFavoriteMovie({
     required String accountId,
     required int movieId,
+  }) {
+    return _setFavorite(
+      accountId: accountId,
+      movieId: movieId,
+      favorite: false,
+    );
+  }
+
+  Future<AppResult<bool>> _setFavorite({
+    required String accountId,
+    required int movieId,
+    required bool favorite,
   }) {
     return safeApiCall(() async {
       const token = ApiConfig.readAccessToken;
@@ -72,7 +95,7 @@ class FavoriteApi {
         body: jsonEncode({
           'media_type': 'movie',
           'media_id': movieId,
-          'favorite': false,
+          'favorite': favorite,
         }),
       );
 
@@ -83,7 +106,10 @@ class FavoriteApi {
         );
       }
 
-      debugPrint('TMDB favorites: movie $movieId removed');
+      debugPrint(
+        'TMDB favorites: movie $movieId '
+        '${favorite ? 'added to' : 'removed from'} favorites',
+      );
       return true;
     });
   }

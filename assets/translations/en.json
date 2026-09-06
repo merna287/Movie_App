@@ -157,6 +157,7 @@
   "favoriteEmptySubtitle": "Find your movie by Type, title,\ncategories, years, etc",
   "removeFromFavoritesTitle": "Remove from Favorites?",
   "removeFromFavoritesMessage": "Are you sure you want to remove this movie from your favorites?",
+  "signInRequired": "Please sign in to manage your favorites.",
   "yes": "Yes",
   "no": "No",
   "movie": "Movie"

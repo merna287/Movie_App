@@ -161,6 +161,7 @@ abstract class  LocaleKeys {
   static const favoriteEmptySubtitle = 'favoriteEmptySubtitle';
   static const removeFromFavoritesTitle = 'removeFromFavoritesTitle';
   static const removeFromFavoritesMessage = 'removeFromFavoritesMessage';
+  static const signInRequired = 'signInRequired';
   static const yes = 'yes';
   static const no = 'no';
   static const movie = 'movie';

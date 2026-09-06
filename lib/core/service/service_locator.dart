@@ -97,7 +97,7 @@ void setupServiceLocator() {
   getIt.registerLazySingleton<FavoriteRepository>(
     () => FavoriteRepositoryImpl(getIt<FavoriteApi>()),
   );
-  getIt.registerFactory<FavoriteCubit>(
+  getIt.registerLazySingleton<FavoriteCubit>(
     () => FavoriteCubit(getIt<FavoriteRepository>()),
   );
 }

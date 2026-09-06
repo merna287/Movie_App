@@ -16,13 +16,27 @@ import 'package:movie_app/features/favorite/presentation/widgets/favorite_loadin
 import 'package:movie_app/features/favorite/presentation/widgets/favorite_movie_card.dart';
 import 'package:movie_app/features/home/domain/entities/movie.dart';
 
-class FavoriteScreen extends StatelessWidget {
+class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({super.key});
 
   @override
+  State<FavoriteScreen> createState() => _FavoriteScreenState();
+}
+
+class _FavoriteScreenState extends State<FavoriteScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final state = getIt<FavoriteCubit>().state;
+    if (state is FavoriteInitial || state is FavoriteError) {
+      getIt<FavoriteCubit>().load();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider<FavoriteCubit>(
-      create: (_) => getIt<FavoriteCubit>()..load(),
+    return BlocProvider.value(
+      value: getIt<FavoriteCubit>(),
       child: const _FavoriteView(),
     );
   }
@@ -63,6 +77,7 @@ class _FavoriteView extends StatelessWidget {
                     const FavoriteLoadingShimmer(),
                   FavoriteError(:final message) =>
                     _ErrorView(message: message),
+                  FavoriteToggling(:final movies) ||
                   FavoriteRemoving(:final movies) =>
                     _LoadedList(movies: movies, removing: true),
                   FavoriteLoaded(:final movies) when movies.isEmpty =>
