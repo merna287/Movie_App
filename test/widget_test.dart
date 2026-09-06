@@ -15,7 +15,7 @@ void main() {
         supportedLocales: const [Locale('en')],
         path: 'assets/translations',
         fallbackLocale: const Locale('en'),
-        child: const MyApp(),
+        child: MyApp(startAuthenticated: false),
       ),
     );
     await tester.pump();

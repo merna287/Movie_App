@@ -87,6 +87,7 @@ abstract class  LocaleKeys {
   static const expiredActionCode = 'expiredActionCode';
   static const tooManyRequests = 'tooManyRequests';
   static const authenticationFailedTryAgain = 'authenticationFailedTryAgain';
+  static const profileNameSaveFailed = 'profileNameSaveFailed';
   static const helloName = 'helloName';
   static const letsStreamYourFavoriteMovie = 'letsStreamYourFavoriteMovie';
   static const searchHint = 'searchHint';

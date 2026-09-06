@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:movie_app/core/common/views/main_layout.dart';
 import 'package:movie_app/core/constants/app_assets.dart';
 import 'package:movie_app/features/auth/get_started/presentation/cubit/get_started_cubit.dart';
 import 'package:movie_app/features/auth/get_started/presentation/cubit/get_started_state.dart';
@@ -43,18 +45,15 @@ class _SocialLoginButtonsState extends State<SocialLoginButtons> {
             _loadingProvider = null;
           });
 
-          debugPrint('Social Sign-In successful');
-          debugPrint('Name: ${state.user.displayName}');
-          debugPrint('Email: ${state.user.email}');
-          debugPrint('UID: ${state.user.uid}');
+          Get.offAll(() => const MainLayout());
         } else if (state is GetStartedError) {
           setState(() {
             _loadingProvider = null;
           });
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.message)));
         }
       },
       builder: (context, state) {

@@ -11,9 +11,8 @@ class FacebookAuthDataSource {
 
   final FirebaseAuth _firebaseAuth;
 
-  FacebookAuthDataSource({
-    FirebaseAuth? firebaseAuth,
-  }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
+  FacebookAuthDataSource({FirebaseAuth? firebaseAuth})
+    : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
 
   Future<AppResult<User?>> signInWithFacebook() async {
     try {
@@ -45,8 +44,15 @@ class FacebookAuthDataSource {
 
       final credential = FacebookAuthProvider.credential(accessToken);
 
-      final userCredential =
-          await _firebaseAuth.signInWithCredential(credential);
+      final userCredential = await _firebaseAuth.signInWithCredential(
+        credential,
+      );
+
+      debugPrint(
+        '[AUTH-TRACE] facebook -> uid=${userCredential.user?.uid} '
+        'email=${userCredential.user?.email} '
+        'displayName=${userCredential.user?.displayName}',
+      );
 
       return Right(userCredential.user);
     } on FirebaseAuthException catch (e) {
@@ -62,11 +68,7 @@ class FacebookAuthDataSource {
       debugPrint('Facebook Login Error: $e');
       debugPrintStack(stackTrace: stackTrace);
 
-      return Left(
-        AuthFailure(
-          message: e.toString(),
-        ),
-      );
+      return Left(AuthFailure(message: e.toString()));
     }
   }
 }

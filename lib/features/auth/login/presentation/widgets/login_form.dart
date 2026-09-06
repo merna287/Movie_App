@@ -6,6 +6,7 @@ import 'package:get/get.dart' hide Trans;
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
+import 'package:movie_app/core/common/views/main_layout.dart';
 import 'package:movie_app/core/dialogs/app_toast.dart';
 import 'package:movie_app/core/validators/validator_app.dart';
 import 'package:movie_app/core/common/widgets/app_button.dart';
@@ -50,14 +51,11 @@ class _LoginFormState extends State<LoginForm> {
             LocaleKeys.loginSuccessful.tr(),
             type: ToastType.success,
           );
+          Get.offAll(() => const MainLayout());
         } else if (state is LoginError) {
           setState(() => _isSubmitting = false);
           AppDialogs.hideLoading();
-          AppToast.showToast(
-            context,
-            state.message,
-            type: ToastType.error,
-          );
+          AppToast.showToast(context, state.message, type: ToastType.error);
         }
       },
       builder: (context, state) {
@@ -125,9 +123,9 @@ class _LoginFormState extends State<LoginForm> {
       setState(() => _isSubmitting = true);
 
       context.read<LoginCubit>().signIn(
-            email: _emailController.text,
-            password: _passwordController.text,
-          );
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
     }
   }
 }
