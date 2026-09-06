@@ -1,0 +1,212 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
+import 'package:movie_app/core/errors/app_exception.dart';
+import 'package:movie_app/core/errors/failure.dart';
+import 'package:movie_app/core/errors/safe_api_call.dart';
+import 'package:movie_app/core/network/api_endpoints.dart';
+import 'package:movie_app/core/network/api_config.dart';
+import 'package:movie_app/features/home/data/models/genre_model.dart';
+import 'package:movie_app/features/home/data/models/movie_model.dart';
+
+class HomeApi {
+  final http.Client _client;
+
+  HomeApi({http.Client? client}) : _client = client ?? http.Client();
+
+  Future<AppResult<List<MovieModel>>> fetchDiscoverMovies() {
+    return safeApiCall(() async {
+      const token = ApiConfig.readAccessToken;
+
+      if (token.isEmpty) {
+        debugPrint('TMDB token configured: false');
+      } else {
+        debugPrint('TMDB token configured: true');
+      }
+
+      final uri = Uri.parse(
+        ApiEndpoints.discoverMovies,
+      ).replace(queryParameters: {'sort_by': 'popularity.desc'});
+
+      final response = await _client.get(
+        uri,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode != 200) {
+        throw ServerException(
+          statusCode: response.statusCode,
+          responseBody: response.body,
+        );
+      }
+
+      final decoded = jsonDecode(response.body) as Map<String, dynamic>;
+      final rawResults = decoded['results'];
+
+      if (rawResults is! List) {
+        throw const ParsingException('Response is missing "results" array');
+      }
+
+      final movies = rawResults
+          .map((item) => MovieModel.fromJson(item as Map<String, dynamic>))
+          .toList();
+
+      debugPrint('TMDB discover: ${movies.length} movies fetched');
+      return movies;
+    });
+  }
+
+  Future<AppResult<List<GenreModel>>> fetchMovieGenres() {
+    return safeApiCall(() async {
+      const token = ApiConfig.readAccessToken;
+
+      final uri = Uri.parse(ApiEndpoints.movieCategories);
+
+      final response = await _client.get(
+        uri,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode != 200) {
+        throw ServerException(
+          statusCode: response.statusCode,
+          responseBody: response.body,
+        );
+      }
+
+      final decoded = jsonDecode(response.body) as Map<String, dynamic>;
+      final rawGenres = decoded['genres'];
+
+      if (rawGenres is! List) {
+        throw const ParsingException('Response is missing "genres" array');
+      }
+
+      final genres = rawGenres
+          .map((item) => GenreModel.fromJson(item as Map<String, dynamic>))
+          .toList();
+
+      debugPrint('TMDB genres: ${genres.length} genres fetched');
+      return genres;
+    });
+  }
+
+  Future<AppResult<List<MovieModel>>> fetchDiscoverMoviesByGenre({
+    required int genreId,
+    required String sortBy,
+    int? minVoteCount,
+  }) {
+    return safeApiCall(() async {
+      const token = ApiConfig.readAccessToken;
+
+      final queryParameters = <String, String>{
+        'with_genres': '$genreId',
+        'sort_by': sortBy,
+      };
+      if (minVoteCount != null) {
+        queryParameters['vote_count.gte'] = '$minVoteCount';
+      }
+
+      final uri = Uri.parse(
+        ApiEndpoints.discoverMovies,
+      ).replace(queryParameters: queryParameters);
+
+      final response = await _client.get(
+        uri,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode != 200) {
+        throw ServerException(
+          statusCode: response.statusCode,
+          responseBody: response.body,
+        );
+      }
+
+      final decoded = jsonDecode(response.body) as Map<String, dynamic>;
+      final rawResults = decoded['results'];
+
+      if (rawResults is! List) {
+        throw const ParsingException('Response is missing "results" array');
+      }
+
+      final movies = rawResults
+          .map((item) => MovieModel.fromJson(item as Map<String, dynamic>))
+          .toList();
+
+      debugPrint(
+        'TMDB discover genre=$genreId sort=$sortBy: '
+        '${movies.length} movies fetched',
+      );
+      return movies;
+    });
+  }
+
+  Future<AppResult<List<MovieModel>>> fetchPopularMovies() {
+    return _fetchMovieResults(
+      Uri.parse(ApiEndpoints.popularMovies),
+      logLabel: 'popular',
+    );
+  }
+
+  Future<AppResult<List<MovieModel>>> fetchTopRatedMovies() {
+    return _fetchMovieResults(
+      Uri.parse(ApiEndpoints.topRatedMovies),
+      logLabel: 'top rated',
+    );
+  }
+
+  Future<AppResult<List<MovieModel>>> fetchTrendingMovies() {
+    return _fetchMovieResults(
+      Uri.parse(ApiEndpoints.trendingMovies),
+      logLabel: 'trending',
+    );
+  }
+
+  Future<AppResult<List<MovieModel>>> _fetchMovieResults(
+    Uri requestUri, {
+    required String logLabel,
+  }) {
+    return safeApiCall(() async {
+      const token = ApiConfig.readAccessToken;
+
+      final response = await _client.get(
+        requestUri,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode != 200) {
+        throw ServerException(
+          statusCode: response.statusCode,
+          responseBody: response.body,
+        );
+      }
+
+      final decoded = jsonDecode(response.body) as Map<String, dynamic>;
+      final rawResults = decoded['results'];
+
+      if (rawResults is! List) {
+        throw const ParsingException('Response is missing "results" array');
+      }
+
+      final movies = rawResults
+          .map((item) => MovieModel.fromJson(item as Map<String, dynamic>))
+          .toList();
+
+      debugPrint('TMDB $logLabel: ${movies.length} movies fetched');
+      return movies;
+    });
+  }
+}

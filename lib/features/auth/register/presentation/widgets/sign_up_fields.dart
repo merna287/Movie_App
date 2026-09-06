@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/validators/validator_app.dart';
-import 'package:movie_app/core/widgets/app_text_form_field.dart';
+import 'package:movie_app/core/common/widgets/app_text_form_field.dart';
 
 class SignUpFields extends StatefulWidget {
   final TextEditingController nameController;

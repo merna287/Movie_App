@@ -1,5 +1,13 @@
 import 'package:get_it/get_it.dart';
 import 'package:movie_app/features/auth/get_started/data/data_sources/facebook_auth_datasource.dart';
+import 'package:movie_app/features/details/data/api/details_api.dart';
+import 'package:movie_app/features/details/data/repositories/details_repository_impl.dart';
+import 'package:movie_app/features/details/domain/repositories/details_repository.dart';
+import 'package:movie_app/features/details/presentation/cubit/movie_details_cubit.dart';
+import 'package:movie_app/features/home/data/api/home_api.dart';
+import 'package:movie_app/features/home/data/repositories/home_repository_impl.dart';
+import 'package:movie_app/features/home/domain/repositories/home_repository.dart';
+import 'package:movie_app/features/home/presentation/cubit/home_cubit.dart';
 import 'package:movie_app/features/auth/get_started/data/data_sources/google_auth_datasource.dart';
 import 'package:movie_app/features/auth/get_started/data/repositories/auth_repository_impl.dart';
 import 'package:movie_app/features/auth/get_started/domain/repositories/auth_repository.dart';
@@ -39,24 +47,18 @@ void setupServiceLocator() {
   getIt.registerFactory<GetStartedCubit>(
     () => GetStartedCubit(getIt<AuthRepository>()),
   );
-  getIt.registerLazySingleton<RegisterDataSource>(
-    () => RegisterDataSource(),
-  );
+  getIt.registerLazySingleton<RegisterDataSource>(() => RegisterDataSource());
   getIt.registerLazySingleton<RegisterRepository>(
     () => RegisterRepositoryImpl(getIt<RegisterDataSource>()),
   );
   getIt.registerFactory<RegisterCubit>(
     () => RegisterCubit(getIt<RegisterRepository>()),
   );
-  getIt.registerLazySingleton<LoginDataSource>(
-    () => LoginDataSource(),
-  );
+  getIt.registerLazySingleton<LoginDataSource>(() => LoginDataSource());
   getIt.registerLazySingleton<LoginRepository>(
     () => LoginRepositoryImpl(getIt<LoginDataSource>()),
   );
-  getIt.registerFactory<LoginCubit>(
-    () => LoginCubit(getIt<LoginRepository>()),
-  );
+  getIt.registerFactory<LoginCubit>(() => LoginCubit(getIt<LoginRepository>()));
   getIt.registerLazySingleton<ResetPasswordDataSource>(
     () => ResetPasswordDataSource(),
   );
@@ -74,5 +76,17 @@ void setupServiceLocator() {
   );
   getIt.registerFactory<CreateNewPasswordCubit>(
     () => CreateNewPasswordCubit(getIt<CreateNewPasswordRepository>()),
+  );
+  getIt.registerLazySingleton<HomeApi>(() => HomeApi());
+  getIt.registerLazySingleton<HomeRepository>(
+    () => HomeRepositoryImpl(getIt<HomeApi>()),
+  );
+  getIt.registerFactory<HomeCubit>(() => HomeCubit(getIt<HomeRepository>()));
+  getIt.registerLazySingleton<DetailsApi>(() => DetailsApi());
+  getIt.registerLazySingleton<DetailsRepository>(
+    () => DetailsRepositoryImpl(getIt<DetailsApi>()),
+  );
+  getIt.registerFactory<MovieDetailsCubit>(
+    () => MovieDetailsCubit(getIt<DetailsRepository>()),
   );
 }

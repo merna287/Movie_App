@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movie_app/core/errors/app_exception.dart';
 import 'package:movie_app/core/errors/failure.dart';
+import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:fpdart/fpdart.dart';
 
 Future<AppResult<T>> safeApiCall<T>(Future<T> Function() call) async {
@@ -59,25 +61,25 @@ Future<AppResult<T>> safeApiCall<T>(Future<T> Function() call) async {
 String _mapFirebaseAuthError(String code) {
   switch (code) {
     case 'email-already-in-use':
-      return 'This email is already registered. Please sign in instead.';
+      return LocaleKeys.emailAlreadyInUse.tr();
     case 'weak-password':
-      return 'The password is too weak. Please choose a stronger password.';
+      return LocaleKeys.weakPassword.tr();
     case 'invalid-email':
-      return 'The email address is invalid.';
+      return LocaleKeys.invalidEmailAddress.tr();
     case 'user-not-found':
-      return 'No account found with this email address.';
+      return LocaleKeys.userNotFound.tr();
     case 'operation-not-allowed':
-      return 'Email/password sign-up is not enabled.';
+      return LocaleKeys.operationNotAllowed.tr();
     case 'invalid-action-code':
-      return 'The password reset link is invalid or has already been used.';
+      return LocaleKeys.invalidActionCode.tr();
     case 'expired-action-code':
-      return 'The password reset link has expired. Please request a new one.';
+      return LocaleKeys.expiredActionCode.tr();
     case 'network-request-failed':
     case 'network_error':
-      return 'No internet connection. Please try again.';
+      return LocaleKeys.noInternetConnection.tr();
     case 'too-many-requests':
-      return 'Too many attempts. Please try again later.';
+      return LocaleKeys.tooManyRequests.tr();
     default:
-      return 'Authentication failed. Please try again.';
+      return LocaleKeys.authenticationFailedTryAgain.tr();
   }
 }

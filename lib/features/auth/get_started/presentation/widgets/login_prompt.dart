@@ -22,7 +22,7 @@ class LoginPrompt extends StatelessWidget {
             text: '${LocaleKeys.alreadyHaveAnAccount.tr()} ',
             style: AppTypography.withColor(
               AppTypography.montserrat16W500,
-              AppColors.dividerColor,
+              AppColors.grayColor,
             ),
             children: [
               TextSpan(

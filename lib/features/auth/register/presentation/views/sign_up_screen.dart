@@ -5,8 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/service/service_locator.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
-import 'package:movie_app/core/widgets/app_screen_header.dart';
-import 'package:movie_app/core/widgets/auth_intro_section.dart';
+import 'package:movie_app/core/common/widgets/app_screen_header.dart';
+import 'package:movie_app/core/common/widgets/auth_intro_section.dart';
 import 'package:movie_app/features/auth/register/presentation/cubit/register_cubit.dart';
 import 'package:movie_app/features/auth/register/presentation/widgets/sign_up_form.dart';
 

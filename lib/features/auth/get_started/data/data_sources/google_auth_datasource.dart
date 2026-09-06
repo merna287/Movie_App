@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movie_app/core/errors/failure.dart';
@@ -9,11 +10,9 @@ class GoogleAuthDataSource {
   final GoogleSignIn _googleSignIn;
   final FirebaseAuth _firebaseAuth;
 
-  GoogleAuthDataSource({
-    GoogleSignIn? googleSignIn,
-    FirebaseAuth? firebaseAuth,
-  })  : _googleSignIn = googleSignIn ?? GoogleSignIn.instance,
-        _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
+  GoogleAuthDataSource({GoogleSignIn? googleSignIn, FirebaseAuth? firebaseAuth})
+    : _googleSignIn = googleSignIn ?? GoogleSignIn.instance,
+      _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
 
   Future<void> initialize() async {
     await _googleSignIn.initialize();
@@ -33,8 +32,15 @@ class GoogleAuthDataSource {
       }
 
       final credential = GoogleAuthProvider.credential(idToken: idToken);
-      final userCredential =
-          await _firebaseAuth.signInWithCredential(credential);
+      final userCredential = await _firebaseAuth.signInWithCredential(
+        credential,
+      );
+
+      debugPrint(
+        '[AUTH-TRACE] google -> uid=${userCredential.user?.uid} '
+        'email=${userCredential.user?.email} '
+        'displayName=${userCredential.user?.displayName}',
+      );
 
       return Right(userCredential.user);
     } on GoogleSignInException catch (e) {

@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
-import 'package:movie_app/core/widgets/app_button.dart';
-import 'package:movie_app/core/widgets/app_screen_header.dart';
-import 'package:movie_app/core/widgets/auth_intro_section.dart';
+import 'package:movie_app/core/common/widgets/app_button.dart';
+import 'package:movie_app/core/common/widgets/app_screen_header.dart';
+import 'package:movie_app/core/common/widgets/auth_intro_section.dart';
 import 'package:movie_app/features/auth/verify_account/presentation/widgets/otp_input_field.dart';
 
 class VerifyAccountScreen extends StatefulWidget {

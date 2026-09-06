@@ -15,7 +15,7 @@ class SocialLoginDivider extends StatelessWidget {
       children: [
         const Expanded(
           child: Divider(
-            color: AppColors.dividerColor,
+            color: AppColors.grayColor,
             thickness: 0.8,
           ),
         ),
@@ -31,7 +31,7 @@ class SocialLoginDivider extends StatelessWidget {
         ),
         const Expanded(
           child: Divider(
-            color: AppColors.dividerColor,
+            color: AppColors.grayColor,
             thickness: 0.8,
           ),
         ),

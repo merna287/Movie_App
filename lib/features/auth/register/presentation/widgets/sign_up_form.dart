@@ -2,9 +2,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:movie_app/core/localization/locale_keys.g.dart';
+import 'package:movie_app/core/common/views/main_layout.dart';
 import 'package:movie_app/core/dialogs/app_toast.dart';
-import 'package:movie_app/core/widgets/app_button.dart';
+import 'package:movie_app/core/common/widgets/app_button.dart';
 import 'package:movie_app/core/dialogs/app_dialogs.dart';
 import 'package:movie_app/features/auth/register/presentation/cubit/register_cubit.dart';
 import 'package:movie_app/features/auth/register/presentation/cubit/register_state.dart';
@@ -49,14 +51,11 @@ class _SignUpFormState extends State<SignUpForm> {
             LocaleKeys.accountCreatedSuccessfully.tr(),
             type: ToastType.success,
           );
+          Get.offAll(() => const MainLayout());
         } else if (state is RegisterError) {
           setState(() => _isSubmitting = false);
           AppDialogs.hideLoading();
-          AppToast.showToast(
-            context,
-            state.message,
-            type: ToastType.error,
-          );
+          AppToast.showToast(context, state.message, type: ToastType.error);
         }
       },
       builder: (context, state) {
@@ -107,9 +106,10 @@ class _SignUpFormState extends State<SignUpForm> {
       setState(() => _isSubmitting = true);
 
       context.read<RegisterCubit>().signUp(
-            email: _emailController.text,
-            password: _passwordController.text,
-          );
+        name: _nameController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
     }
   }
 }
