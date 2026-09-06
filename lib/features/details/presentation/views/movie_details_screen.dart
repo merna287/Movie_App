@@ -9,6 +9,8 @@ import 'package:movie_app/core/service/service_locator.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/features/details/presentation/cubit/movie_details_cubit.dart';
 import 'package:movie_app/features/details/presentation/cubit/movie_details_state.dart';
+import 'package:movie_app/features/favorite/presentation/cubit/favorite_cubit.dart';
+import 'package:movie_app/features/favorite/presentation/cubit/favorite_state.dart';
 import 'package:movie_app/features/details/presentation/widgets/movie_action_buttons.dart';
 import 'package:movie_app/features/details/presentation/widgets/movie_cast_and_crew.dart';
 import 'package:movie_app/features/details/presentation/widgets/movie_details_header.dart';
@@ -34,30 +36,33 @@ class MovieDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            height: MediaQuery.sizeOf(context).height * 0.60,
-            child: IgnorePointer(
-              child: MoviePosterBackdrop(imageUrl: movie.imageUrl),
-            ),
-          ),
-          SafeArea(
-            child: BlocProvider<MovieDetailsCubit>(
-              create: (_) =>
-                  getIt<MovieDetailsCubit>()..load(movieId: movie.id),
-              child: _MovieDetailsView(
-                movie: movie,
-                initialRuntimeMinutes: runtimeMinutes,
+    return BlocProvider.value(
+      value: getIt<FavoriteCubit>(),
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        body: Stack(
+          children: [
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              height: MediaQuery.sizeOf(context).height * 0.60,
+              child: IgnorePointer(
+                child: MoviePosterBackdrop(imageUrl: movie.imageUrl),
               ),
             ),
-          ),
-        ],
+            SafeArea(
+              child: BlocProvider<MovieDetailsCubit>(
+                create: (_) =>
+                    getIt<MovieDetailsCubit>()..load(movieId: movie.id),
+                child: _MovieDetailsView(
+                  movie: movie,
+                  initialRuntimeMinutes: runtimeMinutes,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -74,12 +79,6 @@ class _MovieDetailsView extends StatefulWidget {
 }
 
 class _MovieDetailsViewState extends State<_MovieDetailsView> {
-  bool _isFavorite = false;
-
-  void _toggleFavorite() {
-    setState(() => _isFavorite = !_isFavorite);
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<MovieDetailsCubit, MovieDetailsState>(
@@ -88,7 +87,16 @@ class _MovieDetailsViewState extends State<_MovieDetailsView> {
           _showErrorToast(context, state.message);
         }
       },
-      builder: (context, state) => _buildBody(context, state),
+      builder: (context, state) => BlocListener<FavoriteCubit, FavoriteState>(
+        listenWhen: (prev, curr) =>
+            curr is FavoriteLoaded && curr.errorMessage != null,
+        listener: (context, state) {
+          if (state is FavoriteLoaded && state.errorMessage != null) {
+            _showErrorToast(context, state.errorMessage!);
+          }
+        },
+        child: _buildBody(context, state),
+      ),
     );
   }
 
@@ -99,6 +107,9 @@ class _MovieDetailsViewState extends State<_MovieDetailsView> {
 
     final movie = widget.movie;
     final details = state is MovieDetailsLoaded ? state.details : null;
+    final favoriteCubit = context.watch<FavoriteCubit>();
+    final isFavorite = favoriteCubit.isFavorite(movie.id);
+    final favoriteBusy = favoriteCubit.isPending(movie.id);
 
     final String year = (details?.releaseYear.isNotEmpty ?? false)
         ? details!.releaseYear
@@ -144,8 +155,10 @@ class _MovieDetailsViewState extends State<_MovieDetailsView> {
           },
           SizedBox(height: 6.h),
           MovieActionButtons(
-            isFavorite: _isFavorite,
-            onFavoriteToggle: _toggleFavorite,
+            isFavorite: isFavorite,
+            favoriteBusy: favoriteBusy,
+            onFavoriteToggle: () =>
+                context.read<FavoriteCubit>().toggleMovie(movie),
             onPlay: () => _handlePlay(context),
             onShare: () => _handleShare(context),
           ),

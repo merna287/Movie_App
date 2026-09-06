@@ -7,7 +7,7 @@ class AppColors {
   static const Color backgroundColor = Color(0xFF1F1D2B);
   static const Color primaryTextColor = Color(0xFFFFFFFF);
   static const Color whiteColor = Color(0xFFFFFFFF);
-  static const Color secondaryTextColor = Color(0xFFEBEBEF);
+  static const Color whiteGreyColor = Color(0xFFEBEBEF);
   static const Color tertiaryTextColor = Color(0xFF92929D);
   static const Color boxColor = Color(0xFF252836);
   static const Color grayColor = Color(0xFF92929D);

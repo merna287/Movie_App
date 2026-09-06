@@ -28,6 +28,10 @@ import 'package:movie_app/features/auth/create_new_password/data/data_sources/cr
 import 'package:movie_app/features/auth/create_new_password/data/repositories/create_new_password_repository_impl.dart';
 import 'package:movie_app/features/auth/create_new_password/domain/repositories/create_new_password_repository.dart';
 import 'package:movie_app/features/auth/create_new_password/presentation/cubit/create_new_password_cubit.dart';
+import 'package:movie_app/features/favorite/data/api/favorite_api.dart';
+import 'package:movie_app/features/favorite/data/repositories/favorite_repository_impl.dart';
+import 'package:movie_app/features/favorite/domain/repositories/favorite_repository.dart';
+import 'package:movie_app/features/favorite/presentation/cubit/favorite_cubit.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -88,5 +92,12 @@ void setupServiceLocator() {
   );
   getIt.registerFactory<MovieDetailsCubit>(
     () => MovieDetailsCubit(getIt<DetailsRepository>()),
+  );
+  getIt.registerLazySingleton<FavoriteApi>(() => FavoriteApi());
+  getIt.registerLazySingleton<FavoriteRepository>(
+    () => FavoriteRepositoryImpl(getIt<FavoriteApi>()),
+  );
+  getIt.registerLazySingleton<FavoriteCubit>(
+    () => FavoriteCubit(getIt<FavoriteRepository>()),
   );
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
-import 'package:movie_app/core/theme/app_typography.dart';
 
 class MoviePoster extends StatelessWidget {
   final String imageUrl;
@@ -33,33 +32,8 @@ class MoviePoster extends StatelessWidget {
                   );
                 },
               ),
-              const Positioned(top: 8, left: 8, child: _PremiumBadge()),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _PremiumBadge extends StatelessWidget {
-  const _PremiumBadge();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 65.w,
-      height: 20.h,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: AppColors.ratingStarColor,
-        borderRadius: BorderRadius.circular(4.r),
-      ),
-      child: Text(
-        'Premium',
-        style: AppTypography.withColor(
-          AppTypography.montserrat12W500,
-          AppColors.whiteColor,
         ),
       ),
     );
