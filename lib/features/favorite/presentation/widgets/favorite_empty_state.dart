@@ -16,19 +16,11 @@ class FavoriteEmptyState extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            width: 120.w,
-            height: 120.w,
-            decoration: BoxDecoration(
-              color: AppColors.boxColor,
-              shape: BoxShape.circle,
-            ),
-            child: Center(
-              child: SvgPicture.asset(
-                AppAssets.favorite,
-                width: 63.w,
-                height: 76.w,
-              ),
+          Center(
+            child: SvgPicture.asset(
+              AppAssets.favorite,
+              width: 65.w,
+              height: 76.w,
             ),
           ),
           SizedBox(height: 28.h),

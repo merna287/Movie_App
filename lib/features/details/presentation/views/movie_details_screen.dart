@@ -36,30 +36,33 @@ class MovieDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            height: MediaQuery.sizeOf(context).height * 0.60,
-            child: IgnorePointer(
-              child: MoviePosterBackdrop(imageUrl: movie.imageUrl),
-            ),
-          ),
-          SafeArea(
-            child: BlocProvider<MovieDetailsCubit>(
-              create: (_) =>
-                  getIt<MovieDetailsCubit>()..load(movieId: movie.id),
-              child: _MovieDetailsView(
-                movie: movie,
-                initialRuntimeMinutes: runtimeMinutes,
+    return BlocProvider.value(
+      value: getIt<FavoriteCubit>(),
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        body: Stack(
+          children: [
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              height: MediaQuery.sizeOf(context).height * 0.60,
+              child: IgnorePointer(
+                child: MoviePosterBackdrop(imageUrl: movie.imageUrl),
               ),
             ),
-          ),
-        ],
+            SafeArea(
+              child: BlocProvider<MovieDetailsCubit>(
+                create: (_) =>
+                    getIt<MovieDetailsCubit>()..load(movieId: movie.id),
+                child: _MovieDetailsView(
+                  movie: movie,
+                  initialRuntimeMinutes: runtimeMinutes,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -84,18 +87,15 @@ class _MovieDetailsViewState extends State<_MovieDetailsView> {
           _showErrorToast(context, state.message);
         }
       },
-      builder: (context, state) => BlocProvider.value(
-        value: getIt<FavoriteCubit>(),
-        child: BlocListener<FavoriteCubit, FavoriteState>(
-          listenWhen: (prev, curr) =>
-              curr is FavoriteLoaded && curr.errorMessage != null,
-          listener: (context, state) {
-            if (state is FavoriteLoaded && state.errorMessage != null) {
-              _showErrorToast(context, state.errorMessage!);
-            }
-          },
-          child: _buildBody(context, state),
-        ),
+      builder: (context, state) => BlocListener<FavoriteCubit, FavoriteState>(
+        listenWhen: (prev, curr) =>
+            curr is FavoriteLoaded && curr.errorMessage != null,
+        listener: (context, state) {
+          if (state is FavoriteLoaded && state.errorMessage != null) {
+            _showErrorToast(context, state.errorMessage!);
+          }
+        },
+        child: _buildBody(context, state),
       ),
     );
   }
