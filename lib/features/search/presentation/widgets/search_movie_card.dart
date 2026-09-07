@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart' hide Trans;
+import 'package:movie_app/core/common/widgets/access_badge.dart';
 import 'package:movie_app/core/constants/app_assets.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
@@ -14,9 +15,9 @@ import 'package:movie_app/features/home/presentation/widgets/localized_genre.dar
 /// Vertical/list style movie card used on the Search screen:
 /// "Today" spotlight, movie search results and "Movie Related".
 ///
-/// Premium/Free and runtime are not available in the current Movie entity, so
-/// they are rendered as UI placeholders matching the reference (same approach
-/// as `MovieSectionScreen`).
+/// Runtime is not available in the current Movie entity, so it is rendered as
+/// a UI placeholder matching the reference. The Premium/Free badge is driven by
+/// the movie's shared access status (`movie.isPremium`).
 class SearchMovieCard extends StatelessWidget {
   final Movie movie;
 
@@ -35,7 +36,7 @@ class SearchMovieCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _AccessBadge(isPremium: movie.rating >= 7),
+                AccessBadge(isPremium: movie.isPremium),
                 SizedBox(height: 8.h),
                 Text(
                   movie.title,
@@ -145,36 +146,6 @@ class _Poster extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _AccessBadge extends StatelessWidget {
-  final bool isPremium;
-
-  const _AccessBadge({required this.isPremium});
-
-  @override
-  Widget build(BuildContext context) {
-    final String label = isPremium
-        ? LocaleKeys.premium.tr()
-        : LocaleKeys.free.tr();
-
-    return Container(
-      width: 65.w,
-      height: 20.h,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: isPremium ? AppColors.ratingStarColor : AppColors.primaryColor,
-        borderRadius: BorderRadius.circular(4.r),
-      ),
-      child: Text(
-        label,
-        style: AppTypography.withColor(
-          AppTypography.montserrat12W500,
-          AppColors.whiteColor,
         ),
       ),
     );

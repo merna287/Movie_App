@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart' hide Trans;
+import 'package:movie_app/core/common/widgets/access_badge.dart';
 import 'package:movie_app/core/common/widgets/app_screen_header.dart';
 import 'package:movie_app/core/constants/app_assets.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
@@ -74,8 +75,9 @@ class _MovieRow extends StatelessWidget {
 
   const _MovieRow({required this.movie});
 
-  // Premium/Free and runtime are not available in the current Movie entity,
-  // so they are rendered as static UI placeholders matching the reference.
+  // Runtime is not available in the current Movie entity, so it is rendered
+  // as a static UI placeholder matching the reference. The Premium/Free badge
+  // is driven by the movie's shared access status.
   String get _durationText =>
       LocaleKeys.minutes.tr(namedArgs: {'count': '148'});
 
@@ -92,7 +94,7 @@ class _MovieRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const _AccessBadge(),
+                AccessBadge(isPremium: movie.isPremium),
                 SizedBox(height: 8.h),
                 Text(
                   movie.title,
@@ -186,30 +188,6 @@ class _Poster extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _AccessBadge extends StatelessWidget {
-  const _AccessBadge();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 65.w,
-      height: 20.h,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: AppColors.primaryColor,
-        borderRadius: BorderRadius.circular(4.r),
-      ),
-      child: Text(
-        'Free',
-        style: AppTypography.withColor(
-          AppTypography.montserrat12W500,
-          AppColors.whiteColor,
         ),
       ),
     );

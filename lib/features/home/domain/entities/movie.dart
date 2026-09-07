@@ -11,6 +11,13 @@ class Movie {
   /// `movie` or `tv` (used by search results to render the Movie/Series type).
   final String mediaType;
 
+  /// Single source of truth for the movie access status (Premium vs Free).
+  ///
+  /// Derived from [rating] and matches the existing Premium classification
+  /// used by the Search feature (rating >= 7 = Premium). Home and Search both
+  /// read this value so the same movie always shows the same access badge.
+  bool get isPremium => rating >= 7;
+
   const Movie({
     required this.id,
     required this.title,
