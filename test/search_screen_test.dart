@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
@@ -22,6 +24,18 @@ import 'package:movie_app/features/search/presentation/widgets/search_movie_card
 import 'package:movie_app/features/search/presentation/widgets/search_no_results_view.dart';
 import 'package:movie_app/features/search/presentation/widgets/search_shimmer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+class _InMemoryAssetLoader extends AssetLoader {
+  final Map<String, dynamic> _data;
+
+  _InMemoryAssetLoader(this._data);
+
+  @override
+  Future<Map<String, dynamic>?> load(String path, Locale locale) =>
+      Future.value(_data);
+}
+
+late Map<String, dynamic> _translations;
 
 class _FakeSearchRepository implements SearchRepository {
   List<Movie> results = const [];
@@ -99,6 +113,7 @@ Actor _actor(int id, String name) => Actor(
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  Get.testMode = true;
 
   late _FakeSearchRepository repository;
   late SearchCubit cubit;
@@ -106,9 +121,10 @@ void main() {
   setUpAll(() async {
     SharedPreferences.setMockInitialValues({});
     await EasyLocalization.ensureInitialized();
+    final json = await rootBundle.loadString('assets/translations/en.json');
+    _translations = jsonDecode(json) as Map<String, dynamic>;
     setupServiceLocator();
   });
-
   Future<void> pumpSearch(
     WidgetTester tester, {
     SearchCubit? customCubit,
@@ -119,6 +135,7 @@ void main() {
         path: 'assets/translations',
         fallbackLocale: const Locale('en'),
         useOnlyLangCode: true,
+        assetLoader: _InMemoryAssetLoader(_translations),
         child: AppScreenUtilScope(
           child: Builder(
             builder: (context) {
@@ -146,6 +163,7 @@ void main() {
   }
 
   setUp(() {
+    Get.reset();
     repository = _FakeSearchRepository();
     cubit = SearchCubit(repository);
     repository.gate = null;
@@ -204,13 +222,9 @@ void main() {
       repository.actors = [_actor(1, 'John Wick')];
       repository.topIsActor = true;
 
-await pumpSearch(tester);
+      await pumpSearch(tester);
 
-      debugPrint('DBG textField=${tester.widgetList(find.byType(TextField)).length} '
-          'editable=${tester.widgetList(find.byType(EditableText, skipOffstage: false)).length} '
-          'exc=${tester.takeException()} '
-          'searchScreen=${tester.widgetList(find.byType(SearchScreen)).length}');
-      await tester.enterText(find.byType(TextField), 'fight');
+      await tester.enterText(find.byType(TextField), 'john');
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 400));
       await tester.pump();
@@ -235,7 +249,7 @@ await pumpSearch(tester);
       await tester.pump();
       expect(find.byType(SearchMovieCard), findsOneWidget);
 
-      await tester.tap(find.byIcon(Icons.close));
+      await tester.tap(find.text(LocaleKeys.cancel.tr()));
       await tester.pump();
 
       expect(find.text(LocaleKeys.today.tr()), findsOneWidget);

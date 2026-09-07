@@ -167,17 +167,14 @@ class _AccessBadge extends StatelessWidget {
       height: 20.h,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: isPremium ? AppColors.boxColor : AppColors.primaryColor,
+        color: isPremium ? AppColors.ratingStarColor : AppColors.primaryColor,
         borderRadius: BorderRadius.circular(4.r),
-        border: isPremium
-            ? Border.all(color: AppColors.primaryColor)
-            : Border.all(color: AppColors.primaryColor),
       ),
       child: Text(
         label,
         style: AppTypography.withColor(
           AppTypography.montserrat12W500,
-          isPremium ? AppColors.primaryColor : AppColors.whiteColor,
+          AppColors.whiteColor,
         ),
       ),
     );

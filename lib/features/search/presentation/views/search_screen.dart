@@ -66,12 +66,34 @@ class _SearchScreenState extends State<SearchScreen> {
             SizedBox(height: 14.h),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: HomeSearchBar(
-                controller: _controller,
-                onChanged: context.read<SearchCubit>().onQueryChanged,
-                onSubmitted: context.read<SearchCubit>().search,
-                onClear: _clearSearch,
-                hintText: LocaleKeys.searchPlaceholder.tr(),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: HomeSearchBar(
+                      controller: _controller,
+                      onChanged: context.read<SearchCubit>().onQueryChanged,
+                      onSubmitted: context.read<SearchCubit>().search,
+                      onClear: _clearSearch,
+                      hintText: LocaleKeys.searchPlaceholder.tr(),
+                      showSearchIcon: false,
+                      showTrailing: false,
+                    ),
+                  ),
+                  SizedBox(width: 12.w),
+                  GestureDetector(
+                    onTap: () {
+                      FocusScope.of(context).unfocus();
+                      _clearSearch();
+                    },
+                    child: Text(
+                      LocaleKeys.cancel.tr(),
+                      style: AppTypography.withColor(
+                        AppTypography.montserrat14W500,
+                        AppColors.primaryTextColor,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 20.h),
