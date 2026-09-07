@@ -91,6 +91,8 @@ abstract class  LocaleKeys {
   static const helloName = 'helloName';
   static const letsStreamYourFavoriteMovie = 'letsStreamYourFavoriteMovie';
   static const searchHint = 'searchHint';
+  static const searchIdleTitle = 'searchIdleTitle';
+  static const searchIdleSubtitle = 'searchIdleSubtitle';
   static const categories = 'categories';
   static const mostPopular = 'mostPopular';
   static const topRated = 'topRated';
@@ -166,5 +168,15 @@ abstract class  LocaleKeys {
   static const yes = 'yes';
   static const no = 'no';
   static const movie = 'movie';
-
+  static const cancel = 'cancel';
+  static const weAreSorryCannotFindMovie = 'weAreSorryCannotFindMovie';
+  static const findYourMovie = 'findYourMovie';
+  static const today = 'today';
+  static const recommendForYou = 'recommendForYou';
+  static const actors = 'actors';
+  static const movieRelated = 'movieRelated';
+  static const premium = 'premium';
+  static const free = 'free';
+  static const series = 'series';
+  static const searchPlaceholder = 'searchPlaceholder';
 }

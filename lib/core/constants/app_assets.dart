@@ -24,4 +24,5 @@ class AppAssets {
   static const String calendarIcon = 'assets/icons/calendar.svg';
   static const String clockIcon = 'assets/icons/clock.svg';
   static const String filmIcon = 'assets/icons/film.svg';
+  static const String noResultIcon = 'assets/icons/no_result.svg';
 }

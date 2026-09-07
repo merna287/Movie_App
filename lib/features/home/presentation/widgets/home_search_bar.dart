@@ -10,11 +10,23 @@ import 'package:movie_app/core/theme/app_typography.dart';
 class HomeSearchBar extends StatelessWidget {
   final TextEditingController? controller;
   final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
+  final VoidCallback? onClear;
+  final String? hintText;
 
-  const HomeSearchBar({super.key, this.controller, this.onChanged});
+  const HomeSearchBar({
+    super.key,
+    this.controller,
+    this.onChanged,
+    this.onSubmitted,
+    this.onClear,
+    this.hintText,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final String hint = hintText ?? LocaleKeys.searchHint.tr();
+
     return Container(
       height: 44.h,
       padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -37,7 +49,7 @@ class HomeSearchBar extends StatelessWidget {
           Expanded(
             child: controller == null
                 ? Text(
-                    LocaleKeys.searchHint.tr(),
+                    hint,
                     style: AppTypography.withColor(
                       AppTypography.montserrat14W500,
                       AppColors.tertiaryTextColor,
@@ -46,6 +58,7 @@ class HomeSearchBar extends StatelessWidget {
                 : TextField(
                     controller: controller,
                     onChanged: onChanged,
+                    onSubmitted: onSubmitted,
                     style: AppTypography.withColor(
                       AppTypography.montserrat14W500,
                       AppColors.primaryTextColor,
@@ -55,7 +68,7 @@ class HomeSearchBar extends StatelessWidget {
                     decoration: InputDecoration(
                       isCollapsed: true,
                       border: InputBorder.none,
-                      hintText: LocaleKeys.searchHint.tr(),
+                      hintText: hint,
                       hintStyle: AppTypography.withColor(
                         AppTypography.montserrat14W500,
                         AppColors.tertiaryTextColor,
@@ -69,15 +82,25 @@ class HomeSearchBar extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 14.w),
             color: AppColors.borderColor,
           ),
-          SvgPicture.asset(
-            AppAssets.filterIcon,
-            width: 20.w,
-            height: 20.h,
-            colorFilter: const ColorFilter.mode(
-              AppColors.primaryTextColor,
-              BlendMode.srcIn,
+          if (controller != null && onClear != null && controller!.text.trim().isNotEmpty)
+            GestureDetector(
+              onTap: onClear,
+              child: Icon(
+                Icons.close,
+                size: 20.w,
+                color: AppColors.primaryTextColor,
+              ),
+            )
+          else
+            SvgPicture.asset(
+              AppAssets.filterIcon,
+              width: 20.w,
+              height: 20.h,
+              colorFilter: const ColorFilter.mode(
+                AppColors.primaryTextColor,
+                BlendMode.srcIn,
+              ),
             ),
-          ),
         ],
       ),
     );
