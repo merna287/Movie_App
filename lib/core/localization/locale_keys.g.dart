@@ -179,4 +179,21 @@ abstract class  LocaleKeys {
   static const free = 'free';
   static const series = 'series';
   static const searchPlaceholder = 'searchPlaceholder';
+  static const premiumMember = 'premiumMember';
+  static const premiumBannerDescription = 'premiumBannerDescription';
+  static const logOut = 'logOut';
+  static const settingsAccount = 'settingsAccount';
+  static const settingsGeneral = 'settingsGeneral';
+  static const settingsMore = 'settingsMore';
+  static const settingsMember = 'settingsMember';
+  static const settingsChangePassword = 'settingsChangePassword';
+  static const settingsNotification = 'settingsNotification';
+  static const settingsLanguage = 'settingsLanguage';
+  static const settingsCountry = 'settingsCountry';
+  static const settingsClearCache = 'settingsClearCache';
+  static const settingsLegalPolicies = 'settingsLegalPolicies';
+  static const settingsHelpFeedback = 'settingsHelpFeedback';
+  static const settingsAboutUs = 'settingsAboutUs';
+  static const editProfile = 'editProfile';
+  static const loggedOutSuccessfully = 'loggedOutSuccessfully';
 }

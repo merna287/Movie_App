@@ -174,5 +174,22 @@
   "premium": "Premium",
   "free": "Free",
   "series": "Series",
-  "searchPlaceholder": "Type title, categories, years, etc."
+  "searchPlaceholder": "Type title, categories, years, etc.",
+  "premiumMember": "Premium Member",
+  "premiumBannerDescription": "New movies are coming for you, Download Now!",
+  "logOut": "Log Out",
+  "settingsAccount": "Account",
+  "settingsGeneral": "General",
+  "settingsMore": "More",
+  "settingsMember": "Member",
+  "settingsChangePassword": "Change Password",
+  "settingsNotification": "Notification",
+  "settingsLanguage": "Language",
+  "settingsCountry": "Country",
+  "settingsClearCache": "Clear Cache",
+  "settingsLegalPolicies": "Legal and Policies",
+  "settingsHelpFeedback": "Help & Feedback",
+  "settingsAboutUs": "About Us",
+  "editProfile": "Edit Profile",
+  "loggedOutSuccessfully": "Logged out successfully"
 }

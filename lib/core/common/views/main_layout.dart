@@ -10,6 +10,7 @@ import 'package:movie_app/core/service/service_locator.dart';
 import 'package:movie_app/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:movie_app/features/favorite/presentation/views/favorite_screen.dart';
 import 'package:movie_app/features/home/presentation/views/home_screen.dart';
+import 'package:movie_app/features/profile/presentation/views/profile_screen.dart';
 import 'package:movie_app/features/search/presentation/cubit/search_cubit.dart';
 import 'package:movie_app/features/search/presentation/views/search_screen.dart';
 
@@ -30,7 +31,7 @@ class _MainLayoutState extends State<MainLayout> {
       child: const SearchScreen(),
     ),
     const FavoriteScreen(),
-    const SizedBox.shrink(),
+    const ProfileScreen(),
     const SizedBox.shrink(),
   ];
 
