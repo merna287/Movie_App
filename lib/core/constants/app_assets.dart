@@ -25,4 +25,13 @@ class AppAssets {
   static const String clockIcon = 'assets/icons/clock.svg';
   static const String filmIcon = 'assets/icons/film.svg';
   static const String noResultIcon = 'assets/icons/no_result.svg';
+  static const String editIcon = 'assets/icons/Icon - Edit.svg';
+  static const String padlockIcon = 'assets/icons/padlock.svg';
+  static const String notificationIcon = 'assets/icons/notification.svg';
+  static const String globeIcon = 'assets/icons/globe.svg';
+  static const String trashBinIcon = 'assets/icons/trash-bin.svg';
+  static const String shieldIcon = 'assets/icons/shield.svg';
+  static const String questionIcon = 'assets/icons/question.svg';
+  static const String alertIcon = 'assets/icons/alert.svg';
+  static const String finishIcon = 'assets/icons/finish.svg';
 }

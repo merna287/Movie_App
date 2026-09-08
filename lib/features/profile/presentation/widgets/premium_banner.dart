@@ -40,7 +40,7 @@ class PremiumBanner extends StatelessWidget {
                 ),
                 child: Icon(
                   Icons.workspace_premium,
-                  size: 28.w,
+                  size: 20,
                   color: AppColors.whiteColor,
                 ),
               ),

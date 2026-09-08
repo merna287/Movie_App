@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:movie_app/core/constants/app_assets.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
 
@@ -32,10 +34,14 @@ class ProfileCard extends StatelessWidget {
             backgroundColor: AppColors.headerButtonColor,
             foregroundImage: avatarUrl.isEmpty ? null : NetworkImage(avatarUrl),
             child: avatarUrl.isEmpty
-                ? Icon(
-                    Icons.person,
-                    size: 32.w,
-                    color: AppColors.tertiaryTextColor,
+                ? SvgPicture.asset(
+                    AppAssets.personIcon,
+                    width: 20,
+                    height: 20,
+                    colorFilter: ColorFilter.mode(
+                      AppColors.tertiaryTextColor,
+                      BlendMode.srcIn,
+                    ),
                   )
                 : null,
           ),
@@ -73,6 +79,7 @@ class ProfileCard extends StatelessWidget {
             child: Container(
               width: 42.w,
               height: 42.w,
+              alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: AppColors.primaryColor.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(12.r),
@@ -80,10 +87,14 @@ class ProfileCard extends StatelessWidget {
                   color: AppColors.primaryColor.withValues(alpha: 0.4),
                 ),
               ),
-              child: Icon(
-                Icons.edit,
-                size: 20.w,
-                color: AppColors.primaryColor,
+              child: SvgPicture.asset(
+                AppAssets.editIcon,
+                width: 20,
+                height: 20,
+                colorFilter: ColorFilter.mode(
+                  AppColors.primaryColor,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
           ),

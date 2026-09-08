@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movie_app/core/constants/app_assets.dart';
 import 'package:movie_app/core/dialogs/app_toast.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
@@ -116,12 +117,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: LocaleKeys.settingsAccount.tr(),
                 items: [
                   (
-                    Icons.person_outline,
+                    AppAssets.personIcon,
                     LocaleKeys.settingsMember.tr(),
                     () => _notImplemented(LocaleKeys.settingsMember.tr()),
                   ),
                   (
-                    Icons.lock_outline,
+                    AppAssets.padlockIcon,
                     LocaleKeys.settingsChangePassword.tr(),
                     () => _notImplemented(LocaleKeys.settingsChangePassword.tr()),
                   ),
@@ -132,22 +133,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: LocaleKeys.settingsGeneral.tr(),
                 items: [
                   (
-                    Icons.notifications_none,
+                    AppAssets.notificationIcon,
                     LocaleKeys.settingsNotification.tr(),
                     () => _notImplemented(LocaleKeys.settingsNotification.tr()),
                   ),
                   (
-                    Icons.language,
+                    AppAssets.globeIcon,
                     LocaleKeys.settingsLanguage.tr(),
                     () => _notImplemented(LocaleKeys.settingsLanguage.tr()),
                   ),
                   (
-                    Icons.public,
+                    AppAssets.finishIcon,
                     LocaleKeys.settingsCountry.tr(),
                     () => _notImplemented(LocaleKeys.settingsCountry.tr()),
                   ),
                   (
-                    Icons.delete_outline,
+                    AppAssets.trashBinIcon,
                     LocaleKeys.settingsClearCache.tr(),
                     () => _notImplemented(LocaleKeys.settingsClearCache.tr()),
                   ),
@@ -158,17 +159,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: LocaleKeys.settingsMore.tr(),
                 items: [
                   (
-                    Icons.description_outlined,
+                    AppAssets.shieldIcon,
                     LocaleKeys.settingsLegalPolicies.tr(),
                     () => _notImplemented(LocaleKeys.settingsLegalPolicies.tr()),
                   ),
                   (
-                    Icons.help_outline,
+                    AppAssets.questionIcon,
                     LocaleKeys.settingsHelpFeedback.tr(),
                     () => _notImplemented(LocaleKeys.settingsHelpFeedback.tr()),
                   ),
                   (
-                    Icons.info_outline,
+                    AppAssets.alertIcon,
                     LocaleKeys.settingsAboutUs.tr(),
                     () => _notImplemented(LocaleKeys.settingsAboutUs.tr()),
                   ),
