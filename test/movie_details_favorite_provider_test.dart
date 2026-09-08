@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:movie_app/core/responsive/app_screen_util_scope.dart';
@@ -8,11 +11,25 @@ import 'package:movie_app/features/details/presentation/views/movie_details_scre
 import 'package:movie_app/features/home/domain/entities/movie.dart';
 import 'package:movie_app/features/home/presentation/views/movie_section_screen.dart';
 
+class _InMemoryAssetLoader extends AssetLoader {
+  final Map<String, dynamic> _data;
+
+  _InMemoryAssetLoader(this._data);
+
+  @override
+  Future<Map<String, dynamic>?> load(String path, Locale locale) =>
+      Future.value(_data);
+}
+
+late Map<String, dynamic> _translations;
+
 void main() {
   setUpAll(() async {
     TestWidgetsFlutterBinding.ensureInitialized();
     SharedPreferences.setMockInitialValues({});
     await EasyLocalization.ensureInitialized();
+    final json = await rootBundle.loadString('assets/translations/en.json');
+    _translations = jsonDecode(json) as Map<String, dynamic>;
     setupServiceLocator();
   });
 
@@ -34,13 +51,23 @@ void main() {
           supportedLocales: const [Locale('en')],
           path: 'assets/translations',
           fallbackLocale: const Locale('en'),
+          assetLoader: _InMemoryAssetLoader(_translations),
           child: AppScreenUtilScope(
-            child: const MaterialApp(
-              home: Scaffold(body: SizedBox.shrink()),
+            child: Builder(
+              builder: (context) {
+                return MaterialApp(
+                  localizationsDelegates: context.localizationDelegates,
+                  supportedLocales: context.supportedLocales,
+                  locale: context.locale,
+                  home: const Scaffold(body: SizedBox.shrink()),
+                );
+              },
             ),
           ),
         ),
       );
+
+      await tester.pumpAndSettle();
 
       final navigator = tester.state<NavigatorState>(find.byType(Navigator));
       navigator.push(
@@ -57,7 +84,7 @@ void main() {
     },
   );
 
-  testWidgets('See-all movie list keeps showing the Free access badge', (
+  testWidgets('See-all movie list shows the movie access badge from data', (
     tester,
   ) async {
     final movie = Movie(
@@ -75,9 +102,17 @@ void main() {
         supportedLocales: const [Locale('en')],
         path: 'assets/translations',
         fallbackLocale: const Locale('en'),
+        assetLoader: _InMemoryAssetLoader(_translations),
         child: AppScreenUtilScope(
-          child: MaterialApp(
-            home: MovieSectionScreen(title: 'Now Playing', movies: [movie]),
+          child: Builder(
+            builder: (context) {
+              return MaterialApp(
+                localizationsDelegates: context.localizationDelegates,
+                supportedLocales: context.supportedLocales,
+                locale: context.locale,
+                home: MovieSectionScreen(title: 'Now Playing', movies: [movie]),
+              );
+            },
           ),
         ),
       ),
@@ -86,6 +121,8 @@ void main() {
 
     expect(tester.takeException(), isNull);
     expect(find.text(movie.title), findsOneWidget);
-    expect(find.text('Free'), findsOneWidget);
+    expect(movie.isPremium, isTrue);
+    expect(find.text('Premium'), findsOneWidget);
+    expect(find.text('Free'), findsNothing);
   });
 }

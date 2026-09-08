@@ -10,11 +10,34 @@ import 'package:movie_app/core/theme/app_typography.dart';
 class HomeSearchBar extends StatelessWidget {
   final TextEditingController? controller;
   final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
+  final VoidCallback? onClear;
+  final String? hintText;
 
-  const HomeSearchBar({super.key, this.controller, this.onChanged});
+  /// Whether to show the leading search icon inside the container.
+  /// The Search screen hides it so the field starts directly with the hint.
+  final bool showSearchIcon;
+
+  /// Whether to show the trailing divider + close/filter icon inside the
+  /// container. The Search screen keeps the container clean and moves the
+  /// cancel action outside.
+  final bool showTrailing;
+
+  const HomeSearchBar({
+    super.key,
+    this.controller,
+    this.onChanged,
+    this.onSubmitted,
+    this.onClear,
+    this.hintText,
+    this.showSearchIcon = true,
+    this.showTrailing = true,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final String hint = hintText ?? LocaleKeys.searchHint.tr();
+
     return Container(
       height: 44.h,
       padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -24,20 +47,22 @@ class HomeSearchBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          SvgPicture.asset(
-            AppAssets.searchIcon,
-            width: 20.w,
-            height: 20.h,
-            colorFilter: const ColorFilter.mode(
-              AppColors.tertiaryTextColor,
-              BlendMode.srcIn,
+          if (showSearchIcon) ...[
+            SvgPicture.asset(
+              AppAssets.searchIcon,
+              width: 20.w,
+              height: 20.h,
+              colorFilter: const ColorFilter.mode(
+                AppColors.tertiaryTextColor,
+                BlendMode.srcIn,
+              ),
             ),
-          ),
-          SizedBox(width: 12.w),
+            SizedBox(width: 12.w),
+          ],
           Expanded(
             child: controller == null
                 ? Text(
-                    LocaleKeys.searchHint.tr(),
+                    hint,
                     style: AppTypography.withColor(
                       AppTypography.montserrat14W500,
                       AppColors.tertiaryTextColor,
@@ -46,6 +71,7 @@ class HomeSearchBar extends StatelessWidget {
                 : TextField(
                     controller: controller,
                     onChanged: onChanged,
+                    onSubmitted: onSubmitted,
                     style: AppTypography.withColor(
                       AppTypography.montserrat14W500,
                       AppColors.primaryTextColor,
@@ -55,7 +81,9 @@ class HomeSearchBar extends StatelessWidget {
                     decoration: InputDecoration(
                       isCollapsed: true,
                       border: InputBorder.none,
-                      hintText: LocaleKeys.searchHint.tr(),
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      hintText: hint,
                       hintStyle: AppTypography.withColor(
                         AppTypography.montserrat14W500,
                         AppColors.tertiaryTextColor,
@@ -63,21 +91,35 @@ class HomeSearchBar extends StatelessWidget {
                     ),
                   ),
           ),
-          Container(
-            width: 1.w,
-            height: 20.h,
-            margin: EdgeInsets.symmetric(horizontal: 14.w),
-            color: AppColors.borderColor,
-          ),
-          SvgPicture.asset(
-            AppAssets.filterIcon,
-            width: 20.w,
-            height: 20.h,
-            colorFilter: const ColorFilter.mode(
-              AppColors.primaryTextColor,
-              BlendMode.srcIn,
+          if (showTrailing) ...[
+            Container(
+              width: 1.w,
+              height: 20.h,
+              margin: EdgeInsets.symmetric(horizontal: 14.w),
+              color: AppColors.borderColor,
             ),
-          ),
+            if (controller != null &&
+                onClear != null &&
+                controller!.text.trim().isNotEmpty)
+              GestureDetector(
+                onTap: onClear,
+                child: Icon(
+                  Icons.close,
+                  size: 20.w,
+                  color: AppColors.primaryTextColor,
+                ),
+              )
+            else
+              SvgPicture.asset(
+                AppAssets.filterIcon,
+                width: 20.w,
+                height: 20.h,
+                colorFilter: const ColorFilter.mode(
+                  AppColors.primaryTextColor,
+                  BlendMode.srcIn,
+                ),
+              ),
+          ],
         ],
       ),
     );

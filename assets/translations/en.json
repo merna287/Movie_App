@@ -87,6 +87,8 @@
   "helloName": "Hello, {name}",
   "letsStreamYourFavoriteMovie": "Let's stream your favorite movie",
   "searchHint": "Search a title...",
+  "searchIdleTitle": "Search for your favorite movie",
+  "searchIdleSubtitle": "Type a title to get started",
   "categories": "Categories",
   "mostPopular": "Most popular",
   "topRated": "Top rated",
@@ -161,5 +163,16 @@
   "signInRequired": "Please sign in to manage your favorites.",
   "yes": "Yes",
   "no": "No",
-  "movie": "Movie"
+  "movie": "Movie",
+  "cancel": "Cancel",
+  "weAreSorryCannotFindMovie": "We are sorry, we can \nnot find this movie :(",
+  "findYourMovie": "Find your movie by Type, title, \ncategories, years, etc.",
+  "today": "Today",
+  "recommendForYou": "Recommend for you",
+  "actors": "Actors",
+  "movieRelated": "Movie Related",
+  "premium": "Premium",
+  "free": "Free",
+  "series": "Series",
+  "searchPlaceholder": "Type title, categories, years, etc."
 }

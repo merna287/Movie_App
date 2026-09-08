@@ -32,6 +32,10 @@ import 'package:movie_app/features/favorite/data/api/favorite_api.dart';
 import 'package:movie_app/features/favorite/data/repositories/favorite_repository_impl.dart';
 import 'package:movie_app/features/favorite/domain/repositories/favorite_repository.dart';
 import 'package:movie_app/features/favorite/presentation/cubit/favorite_cubit.dart';
+import 'package:movie_app/features/search/data/api/search_api.dart';
+import 'package:movie_app/features/search/data/repositories/search_repository_impl.dart';
+import 'package:movie_app/features/search/domain/repositories/search_repository.dart';
+import 'package:movie_app/features/search/presentation/cubit/search_cubit.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -99,5 +103,12 @@ void setupServiceLocator() {
   );
   getIt.registerLazySingleton<FavoriteCubit>(
     () => FavoriteCubit(getIt<FavoriteRepository>()),
+  );
+  getIt.registerLazySingleton<SearchApi>(() => SearchApi());
+  getIt.registerLazySingleton<SearchRepository>(
+    () => SearchRepositoryImpl(getIt<SearchApi>()),
+  );
+  getIt.registerLazySingleton<SearchCubit>(
+    () => SearchCubit(getIt<SearchRepository>()),
   );
 }

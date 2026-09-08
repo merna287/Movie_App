@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:movie_app/core/common/widgets/access_badge.dart';
-import 'package:movie_app/core/common/widgets/app_screen_header.dart';
 import 'package:movie_app/core/constants/app_assets.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
@@ -12,74 +11,17 @@ import 'package:movie_app/core/theme/app_typography.dart';
 import 'package:movie_app/features/details/presentation/views/movie_details_screen.dart';
 import 'package:movie_app/features/home/domain/entities/movie.dart';
 import 'package:movie_app/features/home/presentation/widgets/localized_genre.dart';
-import 'package:shimmer/shimmer.dart';
 
-class MovieSectionScreen extends StatelessWidget {
-  final String title;
-  final List<Movie> movies;
-  final bool isLoading;
-
-  const MovieSectionScreen({
-    super.key,
-    required this.title,
-    required this.movies,
-    this.isLoading = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(height: 8.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.w),
-              child: AppScreenHeader(title: title.tr()),
-            ),
-            SizedBox(height: 20.h),
-            Expanded(child: _buildBody()),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBody() {
-    if (isLoading) return const _MovieListShimmer();
-    if (movies.isEmpty) {
-      return Center(
-        child: Text(
-          LocaleKeys.noMoviesAvailable.tr(),
-          style: AppTypography.withColor(
-            AppTypography.montserrat14W500,
-            AppColors.tertiaryTextColor,
-          ),
-        ),
-      );
-    }
-
-    return ListView.separated(
-      physics: const BouncingScrollPhysics(),
-      padding: EdgeInsets.fromLTRB(24.w, 0, 24.w, 24.h),
-      itemCount: movies.length,
-      separatorBuilder: (_, _) => SizedBox(height: 20.h),
-      itemBuilder: (context, index) => _MovieRow(movie: movies[index]),
-    );
-  }
-}
-
-class _MovieRow extends StatelessWidget {
+/// Vertical/list style movie card used on the Search screen:
+/// "Today" spotlight, movie search results and "Movie Related".
+///
+/// Runtime is not available in the current Movie entity, so it is rendered as
+/// a UI placeholder matching the reference. The Premium/Free badge is driven by
+/// the movie's shared access status (`movie.isPremium`).
+class SearchMovieCard extends StatelessWidget {
   final Movie movie;
 
-  const _MovieRow({required this.movie});
-
-  // Runtime is not available in the current Movie entity, so it is rendered
-  // as a static UI placeholder matching the reference. The Premium/Free badge
-  // is driven by the movie's shared access status.
-  String get _durationText =>
-      LocaleKeys.minutes.tr(namedArgs: {'count': '148'});
+  const SearchMovieCard({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
@@ -106,11 +48,19 @@ class _MovieRow extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 8.h),
-                _MetaRow(icon: AppAssets.calendarIcon, text: movie.releaseYear),
+                _MetaRow(
+                  icon: AppAssets.calendarIcon,
+                  text: movie.releaseYear,
+                ),
                 SizedBox(height: 6.h),
                 Row(
                   children: [
-                    _MetaRow(icon: AppAssets.clockIcon, text: _durationText),
+                    _MetaRow(
+                      icon: AppAssets.clockIcon,
+                      text: LocaleKeys.minutes.tr(
+                        namedArgs: {'count': '148'},
+                      ),
+                    ),
                     SizedBox(width: 8.w),
                     const _Pg13Badge(),
                   ],
@@ -118,7 +68,9 @@ class _MovieRow extends StatelessWidget {
                 SizedBox(height: 6.h),
                 _MetaRow(
                   icon: AppAssets.filmIcon,
-                  text: '${localizedGenreName(movie.genre)}  |  Movie',
+                  text:
+                      '${localizedGenreName(movie.genre)}  |  '
+                      '${_typeLabel(movie.mediaType)}',
                 ),
               ],
             ),
@@ -126,6 +78,12 @@ class _MovieRow extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _typeLabel(String mediaType) {
+    return mediaType == 'tv'
+        ? LocaleKeys.series.tr()
+        : LocaleKeys.movie.tr();
   }
 }
 
@@ -244,89 +202,4 @@ class _Pg13Badge extends StatelessWidget {
       ),
     );
   }
-}
-
-class _MovieListShimmer extends StatelessWidget {
-  const _MovieListShimmer();
-
-  @override
-  Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-      baseColor: AppColors.boxColor,
-      highlightColor: AppColors.headerButtonColor,
-      child: ListView.separated(
-        physics: const NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.fromLTRB(24.w, 0, 24.w, 24.h),
-        itemCount: 5,
-        separatorBuilder: (_, _) => SizedBox(height: 20.h),
-        itemBuilder: (context, index) => const _MovieRowShimmer(),
-      ),
-    );
-  }
-}
-
-class _MovieRowShimmer extends StatelessWidget {
-  const _MovieRowShimmer();
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _shimmerBox(width: 112.w, height: 147.h, radius: 12),
-        SizedBox(width: 16.w),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _shimmerBox(width: 65.w, height: 20.h, radius: 4),
-              SizedBox(height: 8.h),
-              _shimmerBox(width: 150.w, height: 18.h, radius: 4),
-              SizedBox(height: 8.h),
-              Row(
-                children: [
-                  _shimmerBox(width: 16.w, height: 16.w),
-                  SizedBox(width: 6.w),
-                  _shimmerBox(width: 60.w, height: 12.h),
-                ],
-              ),
-              SizedBox(height: 6.h),
-              Row(
-                children: [
-                  _shimmerBox(width: 16.w, height: 16.w),
-                  SizedBox(width: 6.w),
-                  _shimmerBox(width: 80.w, height: 12.h),
-                  SizedBox(width: 8.w),
-                  _shimmerBox(width: 40.w, height: 16.h, radius: 4),
-                ],
-              ),
-              SizedBox(height: 6.h),
-              Row(
-                children: [
-                  _shimmerBox(width: 16.w, height: 16.w),
-                  SizedBox(width: 6.w),
-                  _shimmerBox(width: 70.w, height: 12.h),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-Widget _shimmerBox({
-  required double width,
-  required double height,
-  double radius = 8,
-}) {
-  return Container(
-    width: width,
-    height: height,
-    decoration: BoxDecoration(
-      color: AppColors.boxColor,
-      borderRadius: BorderRadius.circular(radius.r),
-    ),
-  );
 }
