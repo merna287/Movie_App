@@ -209,4 +209,6 @@ abstract class  LocaleKeys {
   static const messagesNotifications = 'messagesNotifications';
   static const showNotifications = 'showNotifications';
   static const exceptions = 'exceptions';
+  static const english = 'english';
+  static const arabic = 'arabic';
 }

@@ -11,6 +11,7 @@ import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
 import 'package:movie_app/features/profile/presentation/views/edit_profile_screen.dart';
+import 'package:movie_app/features/profile/presentation/views/language_screen.dart';
 import 'package:movie_app/features/profile/presentation/views/notification_screen.dart';
 import 'package:movie_app/features/profile/presentation/views/privacy_policy_screen.dart';
 import 'package:movie_app/features/profile/presentation/widgets/logout_button.dart';
@@ -150,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   (
                     AppAssets.globeIcon,
                     LocaleKeys.settingsLanguage.tr(),
-                    () => _notImplemented(LocaleKeys.settingsLanguage.tr()),
+                    () => Get.to(() => const LanguageScreen()),
                   ),
                   (
                     AppAssets.finishIcon,

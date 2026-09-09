@@ -80,7 +80,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return EasyLocalization(
-      supportedLocales: const [Locale('en')],
+      supportedLocales: const [Locale('en'), Locale('ar')],
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
       child: AppScreenUtilScope(
