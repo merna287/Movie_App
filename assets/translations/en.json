@@ -191,5 +191,18 @@
   "settingsHelpFeedback": "Help & Feedback",
   "settingsAboutUs": "About Us",
   "editProfile": "Edit Profile",
-  "loggedOutSuccessfully": "Logged out successfully"
+  "loggedOutSuccessfully": "Logged out successfully",
+  "email": "Email",
+  "phoneNumber": "Phone Number",
+  "saveChanges": "Save Changes",
+  "nameAlreadyExist": "* Name already exist",
+  "profileSavedSuccessfully": "Profile updated successfully",
+  "download": "Download",
+  "terms": "Terms",
+  "changesToTheServiceAndOrTerms": "Changes to the Service and/or Terms:",
+  "termsBody": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget ornare quam vel facilisis feugiat amet sagittis arcu, tortor. Sapien, consequat ultrices morbi orci semper sit nulla. Leo auctor ut etiam est, amet aliquet ut vivamus. Odio vulputate est id tincidunt fames.",
+  "serviceChangesBody1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget ornare quam vel facilisis feugiat amet sagittis arcu, tortor. Sapien, consequat ultrices morbi orci semper sit nulla. Leo auctor ut etiam est, amet aliquet ut vivamus. Odio vulputate est id tincidunt fames.",
+  "messagesNotifications": "Messages Notifications",
+  "showNotifications": "Show Notifications",
+  "exceptions": "Exceptions"
 }

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:movie_app/core/common/views/main_layout.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
-import 'package:movie_app/features/profile/presentation/views/profile_screen.dart';
 import 'core/service/deep_link_service.dart';
 import 'core/service/service_locator.dart';
 import 'core/responsive/app_screen_util_scope.dart';
@@ -94,9 +93,9 @@ class _MyAppState extends State<MyApp> {
               localizationsDelegates: context.localizationDelegates,
               supportedLocales: context.supportedLocales,
               locale: context.locale,
-              home: _isAuthenticated
-                  ? const ProfileScreen()
-                  : const OnboardingScreen(),
+home: _isAuthenticated
+                    ? const MainLayout()
+                    : const OnboardingScreen(),
             );
           },
         ),

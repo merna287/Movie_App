@@ -4,11 +4,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:movie_app/core/constants/app_assets.dart';
 import 'package:movie_app/core/dialogs/app_toast.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
+import 'package:movie_app/features/profile/presentation/views/edit_profile_screen.dart';
+import 'package:movie_app/features/profile/presentation/views/notification_screen.dart';
+import 'package:movie_app/features/profile/presentation/views/privacy_policy_screen.dart';
 import 'package:movie_app/features/profile/presentation/widgets/logout_button.dart';
 import 'package:movie_app/features/profile/presentation/widgets/premium_banner.dart';
 import 'package:movie_app/features/profile/presentation/widgets/profile_card.dart';
@@ -106,7 +110,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 name: displayName,
                 email: email,
                 avatarUrl: avatarUrl,
-                onEdit: () => _notImplemented(LocaleKeys.editProfile.tr()),
+                onEdit: () => Get.to(
+                  () => EditProfileScreen(
+                    name: displayName,
+                    email: email,
+                    avatarUrl: avatarUrl,
+                  ),
+                ),
               ),
               SizedBox(height: 20.h),
               PremiumBanner(
@@ -135,7 +145,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   (
                     AppAssets.notificationIcon,
                     LocaleKeys.settingsNotification.tr(),
-                    () => _notImplemented(LocaleKeys.settingsNotification.tr()),
+                    () => Get.to(() => const NotificationScreen()),
                   ),
                   (
                     AppAssets.globeIcon,
@@ -161,7 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   (
                     AppAssets.shieldIcon,
                     LocaleKeys.settingsLegalPolicies.tr(),
-                    () => _notImplemented(LocaleKeys.settingsLegalPolicies.tr()),
+                    () => Get.to(() => const PrivacyPolicyScreen()),
                   ),
                   (
                     AppAssets.questionIcon,

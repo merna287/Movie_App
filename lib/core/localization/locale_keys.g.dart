@@ -196,4 +196,17 @@ abstract class  LocaleKeys {
   static const settingsAboutUs = 'settingsAboutUs';
   static const editProfile = 'editProfile';
   static const loggedOutSuccessfully = 'loggedOutSuccessfully';
+  static const email = 'email';
+  static const phoneNumber = 'phoneNumber';
+  static const saveChanges = 'saveChanges';
+  static const nameAlreadyExist = 'nameAlreadyExist';
+  static const profileSavedSuccessfully = 'profileSavedSuccessfully';
+  static const download = 'download';
+  static const terms = 'terms';
+  static const changesToTheServiceAndOrTerms = 'changesToTheServiceAndOrTerms';
+  static const termsBody = 'termsBody';
+  static const serviceChangesBody1 = 'serviceChangesBody1';
+  static const messagesNotifications = 'messagesNotifications';
+  static const showNotifications = 'showNotifications';
+  static const exceptions = 'exceptions';
 }
