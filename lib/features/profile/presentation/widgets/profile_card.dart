@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:movie_app/core/common/widgets/profile_avatar.dart';
 import 'package:movie_app/core/constants/app_assets.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
@@ -29,21 +30,10 @@ class ProfileCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          CircleAvatar(
+          ProfileAvatar(
             radius: 32.w,
-            backgroundColor: AppColors.headerButtonColor,
-            foregroundImage: avatarUrl.isEmpty ? null : NetworkImage(avatarUrl),
-            child: avatarUrl.isEmpty
-                ? SvgPicture.asset(
-                    AppAssets.personIcon,
-                    width: 20,
-                    height: 20,
-                    colorFilter: ColorFilter.mode(
-                      AppColors.tertiaryTextColor,
-                      BlendMode.srcIn,
-                    ),
-                  )
-                : null,
+            name: name,
+            imageUrl: avatarUrl,
           ),
           SizedBox(width: 16.w),
           Expanded(

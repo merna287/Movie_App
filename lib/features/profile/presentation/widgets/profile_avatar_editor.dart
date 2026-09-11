@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:movie_app/core/common/widgets/profile_avatar.dart';
 import 'package:movie_app/core/constants/app_assets.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 
 class ProfileAvatarEditor extends StatelessWidget {
-  final String avatarUrl;
+  final String? avatarUrl;
+  final String? name;
   final VoidCallback onEdit;
 
   const ProfileAvatarEditor({
     super.key,
-    required this.avatarUrl,
+    this.avatarUrl,
+    this.name,
     required this.onEdit,
   });
 
@@ -20,22 +23,10 @@ class ProfileAvatarEditor extends StatelessWidget {
       clipBehavior: Clip.none,
       alignment: Alignment.bottomRight,
       children: [
-        CircleAvatar(
+        ProfileAvatar(
           radius: 55.w,
-          backgroundColor: AppColors.headerButtonColor,
-          foregroundImage:
-              avatarUrl.isEmpty ? null : NetworkImage(avatarUrl),
-          child: avatarUrl.isEmpty
-              ? SvgPicture.asset(
-                  AppAssets.personIcon,
-                  width: 44.w,
-                  height: 44.w,
-                  colorFilter: ColorFilter.mode(
-                    AppColors.tertiaryTextColor,
-                    BlendMode.srcIn,
-                  ),
-                )
-              : null,
+          name: name,
+          imageUrl: avatarUrl,
         ),
         Positioned(
           right: 2.w,

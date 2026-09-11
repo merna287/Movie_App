@@ -109,9 +109,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               SizedBox(height: 16.h),
               AppScreenHeader(title: LocaleKeys.editProfile.tr()),
               SizedBox(height: 28.h),
-              ProfileAvatarEditor(
-                avatarUrl: widget.avatarUrl ?? '',
-                onEdit: _onEditAvatar,
+              ValueListenableBuilder<TextEditingValue>(
+                valueListenable: _nameController,
+                builder: (context, value, _) => ProfileAvatarEditor(
+                  avatarUrl: widget.avatarUrl,
+                  name: value.text.trim().isEmpty
+                      ? widget.name
+                      : value.text.trim(),
+                  onEdit: _onEditAvatar,
+                ),
               ),
               SizedBox(height: 18.h),
               ValueListenableBuilder<TextEditingValue>(
