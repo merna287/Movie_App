@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/gestures.dart' show PointerDeviceKind;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:movie_app/core/common/views/main_layout.dart';
@@ -15,6 +16,16 @@ import 'firebase_options.dart';
 import 'features/onboarding/presentation/view/onboarding_screen.dart';
 
 final deepLinkService = DeepLinkService();
+
+class _AppScrollBehavior extends MaterialScrollBehavior {
+  const _AppScrollBehavior();
+
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        ...super.dragDevices,
+        PointerDeviceKind.mouse,
+      };
+}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -93,6 +104,7 @@ class _MyAppState extends State<MyApp> {
               localizationsDelegates: context.localizationDelegates,
               supportedLocales: context.supportedLocales,
               locale: context.locale,
+              scrollBehavior: const _AppScrollBehavior(),
 home: _isAuthenticated
                     ? const MainLayout()
                     : const OnboardingScreen(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:movie_app/core/service/service_locator.dart';
 import 'package:movie_app/features/home/presentation/cubit/home_cubit.dart';
 import 'package:movie_app/features/home/presentation/cubit/home_state.dart';
@@ -10,6 +11,8 @@ import 'package:movie_app/features/home/presentation/widgets/home_loading_shimme
 import 'package:movie_app/features/home/presentation/widgets/home_movie_sections.dart';
 import 'package:movie_app/features/home/presentation/widgets/home_search_bar.dart';
 import 'package:movie_app/features/home/presentation/widgets/movie_categories.dart';
+import 'package:movie_app/features/search/presentation/cubit/search_cubit.dart';
+import 'package:movie_app/features/search/presentation/views/search_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -38,7 +41,16 @@ class HomeScreen extends StatelessWidget {
                 Padding(
                   padding:
                       EdgeInsets.symmetric(vertical: 20.h, horizontal: 26.w),
-                  child: const HomeSearchBar(),
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => Get.to(
+                      () => BlocProvider.value(
+                        value: getIt<SearchCubit>(),
+                        child: const SearchScreen(),
+                      ),
+                    ),
+                    child: const HomeSearchBar(),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 15),
