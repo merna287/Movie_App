@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movie_app/core/common/widgets/profile_avatar.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
@@ -153,17 +154,10 @@ class _HomeHeaderState extends State<HomeHeader> {
 
     return Row(
       children: [
-        CircleAvatar(
+        ProfileAvatar(
           radius: 24.r,
-          backgroundColor: AppColors.boxColor,
-          backgroundImage: avatar.isEmpty ? null : NetworkImage(avatar),
-          child: avatar.isEmpty
-              ? Icon(
-                  Icons.person,
-                  size: 24.w,
-                  color: AppColors.tertiaryTextColor,
-                )
-              : null,
+          name: name,
+          imageUrl: avatar,
         ),
         SizedBox(width: 12.w),
         Expanded(
