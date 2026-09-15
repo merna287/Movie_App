@@ -17,7 +17,12 @@ class DetailsRepositoryImpl implements DetailsRepository {
 
     return result.fold(
       (failure) => Left(failure),
-      (model) => Right(model.toEntity()),
+      (model) {
+        if (!model.isCompleteForDisplay) {
+          return const Left(ParsingFailure());
+        }
+        return Right(model.toEntity());
+      },
     );
   }
 

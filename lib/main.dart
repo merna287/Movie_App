@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui' as ui;
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart' show PointerDeviceKind;
@@ -97,17 +98,29 @@ class _MyAppState extends State<MyApp> {
       child: AppScreenUtilScope(
         child: Builder(
           builder: (context) {
+            final locale = context.locale;
+            final textDirection = locale.languageCode == 'ar'
+                ? ui.TextDirection.rtl
+                : ui.TextDirection.ltr;
+
             return GetMaterialApp(
+              key: ValueKey(locale.languageCode),
               title: LocaleKeys.appName.tr(),
               theme: AppTheme.theme,
               debugShowCheckedModeBanner: false,
               localizationsDelegates: context.localizationDelegates,
               supportedLocales: context.supportedLocales,
-              locale: context.locale,
+              locale: locale,
               scrollBehavior: const _AppScrollBehavior(),
-home: _isAuthenticated
-                    ? const MainLayout()
-                    : const OnboardingScreen(),
+              builder: (context, child) {
+                return Directionality(
+                  textDirection: textDirection,
+                  child: child ?? const SizedBox.shrink(),
+                );
+              },
+              home: _isAuthenticated
+                  ? const MainLayout()
+                  : const OnboardingScreen(),
             );
           },
         ),

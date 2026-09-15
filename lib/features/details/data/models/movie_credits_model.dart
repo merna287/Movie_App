@@ -23,7 +23,10 @@ class MovieCreditsModel {
 
   MovieCredits toEntity() {
     return MovieCredits(
-      cast: cast.map((member) => member.toEntity()).toList(),
+      cast: cast
+          .where((member) => member.isCompleteForDisplay)
+          .map((member) => member.toEntity())
+          .toList(),
       crew: crew.map((member) => member.toEntity()).toList(),
     );
   }

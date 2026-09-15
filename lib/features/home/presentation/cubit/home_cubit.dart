@@ -17,23 +17,35 @@ class HomeCubit extends Cubit<HomeState> {
 
   HomeCubit(this._repository) : super(const HomeInitial());
 
-  Future<void> loadHomeData() async {
+  bool _isLoadingHomeData = false;
+
+  Future<void> loadHomeData({bool force = false}) async {
+    if (!force) {
+      if (state is HomeSuccess) return;
+      if (_isLoadingHomeData) return;
+    }
+
     if (ApiConfig.readAccessToken.isEmpty) {
       debugPrint('TMDB token configured: false');
       emit(const HomeError('TMDB token is missing. Add it to your .env file.'));
       return;
     }
 
-    emit(const HomeLoading());
+    _isLoadingHomeData = true;
+    if (state is! HomeSuccess) {
+      emit(const HomeLoading());
+    }
 
     final featuredResult = await _repository.getFeaturedMovies();
     if (featuredResult.isLeft()) {
+      _isLoadingHomeData = false;
       emit(HomeError(failureMessage(featuredResult.getLeft().toNullable()!)));
       return;
     }
 
     final genresResult = await _repository.getMovieGenres();
     if (genresResult.isLeft()) {
+      _isLoadingHomeData = false;
       emit(HomeError(failureMessage(genresResult.getLeft().toNullable()!)));
       return;
     }
@@ -43,18 +55,21 @@ class HomeCubit extends Cubit<HomeState> {
 
     final popularResult = await _repository.getPopularMovies(genres);
     if (popularResult.isLeft()) {
+      _isLoadingHomeData = false;
       emit(HomeError(failureMessage(popularResult.getLeft().toNullable()!)));
       return;
     }
 
     final topRatedResult = await _repository.getTopRatedMovies(genres);
     if (topRatedResult.isLeft()) {
+      _isLoadingHomeData = false;
       emit(HomeError(failureMessage(topRatedResult.getLeft().toNullable()!)));
       return;
     }
 
     final trendingResult = await _repository.getTrendingMovies(genres);
     if (trendingResult.isLeft()) {
+      _isLoadingHomeData = false;
       emit(HomeError(failureMessage(trendingResult.getLeft().toNullable()!)));
       return;
     }
@@ -68,6 +83,7 @@ class HomeCubit extends Cubit<HomeState> {
       '${popular.length} popular, ${topRated.length} top rated, '
       '${trending.length} trending movies loaded',
     );
+    _isLoadingHomeData = false;
     emit(
       HomeSuccess(
         movies: featured,
@@ -109,14 +125,17 @@ class HomeCubit extends Cubit<HomeState> {
       return;
     }
 
-    // Show loading while keeping the selected category visible.
+    // Filter immediately from loaded movies using their genreIds, then fetch
+    // the full genre-specific lists from the API in the background.
     emit(
       current.copyWith(
         selectedGenreId: genreId,
         isGenreLoading: true,
-        filteredPopularMovies: const [],
-        filteredTopRatedMovies: const [],
-        filteredTrendingMovies: const [],
+        filteredPopularMovies: _filterMoviesByGenre(current.popularMovies, genreId),
+        filteredTopRatedMovies:
+            _filterMoviesByGenre(current.topRatedMovies, genreId),
+        filteredTrendingMovies:
+            _filterMoviesByGenre(current.trendingMovies, genreId),
       ),
     );
 
@@ -175,6 +194,10 @@ class HomeCubit extends Cubit<HomeState> {
         filteredTrendingMovies: popularMovies,
       ),
     );
+  }
+
+  List<Movie> _filterMoviesByGenre(List<Movie> movies, int genreId) {
+    return movies.where((movie) => movie.genreIds.contains(genreId)).toList();
   }
 }
 

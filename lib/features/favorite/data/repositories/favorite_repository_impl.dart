@@ -15,7 +15,12 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
 
     return result.fold(
       (failure) => Left(failure),
-      (models) => Right(models.map((model) => model.toEntity()).toList()),
+      (models) => Right(
+        models
+            .where((model) => model.isCompleteForDisplay)
+            .map((model) => model.toEntity())
+            .toList(),
+      ),
     );
   }
 

@@ -7,6 +7,7 @@ import 'package:movie_app/core/dialogs/app_toast.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/service/service_locator.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
+import 'package:movie_app/features/details/domain/entities/movie_video.dart';
 import 'package:movie_app/features/details/presentation/cubit/movie_details_cubit.dart';
 import 'package:movie_app/features/details/presentation/cubit/movie_details_state.dart';
 import 'package:movie_app/features/favorite/presentation/cubit/favorite_cubit.dart';
@@ -40,28 +41,36 @@ class MovieDetailsScreen extends StatelessWidget {
       value: getIt<FavoriteCubit>(),
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
-        body: Stack(
-          children: [
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              height: MediaQuery.sizeOf(context).height * 0.60,
-              child: IgnorePointer(
-                child: MoviePosterBackdrop(imageUrl: movie.imageUrl),
+        body: BlocProvider<MovieDetailsCubit>(
+          create: (_) => getIt<MovieDetailsCubit>()..load(movieId: movie.id),
+          child: Stack(
+            children: [
+              BlocBuilder<MovieDetailsCubit, MovieDetailsState>(
+                builder: (context, state) {
+                  final backdropUrl = state is MovieDetailsLoaded &&
+                          state.details.imageUrl.isNotEmpty
+                      ? state.details.imageUrl
+                      : movie.imageUrl;
+
+                  return Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: MediaQuery.sizeOf(context).height * 0.60,
+                    child: IgnorePointer(
+                      child: MoviePosterBackdrop(imageUrl: backdropUrl),
+                    ),
+                  );
+                },
               ),
-            ),
-            SafeArea(
-              child: BlocProvider<MovieDetailsCubit>(
-                create: (_) =>
-                    getIt<MovieDetailsCubit>()..load(movieId: movie.id),
+              SafeArea(
                 child: _MovieDetailsView(
                   movie: movie,
                   initialRuntimeMinutes: runtimeMinutes,
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -159,7 +168,9 @@ class _MovieDetailsViewState extends State<_MovieDetailsView> {
             favoriteBusy: favoriteBusy,
             onFavoriteToggle: () =>
                 context.read<FavoriteCubit>().toggleMovie(movie),
-            onPlay: () => _handlePlay(context),
+            onPlay: state is MovieDetailsLoaded
+                ? () => _handlePlay(context, state.trailer)
+                : null,
             onShare: () => _handleShare(context),
           ),
           SizedBox(height: 28.h),
@@ -184,10 +195,10 @@ class _MovieDetailsViewState extends State<_MovieDetailsView> {
     context.read<MovieDetailsCubit>().load(movieId: widget.movie.id);
   }
 
-  Future<void> _handlePlay(BuildContext context) async {
-    final state = context.read<MovieDetailsCubit>().state;
-    final trailer = state is MovieDetailsLoaded ? state.trailer : null;
-
+  Future<void> _handlePlay(
+    BuildContext context,
+    MovieVideo? trailer,
+  ) async {
     if (trailer == null) {
       _showErrorToast(context, LocaleKeys.noTrailerAvailable.tr());
       return;
@@ -204,12 +215,26 @@ class _MovieDetailsViewState extends State<_MovieDetailsView> {
     }
 
     try {
+      final canLaunch = await canLaunchUrl(uri);
+      if (!canLaunch) {
+        if (context.mounted) {
+          _showErrorToast(context, LocaleKeys.unexpectedError.tr());
+        }
+        return;
+      }
+
       final launched = await launchUrl(
         uri,
         mode: LaunchMode.externalApplication,
       );
-      if (!launched && context.mounted) {
-        _showErrorToast(context, LocaleKeys.unexpectedError.tr());
+      if (!launched) {
+        final fallbackLaunched = await launchUrl(
+          uri,
+          mode: LaunchMode.platformDefault,
+        );
+        if (!fallbackLaunched && context.mounted) {
+          _showErrorToast(context, LocaleKeys.unexpectedError.tr());
+        }
       }
     } catch (_) {
       if (context.mounted) {

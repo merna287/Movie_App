@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/core/service/service_locator.dart';
+import 'package:movie_app/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:movie_app/features/home/presentation/cubit/home_cubit.dart';
 import 'package:movie_app/features/home/presentation/cubit/home_state.dart';
 import 'package:movie_app/features/home/presentation/widgets/featured_movie_carousel.dart';
@@ -14,13 +15,31 @@ import 'package:movie_app/features/home/presentation/widgets/movie_categories.da
 import 'package:movie_app/features/search/presentation/cubit/search_cubit.dart';
 import 'package:movie_app/features/search/presentation/views/search_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    getIt<HomeCubit>().loadHomeData();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider<HomeCubit>(
-      create: (_) => getIt<HomeCubit>()..loadHomeData(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(
+          value: getIt<HomeCubit>(),
+        ),
+        BlocProvider.value(
+          value: getIt<FavoriteCubit>(),
+        ),
+      ],
       child: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
           if (state is HomeInitial || state is HomeLoading) {

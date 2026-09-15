@@ -38,8 +38,15 @@ class FavoriteCubit extends Cubit<FavoriteState> {
         _ => const <Movie>[],
       };
 
-  Future<void> load() async {
+  Future<void> load({bool force = false}) async {
     if (_pendingIds.isNotEmpty) return;
+
+    if (!force &&
+        (state is FavoriteLoaded ||
+            state is FavoriteToggling ||
+            state is FavoriteRemoving)) {
+      return;
+    }
 
     if (_accountId.isEmpty) {
       debugPrint('TMDB account id not configured');

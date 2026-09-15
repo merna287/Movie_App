@@ -21,7 +21,12 @@ class SearchRepositoryImpl implements SearchRepository {
 
     return result.fold(
       (failure) => Left(failure),
-      (models) => Right(models.map((model) => model.toEntity()).toList()),
+      (models) => Right(
+        models
+            .where((model) => model.isCompleteForDisplay)
+            .map((model) => model.toEntity())
+            .toList(),
+      ),
     );
   }
 
@@ -35,6 +40,7 @@ class SearchRepositoryImpl implements SearchRepository {
       (failure) => Left(failure),
       (model) {
         final movies = model.movies
+            .where((movie) => movie.isCompleteForDisplay)
             .map(
               (movie) => movie.toEntity(
                 genre: _primaryGenre(movie.genreIds, genres),
@@ -43,6 +49,7 @@ class SearchRepositoryImpl implements SearchRepository {
             .toList();
 
         final actors = model.actors
+            .where((actor) => actor.isCompleteForDisplay)
             .map(
               (actor) => actor.toEntity(
                 (genreIds) => _primaryGenre(genreIds, genres),
@@ -84,9 +91,11 @@ class SearchRepositoryImpl implements SearchRepository {
     final popularModels = results[1].getRight().toNullable()!;
 
     final todayMovies = nowPlayingModels
+        .where((model) => model.isCompleteForDisplay)
         .map((model) => model.toEntity(genre: _primaryGenre(model.genreIds, genres)))
         .toList();
     final recommended = popularModels
+        .where((model) => model.isCompleteForDisplay)
         .map((model) => model.toEntity(genre: _primaryGenre(model.genreIds, genres)))
         .toList();
 

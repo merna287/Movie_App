@@ -26,10 +26,13 @@ class MovieDetailsHeader extends StatelessWidget {
             width: 40.w,
             height: 40.w,
             child: Center(
-              child: SvgPicture.asset(
-                AppAssets.backIcon,
-                width: 20.w,
-                height: 20.w,
+              child: Transform.flip(
+                flipX: Directionality.of(context) == TextDirection.rtl,
+                child: SvgPicture.asset(
+                  AppAssets.backIcon,
+                  width: 20.w,
+                  height: 20.w,
+                ),
               ),
             ),
           ),

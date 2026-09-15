@@ -35,6 +35,12 @@ class MovieModel {
     );
   }
 
+  bool get isCompleteForDisplay =>
+      id > 0 &&
+      title.trim().isNotEmpty &&
+      (ApiEndpoints.isValidImagePath(posterPath) ||
+          ApiEndpoints.isValidImagePath(backdropPath));
+
   Movie toEntity({String genre = ''}) {
     final imagePath = backdropPath ?? posterPath;
 

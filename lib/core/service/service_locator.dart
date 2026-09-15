@@ -92,7 +92,7 @@ void setupServiceLocator() {
   getIt.registerLazySingleton<HomeRepository>(
     () => HomeRepositoryImpl(getIt<HomeApi>()),
   );
-  getIt.registerFactory<HomeCubit>(() => HomeCubit(getIt<HomeRepository>()));
+  getIt.registerLazySingleton<HomeCubit>(() => HomeCubit(getIt<HomeRepository>()));
   getIt.registerLazySingleton<DetailsApi>(() => DetailsApi());
   getIt.registerLazySingleton<DetailsRepository>(
     () => DetailsRepositoryImpl(getIt<DetailsApi>()),

@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:movie_app/core/common/widgets/app_screen_header.dart';
 import 'package:movie_app/core/constants/app_assets.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
@@ -63,9 +64,108 @@ class LanguageScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _selectLanguage(BuildContext context, Locale locale) async {
-    if (context.locale.languageCode == locale.languageCode) return;
-    await context.setLocale(locale);
+  Future<void> _selectLanguage(BuildContext context, Locale targetLocale) async {
+    if (context.locale.languageCode == targetLocale.languageCode) return;
+
+    final isCurrentArabic = context.locale.languageCode == 'ar';
+    final confirmed = await showDialog<bool>(
+      context: context,
+      barrierColor: Colors.black54,
+      builder: (dialogContext) => Dialog(
+        backgroundColor: AppColors.boxColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.r),
+        ),
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(24.w, 28.h, 24.w, 20.h),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                isCurrentArabic ? 'تغيير اللغة' : 'Change Language',
+                style: AppTypography.withColor(
+                  AppTypography.montserrat16W600,
+                  AppColors.primaryTextColor,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 12.h),
+              Text(
+                isCurrentArabic
+                    ? 'هل أنت متأكد من تغيير اللغة؟'
+                    : 'Are you sure you want to change the language?',
+                style: AppTypography.withColor(
+                  AppTypography.montserrat12W500.copyWith(height: 1.4),
+                  AppColors.grayColor,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 24.h),
+              Row(
+                children: [
+                  Expanded(
+                    child: _DialogActionButton(
+                      label: LocaleKeys.no.tr(),
+                      isPrimary: false,
+                      onTap: () => Navigator.of(dialogContext).pop(false),
+                    ),
+                  ),
+                  SizedBox(width: 12.w),
+                  Expanded(
+                    child: _DialogActionButton(
+                      label: LocaleKeys.yes.tr(),
+                      isPrimary: true,
+                      onTap: () => Navigator.of(dialogContext).pop(true),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    if (confirmed != true || !context.mounted) return;
+
+    await context.setLocale(targetLocale);
+    Get.updateLocale(targetLocale);
+  }
+}
+
+class _DialogActionButton extends StatelessWidget {
+  final String label;
+  final bool isPrimary;
+  final VoidCallback onTap;
+
+  const _DialogActionButton({
+    required this.label,
+    required this.isPrimary,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 44.h,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: isPrimary
+              ? AppColors.primaryColor
+              : AppColors.headerButtonColor,
+          borderRadius: BorderRadius.circular(22.r),
+        ),
+        child: Text(
+          label,
+          style: AppTypography.withColor(
+            AppTypography.montserrat14W600,
+            isPrimary ? AppColors.primaryTextColor : AppColors.grayColor,
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -139,7 +239,7 @@ class _LanguageRow extends StatelessWidget {
           ),
           if (showDivider)
             Padding(
-              padding: EdgeInsets.only(left: 70.w),
+              padding: EdgeInsetsDirectional.only(start: 70.w),
               child: Divider(
                 height: 1.h,
                 thickness: 1.h,

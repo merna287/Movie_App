@@ -17,7 +17,12 @@ class HomeRepositoryImpl implements HomeRepository {
 
     return result.fold(
       (failure) => Left(failure),
-      (models) => Right(models.map((model) => model.toEntity()).toList()),
+      (models) => Right(
+        models
+            .where((model) => model.isCompleteForDisplay)
+            .map((model) => model.toEntity())
+            .toList(),
+      ),
     );
   }
 
@@ -72,6 +77,7 @@ class HomeRepositoryImpl implements HomeRepository {
       (failure) => Left(failure),
       (models) => Right(
         models
+            .where((model) => model.isCompleteForDisplay)
             .map((model) => model.toEntity(genre: _primaryGenre(model, genres)))
             .toList(),
       ),
