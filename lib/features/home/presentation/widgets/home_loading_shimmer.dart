@@ -19,36 +19,32 @@ class HomeLoadingShimmer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 22.h),
+            SizedBox(height: 16.h),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: const _HeaderShimmer(),
             ),
+            SizedBox(height: 16.h),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 26.w),
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: ShimmerBox(height: 44.h, radius: 14),
             ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 15),
-              child: FeaturedMovieShimmer(),
+            SizedBox(height: 20.h),
+            FeaturedMovieShimmer(),
+            SizedBox(height: 24.h),
+            CategoryShimmer(),
+            SizedBox(height: 24.h),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                MovieSectionShimmer(),
+                SizedBox(height: 24.h),
+                MovieSectionShimmer(),
+                SizedBox(height: 24.h),
+                MovieSectionShimmer(),
+              ],
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 24.h),
-              child: CategoryShimmer(),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  MovieSectionShimmer(),
-                  SizedBox(height: 16.h),
-                  MovieSectionShimmer(),
-                  SizedBox(height: 16.h),
-                  MovieSectionShimmer(),
-                ],
-              ),
-            ),
+            SizedBox(height: 24.h),
           ],
         ),
       ),

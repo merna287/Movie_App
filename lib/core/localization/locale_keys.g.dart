@@ -153,6 +153,13 @@ abstract class  LocaleKeys {
   static const share = 'share';
   static const shareTo = 'shareTo';
   static const minutes = 'minutes';
+  static const runtimeHourShort = 'runtimeHourShort';
+  static const runtimeMinuteShort = 'runtimeMinuteShort';
+  static const runtimeHourMinuteShort = 'runtimeHourMinuteShort';
+  static const tmdbTokenMissing = 'tmdbTokenMissing';
+  static const tmdbAuthFailed = 'tmdbAuthFailed';
+  static const tmdbRequestFailed = 'tmdbRequestFailed';
+  static const tmdbParseFailed = 'tmdbParseFailed';
   static const castAndCrewComingSoon = 'castAndCrewComingSoon';
   static const noTrailerAvailable = 'noTrailerAvailable';
   static const checkOutMovie = 'checkOutMovie';

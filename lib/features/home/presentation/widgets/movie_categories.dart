@@ -56,7 +56,7 @@ class _MovieCategoriesState extends State<MovieCategories> {
                 style: AppTypography.montserrat18W600,
               ),
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: 12.h),
             SizedBox(
               height: 31.h,
               child: genres.isEmpty

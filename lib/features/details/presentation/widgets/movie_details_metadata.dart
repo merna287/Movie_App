@@ -1,9 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movie_app/core/constants/app_assets.dart';
+import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
+import 'package:movie_app/features/home/presentation/widgets/localized_genre.dart';
 
 class MovieDetailsMetadata extends StatelessWidget {
   final String? year;
@@ -25,7 +28,7 @@ class MovieDetailsMetadata extends StatelessWidget {
       if (runtimeMinutes != null && runtimeMinutes! > 0)
         _segment(AppAssets.clockIcon, _formatRuntime(runtimeMinutes!)),
       if (genre != null && genre!.isNotEmpty)
-        _segment(AppAssets.filmIcon, genre!),
+        _segment(AppAssets.filmIcon, localizedGenreName(genre!)),
     ];
 
     if (segments.isEmpty) return const SizedBox.shrink();
@@ -74,8 +77,21 @@ class MovieDetailsMetadata extends StatelessWidget {
     final hours = totalMinutes ~/ 60;
     final minutes = totalMinutes % 60;
 
-    if (hours == 0) return '${minutes}m';
-    if (minutes == 0) return '${hours}h';
-    return '${hours}h ${minutes}m';
+    if (hours == 0) {
+      return LocaleKeys.runtimeMinuteShort.tr(
+        namedArgs: {'count': '$minutes'},
+      );
+    }
+    if (minutes == 0) {
+      return LocaleKeys.runtimeHourShort.tr(
+        namedArgs: {'count': '$hours'},
+      );
+    }
+    return LocaleKeys.runtimeHourMinuteShort.tr(
+      namedArgs: {
+        'hours': '$hours',
+        'minutes': '$minutes',
+      },
+    );
   }
 }

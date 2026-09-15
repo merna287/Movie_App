@@ -48,18 +48,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
           return SafeArea(
             child: ListView(
+              padding: EdgeInsets.only(bottom: 24.h),
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  child: SizedBox(height: 22.h),
-                ),
+                SizedBox(height: 16.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
                   child: const HomeHeader(),
                 ),
+                SizedBox(height: 16.h),
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 20.h, horizontal: 26.w),
+                  padding: EdgeInsets.symmetric(horizontal: 24.w),
                   child: GestureDetector(
                     behavior: HitTestBehavior.opaque,
                     onTap: () => Get.to(
@@ -71,18 +69,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: const HomeSearchBar(),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 15),
-                  child: const FeaturedMovieCarousel(),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 24.h),
-                  child: const MovieCategories(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: const HomeMovieSections(),
-                ),
+                SizedBox(height: 20.h),
+                const FeaturedMovieCarousel(),
+                SizedBox(height: 24.h),
+                const MovieCategories(),
+                SizedBox(height: 24.h),
+                const HomeMovieSections(),
               ],
             ),
           );

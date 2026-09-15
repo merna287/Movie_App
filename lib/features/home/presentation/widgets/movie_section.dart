@@ -35,7 +35,7 @@ class MovieSection extends StatelessWidget {
             onActionTap: onSeeAll,
           ),
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: 12.h),
         SizedBox(
           height: 231.h,
           child: movies.isEmpty
