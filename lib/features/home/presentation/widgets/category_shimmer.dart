@@ -16,7 +16,7 @@ class CategoryShimmer extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: ShimmerBox(width: 90.w, height: 22.h),
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: 12.h),
         SizedBox(
           height: 31.h,
           child: ListView.separated(
@@ -24,7 +24,7 @@ class CategoryShimmer extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             itemCount: _chipWidths.length,
-            separatorBuilder: (_, _) => SizedBox(width: 3.w),
+            separatorBuilder: (_, _) => SizedBox(width: 6.w),
             itemBuilder: (context, index) => ShimmerBox(
               width: _chipWidths[index].w,
               height: 31.h,

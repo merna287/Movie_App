@@ -3,11 +3,16 @@ import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:movie_app/core/common/widgets/profile_avatar.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
+import 'package:movie_app/features/favorite/presentation/cubit/favorite_cubit.dart';
+import 'package:movie_app/features/favorite/presentation/cubit/favorite_state.dart';
+import 'package:movie_app/features/favorite/presentation/views/favorite_screen.dart';
 import 'package:movie_app/features/home/presentation/widgets/shimmer_box.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -191,6 +196,80 @@ class _HomeHeaderState extends State<HomeHeader> {
               ),
             ],
           ),
+        ),
+        SizedBox(width: 12.w),
+        BlocBuilder<FavoriteCubit, FavoriteState>(
+          builder: (context, state) {
+            final count = switch (state) {
+              FavoriteLoaded(:final movies) => movies.length,
+              FavoriteRemoving(:final movies) => movies.length,
+              FavoriteToggling(:final movies) => movies.length,
+              _ => 0,
+            };
+            final hasFavorites = count > 0;
+
+            return GestureDetector(
+              onTap: () => Get.to(() => const FavoriteScreen()),
+              behavior: HitTestBehavior.opaque,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    width: 44.w,
+                    height: 44.w,
+                    decoration: const BoxDecoration(
+                      color: AppColors.headerButtonColor,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: Icon(
+                        hasFavorites
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        size: 20.w,
+                        color: hasFavorites
+                            ? AppColors.errorColor
+                            : AppColors.grayColor,
+                      ),
+                    ),
+                  ),
+                  PositionedDirectional(
+                    top: -2.h,
+                    end: -2.w,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 5.w,
+                        vertical: 1.h,
+                      ),
+                      constraints: BoxConstraints(
+                        minWidth: 18.w,
+                        minHeight: 18.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFFE02F),
+                        borderRadius: BorderRadius.circular(9.r),
+                        border: Border.all(
+                          color: AppColors.backgroundColor,
+                          width: 1.5.w,
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          count > 99 ? '99+' : '$count',
+                          style: TextStyle(
+                            color: AppColors.primaryTextColor,
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.w700,
+                            height: 1.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ],
     );

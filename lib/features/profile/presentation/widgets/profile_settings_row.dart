@@ -65,13 +65,16 @@ Container(
                     ),
                   ),
                 ),
-SvgPicture.asset(
-                  AppAssets.nextIcon,
-                  width: 20,
-                  height: 20,
-                  colorFilter: ColorFilter.mode(
-                    AppColors.grayColor,
-                    BlendMode.srcIn,
+                Transform.flip(
+                  flipX: Directionality.of(context) == TextDirection.rtl,
+                  child: SvgPicture.asset(
+                    AppAssets.nextIcon,
+                    width: 20,
+                    height: 20,
+                    colorFilter: ColorFilter.mode(
+                      AppColors.grayColor,
+                      BlendMode.srcIn,
+                    ),
                   ),
                 ),
               ],
@@ -79,7 +82,7 @@ SvgPicture.asset(
           ),
           if (showDivider)
             Padding(
-              padding: EdgeInsets.only(left: 70.w),
+              padding: EdgeInsetsDirectional.only(start: 70.w),
               child: Divider(
                 height: 1.h,
                 thickness: 1.h,

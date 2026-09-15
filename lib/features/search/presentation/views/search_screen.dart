@@ -75,7 +75,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       onSubmitted: context.read<SearchCubit>().search,
                       onClear: _clearSearch,
                       hintText: LocaleKeys.searchPlaceholder.tr(),
-                      showSearchIcon: false,
+                      showSearchIcon: true,
                       showTrailing: false,
                     ),
                   ),
@@ -229,6 +229,7 @@ class _SearchActorsView extends StatelessWidget {
         SizedBox(
           height: 96.h,
           child: ListView.separated(
+            primary: false,
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
             padding: EdgeInsets.symmetric(horizontal: 24.w),

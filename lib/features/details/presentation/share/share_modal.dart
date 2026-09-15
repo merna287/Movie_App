@@ -50,7 +50,7 @@ class ShareModal extends StatelessWidget {
           child: Column(
             children: [
               Align(
-                alignment: Alignment.topRight,
+                alignment: AlignmentDirectional.topEnd,
                 child: GestureDetector(
                   onTap: () => Navigator.of(context).pop(),
                   child: Container(

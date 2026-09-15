@@ -18,15 +18,21 @@ class HomeMovieSections extends StatelessWidget {
       builder: (context, state) {
         if (state is! HomeSuccess) return const SizedBox.shrink();
 
-        if (state.isGenreLoading && state.selectedGenreId != null) {
+        final showGenreShimmer = state.isGenreLoading &&
+            state.selectedGenreId != null &&
+            state.visiblePopularMovies.isEmpty &&
+            state.visibleTopRatedMovies.isEmpty &&
+            state.visibleTrendingMovies.isEmpty;
+
+        if (showGenreShimmer) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              MovieSectionShimmer(),
-              SizedBox(height: 16),
-              MovieSectionShimmer(),
-              SizedBox(height: 16),
-              MovieSectionShimmer(),
+            children: [
+              const MovieSectionShimmer(),
+              SizedBox(height: 24.h),
+              const MovieSectionShimmer(),
+              SizedBox(height: 24.h),
+              const MovieSectionShimmer(),
             ],
           );
         }
@@ -45,7 +51,7 @@ class HomeMovieSections extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: 24.h),
             MovieSection(
               title: LocaleKeys.topRated,
               movies: state.visibleTopRatedMovies,
@@ -57,7 +63,7 @@ class HomeMovieSections extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: 24.h),
             MovieSection(
               title: LocaleKeys.trending,
               movies: state.visibleTrendingMovies,

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/core/service/service_locator.dart';
+import 'package:movie_app/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:movie_app/features/home/presentation/cubit/home_cubit.dart';
 import 'package:movie_app/features/home/presentation/cubit/home_state.dart';
 import 'package:movie_app/features/home/presentation/widgets/featured_movie_carousel.dart';
@@ -14,13 +15,31 @@ import 'package:movie_app/features/home/presentation/widgets/movie_categories.da
 import 'package:movie_app/features/search/presentation/cubit/search_cubit.dart';
 import 'package:movie_app/features/search/presentation/views/search_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    getIt<HomeCubit>().loadHomeData();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider<HomeCubit>(
-      create: (_) => getIt<HomeCubit>()..loadHomeData(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(
+          value: getIt<HomeCubit>(),
+        ),
+        BlocProvider.value(
+          value: getIt<FavoriteCubit>(),
+        ),
+      ],
       child: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
           if (state is HomeInitial || state is HomeLoading) {
@@ -29,18 +48,16 @@ class HomeScreen extends StatelessWidget {
 
           return SafeArea(
             child: ListView(
+              padding: EdgeInsets.only(bottom: 24.h),
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  child: SizedBox(height: 22.h),
-                ),
+                SizedBox(height: 16.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
                   child: const HomeHeader(),
                 ),
+                SizedBox(height: 16.h),
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 20.h, horizontal: 26.w),
+                  padding: EdgeInsets.symmetric(horizontal: 24.w),
                   child: GestureDetector(
                     behavior: HitTestBehavior.opaque,
                     onTap: () => Get.to(
@@ -52,18 +69,12 @@ class HomeScreen extends StatelessWidget {
                     child: const HomeSearchBar(),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 15),
-                  child: const FeaturedMovieCarousel(),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 24.h),
-                  child: const MovieCategories(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: const HomeMovieSections(),
-                ),
+                SizedBox(height: 20.h),
+                const FeaturedMovieCarousel(),
+                SizedBox(height: 24.h),
+                const MovieCategories(),
+                SizedBox(height: 24.h),
+                const HomeMovieSections(),
               ],
             ),
           );

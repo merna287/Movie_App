@@ -35,7 +35,7 @@ class MovieSection extends StatelessWidget {
             onActionTap: onSeeAll,
           ),
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: 12.h),
         SizedBox(
           height: 231.h,
           child: movies.isEmpty
@@ -45,19 +45,20 @@ class MovieSection extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 )
-              : ListView.builder(
+              : ListView.separated(
+                  primary: false,
                   scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics(),
+                  ),
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
                   itemCount: movies.length,
+                  separatorBuilder: (_, _) => SizedBox(width: 12.w),
                   itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.only(left: index == 0 ? 0 : 12.w),
-                      child: SizedBox(
-                        width: 135.w,
-                        height: 231.h,
-                        child: MovieCard(movie: movies[index]),
-                      ),
+                    return SizedBox(
+                      width: 135.w,
+                      height: 231.h,
+                      child: MovieCard(movie: movies[index]),
                     );
                   },
                 ),

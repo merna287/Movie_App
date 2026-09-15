@@ -18,11 +18,18 @@ class MovieCategories extends StatefulWidget {
 
 class _MovieCategoriesState extends State<MovieCategories> {
   final ScrollController _scrollController = ScrollController();
+  List<GlobalKey> _itemKeys = [];
 
   @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+
+  void _syncItemKeys(int count) {
+    if (_itemKeys.length != count) {
+      _itemKeys = List.generate(count, (_) => GlobalKey());
+    }
   }
 
   @override
@@ -32,7 +39,8 @@ class _MovieCategoriesState extends State<MovieCategories> {
         if (state is! HomeSuccess) return const SizedBox.shrink();
 
         final genres = [null, ...state.genres];
-        final itemKeys = [for (var _ in genres) GlobalKey()];
+        _syncItemKeys(genres.length);
+        final itemKeys = _itemKeys;
         final foundIndex = state.selectedGenreId == null
             ? 0
             : genres.indexWhere((g) => g?.id == state.selectedGenreId);
@@ -48,7 +56,7 @@ class _MovieCategoriesState extends State<MovieCategories> {
                 style: AppTypography.montserrat18W600,
               ),
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: 12.h),
             SizedBox(
               height: 31.h,
               child: genres.isEmpty
@@ -58,20 +66,22 @@ class _MovieCategoriesState extends State<MovieCategories> {
                         style: AppTypography.montserrat12W500,
                       ),
                     )
-                  : ListView.builder(
+                  : ListView.separated(
+                      primary: false,
                       controller: _scrollController,
                       scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics(),
+                      ),
                       padding: EdgeInsets.symmetric(horizontal: 24.w),
                       itemCount: genres.length,
+                      separatorBuilder: (_, _) => SizedBox(width: 6.w),
                       itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.only(left: index == 0 ? 0 : 3.w),
-                          child: _buildCategory(
-                            index,
-                            genres,
-                            itemKeys,
-                            selectedIndex,
-                          ),
+                        return _buildCategory(
+                          index,
+                          genres,
+                          itemKeys,
+                          selectedIndex,
                         );
                       },
                     ),

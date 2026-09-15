@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/errors/failure.dart';
+import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/network/api_config.dart';
 import 'package:movie_app/features/details/domain/entities/cast_member.dart';
 import 'package:movie_app/features/details/domain/entities/crew_member.dart';
@@ -19,9 +21,7 @@ class MovieDetailsCubit extends Cubit<MovieDetailsState> {
     if (ApiConfig.readAccessToken.isEmpty) {
       debugPrint('TMDB token configured: false');
       emit(
-        const MovieDetailsError(
-          'TMDB token is missing. Add it to your .env file.',
-        ),
+        MovieDetailsError(LocaleKeys.tmdbTokenMissing.tr()),
       );
       return;
     }

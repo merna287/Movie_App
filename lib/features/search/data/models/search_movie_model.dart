@@ -39,6 +39,11 @@ class SearchMovieModel {
     );
   }
 
+  bool get isCompleteForDisplay =>
+      id > 0 &&
+      title.trim().isNotEmpty &&
+      ApiEndpoints.isValidImagePath(posterPath);
+
   Movie toEntity({String genre = ''}) {
     return Movie(
       id: id,

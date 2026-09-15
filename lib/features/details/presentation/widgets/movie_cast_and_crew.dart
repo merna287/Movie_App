@@ -75,7 +75,9 @@ class MovieCastAndCrew extends StatelessWidget {
         itemBuilder: (context, index) {
           final member = cast[index];
           return Padding(
-            padding: EdgeInsets.only(left: index == 0 ? 0 : 14.w),
+            padding: EdgeInsetsDirectional.only(
+              start: index == 0 ? 0 : 14.w,
+            ),
             child: SizedBox(
               width: 72.w,
               child: Column(

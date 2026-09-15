@@ -28,10 +28,13 @@ class AppScreenHeader extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.r),
             ),
             child: Center(
-              child: SvgPicture.asset(
-                AppAssets.backIcon,
-                width: 20.w,
-                height: 20.w,
+              child: Transform.flip(
+                flipX: Directionality.of(context) == TextDirection.rtl,
+                child: SvgPicture.asset(
+                  AppAssets.backIcon,
+                  width: 20.w,
+                  height: 20.w,
+                ),
               ),
             ),
           ),

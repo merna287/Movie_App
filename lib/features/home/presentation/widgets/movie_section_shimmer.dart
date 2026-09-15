@@ -21,7 +21,7 @@ class MovieSectionShimmer extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: 12.h),
         SizedBox(
           height: 231.h,
           child: ListView.separated(

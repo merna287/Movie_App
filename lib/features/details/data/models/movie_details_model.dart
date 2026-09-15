@@ -44,6 +44,12 @@ class MovieDetailsModel {
     );
   }
 
+  bool get isCompleteForDisplay =>
+      id > 0 &&
+      title.trim().isNotEmpty &&
+      (ApiEndpoints.isValidImagePath(posterPath) ||
+          ApiEndpoints.isValidImagePath(backdropPath));
+
   MovieDetails toEntity() {
     final imagePath = backdropPath ?? posterPath;
 

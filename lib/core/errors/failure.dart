@@ -64,15 +64,17 @@ String failureMessage(Failure failure) {
   if (failure is ServerFailure) {
     final statusCode = failure.statusCode;
     if (statusCode == 401 || statusCode == 403) {
-      return 'TMDB authentication failed. Check your API token.';
+      return LocaleKeys.tmdbAuthFailed.tr();
     }
     if (statusCode != null) {
-      return 'TMDB request failed (HTTP $statusCode).';
+      return LocaleKeys.tmdbRequestFailed.tr(
+        namedArgs: {'code': '$statusCode'},
+      );
     }
     return failure.serverMessage ?? LocaleKeys.unexpectedError.tr();
   }
   if (failure is ParsingFailure) {
-    return 'Failed to parse TMDB response.';
+    return LocaleKeys.tmdbParseFailed.tr();
   }
   return LocaleKeys.unexpectedError.tr();
 }

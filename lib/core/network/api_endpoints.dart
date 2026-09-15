@@ -23,8 +23,14 @@ class ApiEndpoints {
 
   static const String imageBaseUrl = 'https://image.tmdb.org/t/p';
 
+  static bool isValidImagePath(String? path) {
+    if (path == null) return false;
+    final trimmed = path.trim();
+    return trimmed.isNotEmpty && trimmed.startsWith('/');
+  }
+
   static String imageUrl(String path, {String size = 'w500'}) =>
-      path.isEmpty ? '' : '$imageBaseUrl/$size$path';
+      isValidImagePath(path) ? '$imageBaseUrl/$size$path' : '';
 
   static String favoriteMovies(String accountId) =>
       '$baseUrl/account/$accountId/favorite/movies';

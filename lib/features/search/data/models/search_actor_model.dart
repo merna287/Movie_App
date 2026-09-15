@@ -25,9 +25,15 @@ class SearchActorModel {
       knownFor: rawKnownFor
           .whereType<Map<String, dynamic>>()
           .map(SearchMovieModel.fromJson)
+          .where((movie) => movie.isCompleteForDisplay)
           .toList(),
     );
   }
+
+  bool get isCompleteForDisplay =>
+      id > 0 &&
+      name.trim().isNotEmpty &&
+      ApiEndpoints.isValidImagePath(profilePath);
 
   Actor toEntity(String Function(List<int> genreIds) genreMapper) {
     return Actor(

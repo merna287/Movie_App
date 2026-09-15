@@ -23,6 +23,11 @@ class CastMemberModel {
     );
   }
 
+  bool get isCompleteForDisplay =>
+      id > 0 &&
+      name.trim().isNotEmpty &&
+      ApiEndpoints.isValidImagePath(profilePath);
+
   CastMember toEntity() {
     return CastMember(
       id: id,
