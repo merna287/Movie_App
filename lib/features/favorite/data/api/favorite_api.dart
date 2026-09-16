@@ -19,7 +19,13 @@ class FavoriteApi {
   ) {
     return safeApiCall(() async {
       const token = ApiConfig.readAccessToken;
-      final uri = Uri.parse(ApiEndpoints.favoriteMovies(accountId));
+      final uri = Uri.parse(ApiEndpoints.favoriteMovies(accountId)).replace(
+        queryParameters: const {
+          'page': '1',
+          'language': 'en-US',
+          'sort_by': 'created_at.desc',
+        },
+      );
       final response = await _client.get(
         uri,
         headers: {

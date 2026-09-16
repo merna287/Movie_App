@@ -89,6 +89,15 @@ class _MovieDetailsView extends StatefulWidget {
 
 class _MovieDetailsViewState extends State<_MovieDetailsView> {
   @override
+  void initState() {
+    super.initState();
+    final favoriteState = getIt<FavoriteCubit>().state;
+    if (favoriteState is FavoriteInitial || favoriteState is FavoriteError) {
+      getIt<FavoriteCubit>().load();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<MovieDetailsCubit, MovieDetailsState>(
       listener: (context, state) {
@@ -116,9 +125,6 @@ class _MovieDetailsViewState extends State<_MovieDetailsView> {
 
     final movie = widget.movie;
     final details = state is MovieDetailsLoaded ? state.details : null;
-    final favoriteCubit = context.watch<FavoriteCubit>();
-    final isFavorite = favoriteCubit.isFavorite(movie.id);
-    final favoriteBusy = favoriteCubit.isPending(movie.id);
 
     final String year = (details?.releaseYear.isNotEmpty ?? false)
         ? details!.releaseYear
@@ -163,15 +169,19 @@ class _MovieDetailsViewState extends State<_MovieDetailsView> {
             MovieDetailsLoaded() => const SizedBox.shrink(),
           },
           SizedBox(height: 6.h),
-          MovieActionButtons(
-            isFavorite: isFavorite,
-            favoriteBusy: favoriteBusy,
-            onFavoriteToggle: () =>
-                context.read<FavoriteCubit>().toggleMovie(movie),
-            onPlay: state is MovieDetailsLoaded
-                ? () => _handlePlay(context, state.trailer)
-                : null,
-            onShare: () => _handleShare(context),
+          BlocBuilder<FavoriteCubit, FavoriteState>(
+            builder: (context, favoriteState) {
+              final favoriteCubit = context.read<FavoriteCubit>();
+              return MovieActionButtons(
+                isFavorite: favoriteCubit.isFavorite(movie.id),
+                favoriteBusy: favoriteCubit.isPending(movie.id),
+                onFavoriteToggle: () => favoriteCubit.toggleMovie(movie),
+                onPlay: state is MovieDetailsLoaded
+                    ? () => _handlePlay(context, state.trailer)
+                    : null,
+                onShare: () => _handleShare(context),
+              );
+            },
           ),
           SizedBox(height: 28.h),
           Padding(
