@@ -18,10 +18,12 @@ class FeaturedMovieCarousel extends StatelessWidget {
         return switch (state) {
           HomeInitial() || HomeLoading() => const _CarouselLoading(),
           HomeError(:final message) => _CarouselError(message: message),
-          HomeSuccess(:final movies) =>
-            movies.isEmpty
+          HomeSuccess() when state.isGenreLoading && state.selectedGenreId != null =>
+            const _CarouselLoading(),
+          HomeSuccess(:final visibleMovies) =>
+            visibleMovies.isEmpty
                 ? const _CarouselEmpty()
-                : _CarouselView(movies: movies),
+                : _CarouselView(movies: visibleMovies),
         };
       },
     );
@@ -130,16 +132,24 @@ class _CarouselViewState extends State<_CarouselView> {
   @override
   void didUpdateWidget(covariant _CarouselView oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.movies.length != widget.movies.length) {
-      _itemCount = widget.movies.length;
-      _currentPage = 0;
-      _forward = true;
-      _pageController.dispose();
-      _pageController = PageController(
-        viewportFraction: (_cardWidth + _slideGap) / _screenWidth,
-      );
-      _startAutoPlay();
+    if (_sameMovieList(oldWidget.movies, widget.movies)) return;
+
+    _itemCount = widget.movies.length;
+    _currentPage = 0;
+    _forward = true;
+    _pageController.dispose();
+    _pageController = PageController(
+      viewportFraction: (_cardWidth + _slideGap) / _screenWidth,
+    );
+    _startAutoPlay();
+  }
+
+  bool _sameMovieList(List<Movie> previous, List<Movie> current) {
+    if (previous.length != current.length) return false;
+    for (var i = 0; i < previous.length; i++) {
+      if (previous[i].id != current[i].id) return false;
     }
+    return true;
   }
 
   @override

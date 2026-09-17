@@ -177,6 +177,10 @@ void main() {
     final loadingState = cubit.state as HomeSuccess;
     expect(loadingState.isGenreLoading, isTrue);
     expect(loadingState.selectedGenreId, 28);
+    expect(loadingState.visiblePopularMovies, isEmpty);
+    expect(loadingState.visibleTopRatedMovies, isEmpty);
+    expect(loadingState.visibleTrendingMovies, isEmpty);
+    expect(loadingState.visibleMovies, isEmpty);
     await future;
     expect((cubit.state as HomeSuccess).isGenreLoading, isFalse);
   });
@@ -290,11 +294,27 @@ void main() {
 
   test('switching All → Action → Comedy → All works correctly', () async {
     await cubit.loadHomeData();
+    final allState = cubit.state as HomeSuccess;
+    expect(allState.visibleMovies.map((m) => m.id).toList(), [1]);
+
     await cubit.selectGenre(28);
     expect((cubit.state as HomeSuccess).visiblePopularMovies.length, 2);
+    expect(
+      (cubit.state as HomeSuccess).visibleMovies.map((m) => m.id).toList(),
+      [100, 101],
+    );
 
     await cubit.selectGenre(35);
     expect((cubit.state as HomeSuccess).visiblePopularMovies.length, 1);
+    expect(
+      (cubit.state as HomeSuccess).visibleMovies.map((m) => m.id).toList(),
+      [110],
+    );
+    expect(
+      (cubit.state as HomeSuccess).visiblePopularMovies
+          .every((movie) => movie.genreIds.contains(35)),
+      isTrue,
+    );
 
     await cubit.selectGenre(null);
     final state = cubit.state as HomeSuccess;
@@ -302,6 +322,31 @@ void main() {
     expect(state.visiblePopularMovies.length, 3);
     expect(state.visibleTopRatedMovies.length, 2);
     expect(state.visibleTrendingMovies.length, 2);
+    expect(state.visibleMovies.map((m) => m.id).toList(), [1]);
+  });
+
+  test('selectGenre replaces previous category movies when switching genres', () async {
+    await cubit.loadHomeData();
+    await cubit.selectGenre(28);
+    expect(
+      (cubit.state as HomeSuccess).visiblePopularMovies
+          .every((movie) => movie.genreIds.contains(28)),
+      isTrue,
+    );
+
+    await cubit.selectGenre(35);
+    final comedyState = cubit.state as HomeSuccess;
+    expect(comedyState.selectedGenreId, 35);
+    expect(comedyState.visiblePopularMovies.map((m) => m.id).toList(), [110]);
+    expect(
+      comedyState.visiblePopularMovies
+          .every((movie) => movie.genreIds.contains(35)),
+      isTrue,
+    );
+    expect(
+      comedyState.visiblePopularMovies.any((movie) => movie.genreIds.contains(28)),
+      isFalse,
+    );
   });
 
   test(

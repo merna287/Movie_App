@@ -106,7 +106,15 @@ class HomeCubit extends Cubit<HomeState> {
     // All: no API request, restore the original data.
     if (genreId == null) {
       if (current.selectedGenreId == null) return;
-      emit(current.copyWith(clearSelectedGenreId: true, isGenreLoading: false));
+      emit(
+        current.copyWith(
+          clearSelectedGenreId: true,
+          isGenreLoading: false,
+          filteredPopularMovies: const [],
+          filteredTopRatedMovies: const [],
+          filteredTrendingMovies: const [],
+        ),
+      );
       return;
     }
 
@@ -125,17 +133,14 @@ class HomeCubit extends Cubit<HomeState> {
       return;
     }
 
-    // Filter immediately from loaded movies using their genreIds, then fetch
-    // the full genre-specific lists from the API in the background.
+    // Show loading while keeping the selected category visible.
     emit(
       current.copyWith(
         selectedGenreId: genreId,
         isGenreLoading: true,
-        filteredPopularMovies: _filterMoviesByGenre(current.popularMovies, genreId),
-        filteredTopRatedMovies:
-            _filterMoviesByGenre(current.topRatedMovies, genreId),
-        filteredTrendingMovies:
-            _filterMoviesByGenre(current.trendingMovies, genreId),
+        filteredPopularMovies: const [],
+        filteredTopRatedMovies: const [],
+        filteredTrendingMovies: const [],
       ),
     );
 
@@ -194,10 +199,6 @@ class HomeCubit extends Cubit<HomeState> {
         filteredTrendingMovies: popularMovies,
       ),
     );
-  }
-
-  List<Movie> _filterMoviesByGenre(List<Movie> movies, int genreId) {
-    return movies.where((movie) => movie.genreIds.contains(genreId)).toList();
   }
 }
 

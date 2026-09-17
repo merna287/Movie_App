@@ -18,13 +18,7 @@ class HomeMovieSections extends StatelessWidget {
       builder: (context, state) {
         if (state is! HomeSuccess) return const SizedBox.shrink();
 
-        final showGenreShimmer = state.isGenreLoading &&
-            state.selectedGenreId != null &&
-            state.visiblePopularMovies.isEmpty &&
-            state.visibleTopRatedMovies.isEmpty &&
-            state.visibleTrendingMovies.isEmpty;
-
-        if (showGenreShimmer) {
+        if (state.isGenreLoading && state.selectedGenreId != null) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
