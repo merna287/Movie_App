@@ -107,7 +107,7 @@ class HomeCubit extends Cubit<HomeState> {
     if (genreId == null) {
       if (current.selectedGenreId == null) return;
       emit(
-        current.copyWith(
+        (state as HomeSuccess).copyWith(
           clearSelectedGenreId: true,
           isGenreLoading: false,
           filteredPopularMovies: const [],
@@ -122,7 +122,7 @@ class HomeCubit extends Cubit<HomeState> {
     final cached = _genreCache[genreId];
     if (cached != null) {
       emit(
-        current.copyWith(
+        (state as HomeSuccess).copyWith(
           selectedGenreId: genreId,
           isGenreLoading: false,
           filteredPopularMovies: cached.popular,
@@ -135,7 +135,7 @@ class HomeCubit extends Cubit<HomeState> {
 
     // Show loading while keeping the selected category visible.
     emit(
-      current.copyWith(
+      (state as HomeSuccess).copyWith(
         selectedGenreId: genreId,
         isGenreLoading: true,
         filteredPopularMovies: const [],
@@ -144,7 +144,7 @@ class HomeCubit extends Cubit<HomeState> {
       ),
     );
 
-    final genres = current.genres;
+    final genres = (state as HomeSuccess).genres;
 
     // Popular and Top Rated are independent Discover queries: run them
     // concurrently so the total wait is roughly a single round trip instead of
@@ -174,8 +174,15 @@ class HomeCubit extends Cubit<HomeState> {
       return;
     }
 
-    final popularMovies = results[0].getRight().toNullable()!;
-    final topRatedMovies = results[1].getRight().toNullable()!;
+    final rawPopularMovies = results[0].getRight().toNullable()!;
+    final rawTopRatedMovies = results[1].getRight().toNullable()!;
+
+    final popularMovies = rawPopularMovies
+        .where((movie) => movie.genreIds.contains(genreId))
+        .toList();
+    final topRatedMovies = rawTopRatedMovies
+        .where((movie) => movie.genreIds.contains(genreId))
+        .toList();
 
     // Cache even if the user already moved to another category, so revisiting
     // this genre is instant.
@@ -191,7 +198,7 @@ class HomeCubit extends Cubit<HomeState> {
     if (latest is! HomeSuccess || latest.selectedGenreId != genreId) return;
 
     emit(
-      current.copyWith(
+      latest.copyWith(
         selectedGenreId: genreId,
         isGenreLoading: false,
         filteredPopularMovies: popularMovies,

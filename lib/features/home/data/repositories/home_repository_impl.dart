@@ -66,25 +66,49 @@ class HomeRepositoryImpl implements HomeRepository {
       sortBy: sortBy,
       minVoteCount: minVoteCount,
     );
-    return _mapMovieResult(result, genres);
+    return _mapMovieResult(result, genres, targetGenreId: genreId);
   }
 
   AppResult<List<Movie>> _mapMovieResult(
     AppResult<List<MovieModel>> result,
-    List<Genre> genres,
-  ) {
+    List<Genre> genres, {
+    int? targetGenreId,
+  }) {
     return result.fold(
       (failure) => Left(failure),
       (models) => Right(
         models
-            .where((model) => model.isCompleteForDisplay)
-            .map((model) => model.toEntity(genre: _primaryGenre(model, genres)))
+            .where((model) =>
+                model.isCompleteForDisplay &&
+                (targetGenreId == null ||
+                    model.genreIds.contains(targetGenreId)))
+            .map(
+              (model) => model.toEntity(
+                genre: _primaryGenre(
+                  model,
+                  genres,
+                  targetGenreId: targetGenreId,
+                ),
+              ),
+            )
             .toList(),
       ),
     );
   }
 
-  String _primaryGenre(MovieModel model, List<Genre> genres) {
+  String _primaryGenre(
+    MovieModel model,
+    List<Genre> genres, {
+    int? targetGenreId,
+  }) {
+    if (targetGenreId != null) {
+      for (final genre in genres) {
+        if (genre.id == targetGenreId &&
+            model.genreIds.contains(targetGenreId)) {
+          return genre.name;
+        }
+      }
+    }
     for (final id in model.genreIds) {
       for (final genre in genres) {
         if (genre.id == id) {

@@ -31,7 +31,10 @@ class MovieModel {
       backdropPath: json['backdrop_path'],
       voteAverage: (json['vote_average'] ?? 0).toDouble(),
       releaseDate: json['release_date'] ?? '',
-      genreIds: (json['genre_ids'] as List? ?? []).cast<int>(),
+      genreIds: (json['genre_ids'] as List? ?? [])
+          .whereType<num>()
+          .map((id) => id.toInt())
+          .toList(),
     );
   }
 
