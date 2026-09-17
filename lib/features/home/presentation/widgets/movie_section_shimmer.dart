@@ -55,8 +55,9 @@ class _MovieCardShimmer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              flex: 3,
+            SizedBox(
+              width: 135.w,
+              height: 178.h,
               child: Stack(
                 fit: StackFit.expand,
                 children: [
@@ -70,7 +71,6 @@ class _MovieCardShimmer extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 1,
               child: Padding(
                 padding: EdgeInsets.fromLTRB(8.w, 4.h, 8.w, 4.h),
                 child: Column(

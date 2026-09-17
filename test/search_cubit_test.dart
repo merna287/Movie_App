@@ -142,6 +142,16 @@ void main() {
     expect(actorState.movies.first.title, isNotEmpty);
   });
 
+  test('query with actors shows actor results even when topIsActor is false', () async {
+    repository.actors = [_actor(1), _actor(2)];
+    repository.results = [_movie(1, title: 'Movie 1')];
+    repository.topIsActor = false;
+
+    await cubit.search('john');
+
+    expect(cubit.state, isA<SearchActorResults>());
+  });
+
   test('empty query stays idle and does not call the API', () async {
     await cubit.search('   ');
 

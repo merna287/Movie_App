@@ -130,6 +130,53 @@ class SearchApi {
     });
   }
 
+  Future<AppResult<List<SearchActorModel>>> fetchSearchPeople(
+    String query, {
+    int page = 1,
+  }) {
+    return safeApiCall(() async {
+      const token = ApiConfig.readAccessToken;
+
+      final uri = Uri.parse(ApiEndpoints.searchPerson).replace(
+        queryParameters: <String, String>{
+          'query': query,
+          'include_adult': 'false',
+          'page': '$page',
+        },
+      );
+
+      final response = await _client.get(
+        uri,
+        headers: <String, String>{
+          'Authorization': 'Bearer $token',
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode != 200) {
+        throw ServerException(
+          statusCode: response.statusCode,
+          responseBody: response.body,
+        );
+      }
+
+      final decoded = jsonDecode(response.body) as Map<String, dynamic>;
+      final rawResults = decoded['results'];
+
+      if (rawResults is! List) {
+        throw const ParsingException('Response is missing "results" array');
+      }
+
+      final actors = rawResults
+          .whereType<Map<String, dynamic>>()
+          .map(SearchActorModel.fromJson)
+          .toList();
+
+      debugPrint('TMDB search person "$query": ${actors.length} actors fetched');
+      return actors;
+    });
+  }
+
   Future<AppResult<List<GenreModel>>> fetchMovieGenres() {
     return safeApiCall(() async {
       const token = ApiConfig.readAccessToken;
