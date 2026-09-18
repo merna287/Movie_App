@@ -87,13 +87,9 @@ The app includes a Gemini-powered AI movie assistant that can:
 * Copy AI responses
 * Support Arabic and English
 
-<h2>🎥 Demo Video</h2>
+## 🎥 Demo Video
 
-<p align="center">
-  <video src="assets/screenshots/video6.mp4" controls width="600">
-  Your browser does not support the video tag.
-  </video>
-</p>
+[▶️ Watch CINEMAX Demo Video](https://drive.google.com/file/d/1rW8JIRShpBU8Oe5xPt64ZE2wfLkwo7PK/view?usp=sharing)
 
 ## ✨ Features
 
