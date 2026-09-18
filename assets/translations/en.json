@@ -222,5 +222,9 @@
   "aiInvalidApiKey": "Invalid Gemini API key.",
   "aiChatError": "Unable to reach Gemini. Please try again.",
   "aiThinking": "Thinking...",
-  "aiChatEmptyHint": "Ask about movie recommendations, genres, actors, or what to watch tonight."
+  "aiChatEmptyHint": "Ask about movie recommendations, genres, actors, or what to watch tonight.",
+  "aiEdit": "Edit",
+  "aiCopy": "Copy",
+  "aiCopied": "Copied to clipboard",
+  "aiEditingMessage": "Editing message"
 }

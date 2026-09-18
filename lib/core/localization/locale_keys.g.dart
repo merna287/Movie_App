@@ -227,4 +227,8 @@ abstract class  LocaleKeys {
   static const aiChatError = 'aiChatError';
   static const aiThinking = 'aiThinking';
   static const aiChatEmptyHint = 'aiChatEmptyHint';
+  static const aiEdit = 'aiEdit';
+  static const aiCopy = 'aiCopy';
+  static const aiCopied = 'aiCopied';
+  static const aiEditingMessage = 'aiEditingMessage';
 }
