@@ -113,8 +113,12 @@ class _SearchScreenState extends State<SearchScreen> {
                     SearchLoading() => const SearchShimmer(),
                     SearchMovieResults(:final movies) =>
                       _SearchMovieResultsView(movies: movies),
-                    SearchActorResults(:final actors, :final movies) =>
-                      _SearchActorsView(actors: actors, movies: movies),
+                    SearchActorResults(:final actors, :final movies, :final query) =>
+                      _SearchActorsView(
+                        actors: actors,
+                        movies: movies,
+                        query: query,
+                      ),
                     SearchEmpty() => const SearchNoResultsView(),
                     SearchError(:final message) => _SearchErrorView(
                       message: message,
@@ -212,8 +216,13 @@ class _SearchMovieResultsView extends StatelessWidget {
 class _SearchActorsView extends StatelessWidget {
   final List<Actor> actors;
   final List<Movie> movies;
+  final String query;
 
-  const _SearchActorsView({required this.actors, required this.movies});
+  const _SearchActorsView({
+    required this.actors,
+    required this.movies,
+    this.query = '',
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -222,27 +231,27 @@ class _SearchActorsView extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 24.h),
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: HomeSectionHeader(titleKey: LocaleKeys.actors),
         ),
         SizedBox(height: 14.h),
         SizedBox(
-          height: 96.h,
+          height: 100.h,
           child: ListView.separated(
             primary: false,
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
             itemCount: actors.length,
-            separatorBuilder: (_, _) => SizedBox(width: 12.w),
+            separatorBuilder: (_, _) => SizedBox(width: 14.w),
             itemBuilder: (context, index) =>
-                SearchActorTile(actor: actors[index]),
+                SearchActorTile(actor: actors[index], query: query),
           ),
         ),
         if (movies.isNotEmpty) ...[
           SizedBox(height: 24.h),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: HomeSectionHeader(
               titleKey: LocaleKeys.movieRelated,
               actionKey: LocaleKeys.seeAll,

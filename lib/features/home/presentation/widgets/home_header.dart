@@ -10,6 +10,7 @@ import 'package:movie_app/core/common/widgets/profile_avatar.dart';
 import 'package:movie_app/core/localization/locale_keys.g.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/app_typography.dart';
+import 'package:movie_app/features/ai/presentation/views/gemini_chat_screen.dart';
 import 'package:movie_app/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:movie_app/features/favorite/presentation/cubit/favorite_state.dart';
 import 'package:movie_app/features/favorite/presentation/views/favorite_screen.dart';
@@ -133,6 +134,10 @@ class _HomeHeaderState extends State<HomeHeader> {
         : '(no username on account)';
   }
 
+  void _openAiChat() {
+    Get.to(() => const GeminiChatScreen());
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = _user;
@@ -198,6 +203,26 @@ class _HomeHeaderState extends State<HomeHeader> {
           ),
         ),
         SizedBox(width: 12.w),
+        GestureDetector(
+          onTap: _openAiChat,
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+            width: 44.w,
+            height: 44.w,
+            decoration: const BoxDecoration(
+              color: AppColors.headerButtonColor,
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: Icon(
+                Icons.auto_awesome_rounded,
+                size: 20.w,
+                color: AppColors.primaryColor,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(width: 8.w),
         BlocBuilder<FavoriteCubit, FavoriteState>(
           builder: (context, state) {
             final count = switch (state) {

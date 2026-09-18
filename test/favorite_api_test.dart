@@ -17,11 +17,14 @@ void main() {
   test('fetchFavoriteMovies maps the results list', () async {
     final client = MockClient((request) async {
       expect(request.url.path, '/3/account/12345/favorite/movies');
+      expect(request.url.queryParameters['page'], '1');
+      expect(request.url.queryParameters['language'], 'en-US');
       return favoriteResponse(
         jsonEncode({
           'results': [
             {
               'id': 550,
+              'name': 'Fight Club',
               'title': 'Fight Club',
               'overview': 'An insomniac office worker.',
               'poster_path': '/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg',

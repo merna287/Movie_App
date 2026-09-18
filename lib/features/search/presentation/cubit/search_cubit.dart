@@ -139,8 +139,8 @@ class SearchCubit extends Cubit<SearchState> {
   SearchState _resultState(String query, SearchResults results) {
     if (results.isEmpty) return SearchEmpty(query: query);
 
-    // A person as the top-ranked hit drives the Actors + Movie Related view.
-    if (results.topIsActor && results.actors.isNotEmpty) {
+    // If actors are found for the query, show the Actors section + Movie Related.
+    if (results.actors.isNotEmpty) {
       return SearchActorResults(
         query: query,
         actors: results.actors,

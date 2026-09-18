@@ -213,5 +213,18 @@
   "showNotifications": "Show Notifications",
   "exceptions": "Exceptions",
   "english": "English",
-  "arabic": "Arabic"
+  "arabic": "Arabic",
+  "aiAssistant": "Movie AI",
+  "aiChatHint": "Ask about movies...",
+  "aiSend": "Send",
+  "aiEmptyMessage": "Please enter a message",
+  "aiGeminiApiKeyMissing": "Gemini API key is missing. Add GEMINI_API_KEY to your .env file.",
+  "aiInvalidApiKey": "Invalid Gemini API key.",
+  "aiChatError": "Unable to reach Gemini. Please try again.",
+  "aiThinking": "Thinking...",
+  "aiChatEmptyHint": "Ask about movie recommendations, genres, actors, or what to watch tonight.",
+  "aiEdit": "Edit",
+  "aiCopy": "Copy",
+  "aiCopied": "Copied to clipboard",
+  "aiEditingMessage": "Editing message"
 }

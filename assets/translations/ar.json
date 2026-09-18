@@ -213,5 +213,18 @@
   "showNotifications": "إظهار الإشعارات",
   "exceptions": "الاستثناءات",
   "english": "الإنجليزية",
-  "arabic": "العربية"
+  "arabic": "العربية",
+  "aiAssistant": "مساعد الأفلام",
+  "aiChatHint": "اسأل عن الأفلام...",
+  "aiSend": "إرسال",
+  "aiEmptyMessage": "يرجى إدخال رسالة",
+  "aiGeminiApiKeyMissing": "مفتاح Gemini API مفقود. أضف GEMINI_API_KEY إلى ملف .env.",
+  "aiInvalidApiKey": "مفتاح Gemini API غير صالح.",
+  "aiChatError": "تعذر الوصول إلى Gemini. يرجى المحاولة مرة أخرى.",
+  "aiThinking": "جارٍ التفكير...",
+  "aiChatEmptyHint": "اسأل عن توصيات الأفلام أو الأنواع أو الممثلين أو ما يمكنك مشاهدته الليلة.",
+  "aiEdit": "تعديل",
+  "aiCopy": "نسخ",
+  "aiCopied": "تم النسخ إلى الحافظة",
+  "aiEditingMessage": "تعديل الرسالة"
 }

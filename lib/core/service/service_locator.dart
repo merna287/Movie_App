@@ -1,4 +1,9 @@
 import 'package:get_it/get_it.dart';
+import 'package:movie_app/features/ai/data/api/gemini_api.dart';
+import 'package:movie_app/features/ai/data/repositories/gemini_repository_impl.dart';
+import 'package:movie_app/features/ai/data/services/movie_context_enricher.dart';
+import 'package:movie_app/features/ai/domain/repositories/gemini_repository.dart';
+import 'package:movie_app/features/ai/presentation/cubit/gemini_chat_cubit.dart';
 import 'package:movie_app/features/auth/get_started/data/data_sources/facebook_auth_datasource.dart';
 import 'package:movie_app/features/details/data/api/details_api.dart';
 import 'package:movie_app/features/details/data/repositories/details_repository_impl.dart';
@@ -117,5 +122,21 @@ void setupServiceLocator() {
   getIt.registerLazySingleton<ProfileDataSource>(() => ProfileDataSource());
   getIt.registerLazySingleton<ProfileRepository>(
     () => ProfileRepositoryImpl(getIt<ProfileDataSource>()),
+  );
+  getIt.registerLazySingleton<GeminiApi>(() => GeminiApi());
+  getIt.registerLazySingleton<MovieContextEnricher>(
+    () => MovieContextEnricher(
+      getIt<SearchRepository>(),
+      getIt<DetailsRepository>(),
+    ),
+  );
+  getIt.registerLazySingleton<GeminiRepository>(
+    () => GeminiRepositoryImpl(
+      getIt<GeminiApi>(),
+      getIt<MovieContextEnricher>(),
+    ),
+  );
+  getIt.registerFactory<GeminiChatCubit>(
+    () => GeminiChatCubit(getIt<GeminiRepository>()),
   );
 }

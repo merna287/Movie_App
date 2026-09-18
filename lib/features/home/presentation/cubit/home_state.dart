@@ -52,25 +52,44 @@ final class HomeSuccess extends HomeState {
       popularMovies: popularMovies,
       topRatedMovies: topRatedMovies,
       trendingMovies: trendingMovies,
-      selectedGenreId: clearSelectedGenreId ? null : selectedGenreId,
-      filteredPopularMovies:
-          filteredPopularMovies ?? this.filteredPopularMovies,
-      filteredTopRatedMovies:
-          filteredTopRatedMovies ?? this.filteredTopRatedMovies,
-      filteredTrendingMovies:
-          filteredTrendingMovies ?? this.filteredTrendingMovies,
+      selectedGenreId:
+          clearSelectedGenreId ? null : (selectedGenreId ?? this.selectedGenreId),
+      filteredPopularMovies: clearSelectedGenreId
+          ? const <Movie>[]
+          : (filteredPopularMovies ?? this.filteredPopularMovies),
+      filteredTopRatedMovies: clearSelectedGenreId
+          ? const <Movie>[]
+          : (filteredTopRatedMovies ?? this.filteredTopRatedMovies),
+      filteredTrendingMovies: clearSelectedGenreId
+          ? const <Movie>[]
+          : (filteredTrendingMovies ?? this.filteredTrendingMovies),
       isGenreLoading: isGenreLoading ?? this.isGenreLoading,
     );
   }
 
-  List<Movie> get visiblePopularMovies =>
-      selectedGenreId == null ? popularMovies : filteredPopularMovies;
+  List<Movie> get visibleMovies => selectedGenreId == null
+      ? movies
+      : filteredPopularMovies
+          .where((m) => m.genreIds.contains(selectedGenreId!))
+          .toList();
 
-  List<Movie> get visibleTopRatedMovies =>
-      selectedGenreId == null ? topRatedMovies : filteredTopRatedMovies;
+  List<Movie> get visiblePopularMovies => selectedGenreId == null
+      ? popularMovies
+      : filteredPopularMovies
+          .where((m) => m.genreIds.contains(selectedGenreId!))
+          .toList();
 
-  List<Movie> get visibleTrendingMovies =>
-      selectedGenreId == null ? trendingMovies : filteredTrendingMovies;
+  List<Movie> get visibleTopRatedMovies => selectedGenreId == null
+      ? topRatedMovies
+      : filteredTopRatedMovies
+          .where((m) => m.genreIds.contains(selectedGenreId!))
+          .toList();
+
+  List<Movie> get visibleTrendingMovies => selectedGenreId == null
+      ? trendingMovies
+      : filteredTrendingMovies
+          .where((m) => m.genreIds.contains(selectedGenreId!))
+          .toList();
 }
 
 final class HomeError extends HomeState {

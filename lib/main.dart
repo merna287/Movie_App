@@ -28,13 +28,25 @@ class _AppScrollBehavior extends MaterialScrollBehavior {
       };
 }
 
+Future<bool> _resolveStartupAuthentication() async {
+  final auth = FirebaseAuth.instance;
+
+  if (auth.currentUser != null) {
+    return true;
+  }
+
+  // Wait for Firebase Auth to finish restoring the persisted session.
+  await auth.authStateChanges().first;
+
+  return auth.currentUser != null;
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   setupServiceLocator();
-  final isAuthenticated =
-      await FirebaseAuth.instance.authStateChanges().first != null;
+  final isAuthenticated = await _resolveStartupAuthentication();
   debugPrint(
     '[AUTH-GATE] resolved at startup -> currentUser==null: '
     '${FirebaseAuth.instance.currentUser == null} | uid: '

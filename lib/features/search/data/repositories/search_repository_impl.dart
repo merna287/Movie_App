@@ -36,40 +36,49 @@ class SearchRepositoryImpl implements SearchRepository {
 
     final result = await _api.fetchMultiSearch(query);
 
-    return result.fold(
-      (failure) => Left(failure),
-      (model) {
-        final movies = model.movies
-            .where((movie) => movie.isCompleteForDisplay)
-            .map(
-              (movie) => movie.toEntity(
-                genre: _primaryGenre(movie.genreIds, genres),
-              ),
-            )
-            .toList();
+    if (result.isLeft()) {
+      return Left(result.getLeft().toNullable()!);
+    }
 
-        final actors = model.actors
-            .where((actor) => actor.isCompleteForDisplay)
-            .map(
-              (actor) => actor.toEntity(
-                (genreIds) => _primaryGenre(genreIds, genres),
-              ),
-            )
-            .toList();
+    final model = result.getRight().toNullable()!;
+    var actorModels = model.actors;
+    if (actorModels.isEmpty) {
+      final peopleResult = await _api.fetchSearchPeople(query);
+      peopleResult.fold(
+        (_) {},
+        (people) => actorModels = people,
+      );
+    }
 
-        debugPrint(
-          'TMDB searchAll "$query": '
-          '${movies.length} movies, ${actors.length} actors',
-        );
-
-        return Right(
-          SearchResults(
-            movies: movies,
-            actors: actors,
-            topIsActor: model.topIsActor,
+    final movies = model.movies
+        .where((movie) => movie.isCompleteForDisplay)
+        .map(
+          (movie) => movie.toEntity(
+            genre: _primaryGenre(movie.genreIds, genres),
           ),
-        );
-      },
+        )
+        .toList();
+
+    final actors = actorModels
+        .where((actor) => actor.isCompleteForDisplay)
+        .map(
+          (actor) => actor.toEntity(
+            (genreIds) => _primaryGenre(genreIds, genres),
+          ),
+        )
+        .toList();
+
+    debugPrint(
+      'TMDB searchAll "$query": '
+      '${movies.length} movies, ${actors.length} actors',
+    );
+
+    return Right(
+      SearchResults(
+        movies: movies,
+        actors: actors,
+        topIsActor: model.topIsActor || actors.isNotEmpty,
+      ),
     );
   }
 

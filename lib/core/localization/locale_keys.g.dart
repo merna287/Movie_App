@@ -218,4 +218,17 @@ abstract class  LocaleKeys {
   static const exceptions = 'exceptions';
   static const english = 'english';
   static const arabic = 'arabic';
+  static const aiAssistant = 'aiAssistant';
+  static const aiChatHint = 'aiChatHint';
+  static const aiSend = 'aiSend';
+  static const aiEmptyMessage = 'aiEmptyMessage';
+  static const aiGeminiApiKeyMissing = 'aiGeminiApiKeyMissing';
+  static const aiInvalidApiKey = 'aiInvalidApiKey';
+  static const aiChatError = 'aiChatError';
+  static const aiThinking = 'aiThinking';
+  static const aiChatEmptyHint = 'aiChatEmptyHint';
+  static const aiEdit = 'aiEdit';
+  static const aiCopy = 'aiCopy';
+  static const aiCopied = 'aiCopied';
+  static const aiEditingMessage = 'aiEditingMessage';
 }
